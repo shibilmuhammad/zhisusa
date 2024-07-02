@@ -20,3 +20,11 @@ export const eventsSpecsData = [
         description : "  Host lively musical festivals featuring diverse genres and performances. Our venues are equipped to handle concerts, jam sessions, and large-scale festivals with advanced sound and lighting systems, ensuring an unforgettable experience for performers and attendees."
     }
 ]
+export const eventsParticipateIntro = {
+    title : 'Join Our Exciting',
+    description : 'Dive into a vibrant calendar of events that invite you to participate and enjoy unique experiences. From art exhibitions to musical festivals, there’s always something happening. Join us and be part of the excitement!',
+}
+export const eventsHostIntro = {
+    title : 'Host Your Dream',
+    description : 'Transform your special occasions into unforgettable experiences with our elegant venues and expert planning services. From weddings to art exhibitions, birthday celebrations, and music festivals, we offer everything you need for a flawless event that leaves lasting impressions.',
+}

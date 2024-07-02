@@ -1,25 +1,21 @@
 import React from "react";
 
-const StripedIntro = () => {
+const StripedIntro = ({type,data}) => {
 	return (
-		<div className="w-full bg-orange-active flex  ">
+		<div className={`w-full  flex  ${type === 'host' ? 'bg-orange-active':'bg-PrimaryBlue-light_active'}`}>
 			<div className="w-6/12 p-8 space-y-8">
 				<div className="text-5xl font-poppins font-bold space-y-2">
-					<span className=" ">Host Your Dream</span>
-					<span className="block text-orange-normal ">Events</span>
+					<span className=" ">{data?.title}</span>
+					<span className={`block ${type === 'host' ? 'text-orange-normal' : 'text-PrimaryBlue-normal'} `}>Events</span>
 				</div>
-				<p className={'text-orange-dark_hover font-poppins w-4/6'}>
-					Transform your special occasions into unforgettable experiences with
-					our elegant venues and expert planning services. From weddings to art
-					exhibitions, birthday celebrations, and music festivals, we offer
-					everything you need for a flawless event that leaves lasting
-					impressions.
+				<p className={`${type === 'host' ? 'text-orange-dark_hover' : 'text-PrimaryBlue-dark_active'} font-poppins w-4/6`}>
+					{data?.description}
 				</p>
 			</div>
 			<div className="w-6/12">
 				<div className="relative ">
 					<div
-						className="parellelogram absolute h-96 w-96 bg-orange-normal"
+						className={`parellelogram absolute h-96 w-96 ${type === 'host' ? 'bg-orange-normal': 'bg-PrimaryBlue-normal'}`}
 					/>
 					
 				</div>

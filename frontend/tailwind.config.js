@@ -23,7 +23,8 @@ module.exports = {
         PrimaryBlue: {
           normal: '#1071db',
           darker : '#06284d',
-          light_active : '#b5d3f4'
+          light_active : '#b5d3f4',
+          dark_active : '#073363'
         },
       },
       fontFamily: {
