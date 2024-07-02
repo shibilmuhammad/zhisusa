@@ -10,7 +10,7 @@ const FeaturesCard = ({data,page}) => {
 			</div>
 
 			<div className="w-full space-y-2">
-				<h1 className="font-poppins text-xl font-medium">{data?.title}</h1>
+				<h1 className="font-poppins text-lg font-medium">{data?.title}</h1>
 				<p className="font-poppins text-PrimaryBlue-darker text-sm">
 					{data?.description}
 				</p>
