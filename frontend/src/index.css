@@ -14,5 +14,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.trapezoid{
+  clip-path: polygon(31% 0, 100% 0, 100% 100%, 0% 100%);
+
+}
+.parellelogram{
+  clip-path: polygon(44% 0, 100% 0, 56% 100%, 0% 100%);
+}
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 

@@ -9,7 +9,8 @@ module.exports = {
         orange: {
           normal: '#fb9216',
           active : '#feddb7',
-          normal_hover : '#e28314'
+          normal_hover : '#e28314',
+          dark_hover : '#97580d'
         },
         navyBlue: {
           normal: '#0c264c',
