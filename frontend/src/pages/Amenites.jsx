@@ -1,7 +1,7 @@
 
 import { amenitiesData } from "../utils/ameniities";
-import AmenitiesCard from "../componets/AmenitiesCard";
-import FullScreenPage from "../componets/FullScreenPage";
+import AmenitiesCard from "../components/AmenitiesCard";
+import FullScreenPage from "../components/FullScreenPage";
 const Amenites = () => {
   return (
     <div className="">
