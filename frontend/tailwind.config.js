@@ -29,7 +29,8 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
-        'work_intro': "url('../public/images/conference.jpeg')",
+        'work_intro': "url('../public/images/work-intro.jpg')",
+        
        
       }
     },
