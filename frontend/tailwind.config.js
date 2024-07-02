@@ -21,7 +21,8 @@ module.exports = {
         },
         PrimaryBlue: {
           normal: '#1071db',
-          darker : '#06284d'
+          darker : '#06284d',
+          light_active : '#b5d3f4'
         },
       },
       fontFamily: {
@@ -29,7 +30,8 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
-        'work_intro': "url('../public/images/work-intro.jpg')",
+        work_intro: "url('../public/images/work-intro.jpg')",
+        live_intro: "url('../public/images/live-intro.jpg')",
         
        
       }

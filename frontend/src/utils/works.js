@@ -29,7 +29,7 @@ export const workFeaturesIntro = {
     description : 'Explore the distinctive features of our workspaces, meticulously designed to meet your professional needs. Discover innovative amenities and thoughtful details crafted to enhance productivity and comfort, ensuring an exceptional work experience tailored to you.'
 }
 export const workIntro = {
-    thumb :'work_intro',
+    thumb :'../images/work-intro.jpg',
     title : 'Spaces Tailored to Your Needs',
     description : 'Discover our versatile range of workspaces designed to enhance productivity and comfort. From collaborative co-working areas to private offices, quiet spaces, and fully equipped conference rooms, we provide the ideal environment for every type of work. Explore our offerings to find the perfect fit for your professional needs.',
     button : 'Explore Favorite Work Spaces'
