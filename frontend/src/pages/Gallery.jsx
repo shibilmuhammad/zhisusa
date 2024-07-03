@@ -1,5 +1,5 @@
 import React from "react";
-import SimplePageIntro from "../componets/SimplePageIntro";
+import SimplePageIntro from "../components/SimplePageIntro";
 
 const Gallery = () => {
 	return (

@@ -1,7 +1,7 @@
 import React from 'react'
-import PageIntro from '../componets/PageIntro'
-import Features from '../componets/Features'
-import SpecsCard from '../componets/SpecsCard'
+import PageIntro from '../components/PageIntro'
+import Features from '../components/Features'
+import SpecsCard from '../components/SpecsCard'
 import { accomodationFeatures, accomodationFeaturesIntro, accomodationIntro, accomodationSpecsData } from '../utils/accomodation'
 
 

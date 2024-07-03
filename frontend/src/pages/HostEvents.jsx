@@ -1,9 +1,9 @@
 import React from 'react'
-import StripedIntro from '../componets/StripedIntro'
+import StripedIntro from '../components/StripedIntro'
 import { workSpecsData } from '../utils/works'
-import SpecsCard from '../componets/SpecsCard'
+import SpecsCard from '../components/SpecsCard'
 import { eventsHostIntro, eventsSpecsData } from '../utils/events'
-import MobileStripedIntro from '../componets/MobileStripedIntro'
+import MobileStripedIntro from '../components/MobileStripedIntro'
 
 const HostEvents = () => {
   return (

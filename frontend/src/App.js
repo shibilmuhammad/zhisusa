@@ -1,5 +1,5 @@
-import PageIntro from "./componets/PageIntro";
-import SimplePageIntro from "./componets/SimplePageIntro";
+import PageIntro from "./components/PageIntro";
+import SimplePageIntro from "./components/SimplePageIntro";
 import Accomodation from "./pages/Accomodation";
 import Activities from "./pages/Activities";
 import Amenites from "./pages/Amenites";
