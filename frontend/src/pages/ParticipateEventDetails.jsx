@@ -21,7 +21,7 @@ const ParticipateEventDetails = () => {
 			/>
 			<div className=" flex md:flex-row-reverse font-poppins p-4 md:gap-10 xl:gap-32 md:px-24">
 				<div className="md:w-5/12">
-					<h1 className="md:hidden text-xl font-medium border-b-2 border-black pb-1">
+					<h1 className="md:hidden text-xl font-medium border-b-2 border-gray-400 pb-1">
 						About
 					</h1>
 					<EventAboutSection />
