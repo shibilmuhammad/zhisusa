@@ -15,7 +15,7 @@ const FullScreenPage = ({Heading,Description,button,span}) => {
               {Heading}{" "}
               <span className="text-orange-normal"> {span}</span>
             </h1>
-            <p className="p-4 text-center text-sm lg:text-xl lg:max-w-2xl ">
+            <p className="p-4 text-center text-sm lg:text-lg lg:max-w-2xl ">
              {Description}
             </p>
             <button className="px-4 mt-4 lg:mt-12 py-2 border rou rounded-full flex items-center space-x-2 justify-center group ">

@@ -4,6 +4,7 @@ import Amenites from "./pages/Amenites";
 import HostEvents from "./pages/HostEvents";
 import Packages from "./pages/Packages";
 import ParticipateEvents from "./pages/ParticipateEvents";
+import WeeklyRetreat from "./pages/WeeklyRetreat";
 import Works from "./pages/Works";
 
 
@@ -12,7 +13,7 @@ function App() {
     <div className="App">
 
 
-    <Packages />
+    <WeeklyRetreat />
     </div>
   );
 }

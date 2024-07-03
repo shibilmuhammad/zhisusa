@@ -1,7 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import settings from "../utils/sliderSettings";
-const PackageCard = ({DailyEscapeCard}) => {
+const PackageCard = ({data}) => {
   return (
     <div>
       <div className="mt-5 border border-black lg:mx-10 lg:px-5  p-2 mx-2 rounded-lg ">
@@ -54,7 +54,7 @@ const PackageCard = ({DailyEscapeCard}) => {
                 <span className="ml-2 text-PrimaryBlue-normal"> With Us</span>
               </h1>
               <div className=" space-y-3 mt-4 ">
-                {DailyEscapeCard.map((data)=>{
+                {data.map((data)=>{
                     return(
                     <div className="flex    ">
                     <div className="mx-2">
