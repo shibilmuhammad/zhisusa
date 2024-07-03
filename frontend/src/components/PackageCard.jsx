@@ -1,8 +1,7 @@
 import React from "react";
 import Slider from "react-slick";
 import settings from "../utils/sliderSettings";
-import { DailyEscapeCard } from "../utils/packages";
-const PackageCard = () => {
+const PackageCard = ({DailyEscapeCard}) => {
   return (
     <div>
       <div className="mt-5 border border-black lg:mx-10 lg:px-5  p-2 mx-2 rounded-lg ">
