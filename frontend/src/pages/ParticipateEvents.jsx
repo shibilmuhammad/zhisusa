@@ -1,9 +1,9 @@
 import React from "react";
-import StripedIntro from "../componets/StripedIntro";
-import MobileStripedIntro from "../componets/MobileStripedIntro";
+import StripedIntro from "../components/StripedIntro";
+import MobileStripedIntro from "../components/MobileStripedIntro";
 import { eventsParticipateIntro } from "../utils/events";
-import EventCard from "../componets/EventCard";
-import PastEvents from "../componets/PastEvents";
+import EventCard from "../components/EventCard";
+import PastEvents from "../components/PastEvents";
 
 const ParticipateEvents = () => {
 	return (

@@ -1,8 +1,7 @@
 import React from 'react'
-import FeaturesCard from '../componets/FeaturesCard'
-import SpecsCard from '../componets/SpecsCard'
-import Features from '../componets/Features'
-import PageIntro from '../componets/PageIntro'
+import SpecsCard from '../components/SpecsCard'
+import Features from '../components/Features'
+import PageIntro from '../components/PageIntro'
 import { workFeatures, workFeaturesIntro, workSpecsData } from '../utils/works'
 import { workIntro } from '../utils/works'
 
