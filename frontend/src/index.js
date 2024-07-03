@@ -7,6 +7,7 @@ import Aboutus from './pages/Aboutus';
 import Gallery from './pages/Gallery';
 import Works from './pages/Works';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import Contactus from './pages/Contactus';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: "/aboutus",
         element: <Aboutus />,
+      },
+      {
+        path: "/contactus",
+        element: <Contactus />,
       },
       
       
