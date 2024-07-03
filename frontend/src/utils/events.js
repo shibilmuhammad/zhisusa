@@ -1,3 +1,7 @@
+import { FaBirthdayCake } from "react-icons/fa";
+import { MdEventSeat } from "react-icons/md";
+import { FaUserTie } from "react-icons/fa";
+
 export const eventsSpecsData = [
     {
         thumbnail : '../images/wedding.jpg',
@@ -28,3 +32,60 @@ export const eventsHostIntro = {
     title : 'Host Your Dream',
     description : 'Transform your special occasions into unforgettable experiences with our elegant venues and expert planning services. From weddings to art exhibitions, birthday celebrations, and music festivals, we offer everything you need for a flawless event that leaves lasting impressions.',
 }
+export const eventsIntro =  {
+    thumb :'../images/event-intro.jpg',
+    title : 'Explore Your Dream Events with Style',
+    description : 'Transform your special occasions into unforgettable experiences with our elegant venues and expert planning services. From weddings to art exhibitions, birthday celebrations, and music festivals, we offer everything you need for a flawless event that leaves lasting impressions.',
+    button : 'Plan Your Favorite Event'
+}
+export const eventsFeaturesIntro = {
+    title : 'Explore Our Features',
+    description : 'Discover the unique features that make our events and activities truly special. From top-tier amenities and personalized services to state-of-the-art facilities and breathtaking natural surroundings, we offer everything you need to create unforgettable experiences. '
+}
+export const eventFeatures = [
+    {
+        icon : MdEventSeat,
+        title : 'Stunning Venues',
+        description : 'Host your event in breathtaking locations with picturesque settings, from lush gardens to elegant indoor spaces.'
+    },
+    {
+        icon : FaBirthdayCake,
+        title : 'Customizable Packages',
+        description : 'Tailor your event with flexible options to suit your vision and budget, whether it’s a wedding or corporate gathering.'
+    },
+    {
+        icon : FaUserTie,
+        title : 'Professional Staff',
+        description : 'Dedicated team of professionals manage and execute your event seamlessly, ensuring everything runs smoothly.'
+    }
+]
+export const eventHostCardsData = [
+    {
+        img : '../images/wedding.jpg',
+        title : 'Wedding'
+    },
+    {
+        img : '../images/celebration.jpg',
+        title : 'Celebrations'
+    },
+    {
+        img : '../images/art.jpg',
+        title : 'Art Exhibitions'
+    },
+    {
+        img : '../images/music.jpg',
+        title : 'Music Fest'
+    },
+]
+export const eventsParticipateGridData = [
+    {
+        img : '../images/music.jpg',
+        title : 'Music Fest by Anirudh Ravichandran',
+        date : '07 Jan 2024'
+    },
+    {
+        img : '../images/music.jpg',
+        title : 'Music Fest by Anirudh Ravichandran',
+        date : '07 Jan 2024'
+    }
+]

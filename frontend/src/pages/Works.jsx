@@ -7,7 +7,7 @@ import { workIntro } from '../utils/works'
 
 const Works = () => {
   return (
-    <div className=' h-[100vh]'>
+    <div className=''>
         <PageIntro data={workIntro}/>
         <Features intro={workFeaturesIntro} data={workFeatures}/>
         <div className=' py-8 flex flex-col gap-5 md:gap-10 md:mt-12 '>
