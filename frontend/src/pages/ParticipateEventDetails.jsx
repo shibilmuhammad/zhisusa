@@ -19,32 +19,29 @@ const ParticipateEventDetails = () => {
 					title: "Music Fest By Anirudh R",
 				}}
 			/>
-			<div className=" flex md:flex-row-reverse font-poppins  p-4">
-				<div>
-					<div>
-						<h1 className="text-xl font-medium border-b-2 border-black pb-1">
-							About
-						</h1>
-						<EventAboutSection />
-						<EventGuideSection />
-					</div>
-					<div>
-						<EventDetailsSection />
-					</div>
+			<div className=" flex md:flex-row-reverse font-poppins p-4 md:gap-10 xl:gap-32 md:px-24">
+				<div className="md:w-5/12">
+					<h1 className="md:hidden text-xl font-medium border-b-2 border-black pb-1">
+						About
+					</h1>
+					<EventAboutSection />
+					<EventGuideSection />
+				</div>
+				<div className="md:w-8/12">
+					<EventDetailsSection />
 				</div>
 			</div>
 			{/* Related Events */}
-			<div className="p-5">
+			<div className="p-5 md:px-24">
 				<h1 className="text-xl font-poppins font-bold border-b-2 border-gray-400 pb-1">
-                    You may also like this
+					You may also like this
 				</h1>
-                <div className="mt-4">
-                    <EventRelatedCard />
-                </div>
-				
+				<div className="mt-4 grid grid-cols-1 md:grid-cols-3">
+					<EventRelatedCard />
+				</div>
 			</div>
 			{/* Price card */}
-			<div className="fixed bottom-4 w-full px-6">
+			<div className="fixed bottom-4 w-full px-6 md:hidden">
 				<EventPriceCard />
 			</div>
 		</div>

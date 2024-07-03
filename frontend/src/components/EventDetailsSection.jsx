@@ -3,8 +3,8 @@ import React from "react";
 const EventDetailsSection = () => {
 	return (
 		<div className="space-y-3 mt-4">
-			<h1 className="font-bold text-lg">About the event</h1>
-			<p className="text-sm">
+			<h1 className="font-bold text-lg md:text-xl">About the event</h1>
+			<p className="text-sm md:text-base">
 				Shri. Ilaiyaraaja, born June 2nd, 1943, is an Indian Film Composer,
 				Conductor, Arranger, Lyricist and Singer who works in the Indian Film
 				Industry. Widely regarded as one of the Greatest Indian Music Composers,
@@ -19,16 +19,16 @@ const EventDetailsSection = () => {
 				1991 film Thalapathi was voted Fourth in the Top 10 Most Popular Songs
 				of All Time.
 			</p>
-			<h1 className="font-bold text-lg">Venue</h1>
-			<p className="text-sm">
+			<h1 className="font-bold text-lg md:text-xl">Venue</h1>
+			<p className="text-sm md:text-base">
 				Alamparai Backwaters, 26HR+324, Y.M.C.A College of Physical Education,
 				Nandanam, Chennai, Tamil Nadu 600035, India
 			</p>
 			<button className="border-2 rounded-md p-2 px-4 text-sm">
 				Get Direction
 			</button>
-			<h1 className="font-bold text-lg">Terms & Conditions</h1>
-			<p className="text-sm">
+			<h1 className="font-bold text-lg md:text-xl">Terms & Conditions</h1>
+			<p className="text-sm md:text-base">
 				Alamparai Backwaters, 26HR+324, Y.M.C.A College of Physical Education,
 				Nandanam, Chennai, Tamil Nadu 600035, India
 			</p>
