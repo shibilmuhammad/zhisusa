@@ -1,6 +1,7 @@
 import React from "react";
 import { IoBookmarkOutline, IoLocationOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
+import EventPriceCard from "./EventPriceCard";
 
 const EventAboutSection = () => {
 	return (
@@ -17,6 +18,9 @@ const EventAboutSection = () => {
 			<div className="flex gap-2 items-center ">
 				<IoLocationOutline className="text-2xl" />
 				<span>Alampara, Chennai</span>
+			</div>
+			<div className="hidden md:block">
+				<EventPriceCard/>
 			</div>
 		</div>
 	);
