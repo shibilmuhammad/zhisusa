@@ -8,10 +8,16 @@ import HostEvents from "./pages/HostEvents";
 import ParticipateEvents from "./pages/ParticipateEvents";
 import Works from "./pages/Works";
 
+
 function App() {
   return (
     <div className="App">
+
       <Gallery />
+
+
+
+     
     </div>
   );
 }
