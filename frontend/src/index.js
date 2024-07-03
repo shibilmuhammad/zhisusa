@@ -9,6 +9,7 @@ import Works from './pages/Works';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import Contactus from './pages/Contactus';
 import Events from './pages/Events';
+import ParticipateEventDetails from './pages/ParticipateEventDetails';
 
 
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/events",
         element: <Events />,
+      },
+      {
+        path: "/eventDetails",
+        element: <ParticipateEventDetails />,
       },
       
       
