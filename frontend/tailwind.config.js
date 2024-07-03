@@ -20,6 +20,7 @@ module.exports = {
         
         skyBlue: {
           normal: '#bcdcff',
+          dark_active : '#556373'
         },
         PrimaryBlue: {
           normal: '#1071db',
