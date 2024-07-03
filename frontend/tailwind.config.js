@@ -14,7 +14,8 @@ module.exports = {
         },
         navyBlue: {
           normal: '#0c264c',
-          dark_hover : '#07172e'
+          dark_hover : '#07172e',
+          light : '#e7e9ed'
         },
         
         skyBlue: {

@@ -1,5 +1,7 @@
+import { Outlet } from "react-router-dom";
 import PageIntro from "./components/PageIntro";
 import SimplePageIntro from "./components/SimplePageIntro";
+import Aboutus from "./pages/Aboutus";
 import Accomodation from "./pages/Accomodation";
 import Activities from "./pages/Activities";
 import Amenites from "./pages/Amenites";
@@ -13,7 +15,7 @@ function App() {
   return (
     <div className="App">
 
-      <Gallery />
+      <Outlet />
 
 
 
