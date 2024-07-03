@@ -29,5 +29,42 @@ export const dailyEscape = [
     des: "Enjoy a serene boating experience on our beautiful lake. Paddle through calm waters and enjoy the natural surroundings.",
     imgUrl: "../images/campfire.jpeg",
   },
-  
+];
+export const DailyEscapeCard = [
+  {
+    title: "Spacious Accommodations",
+    des: "Luxurious rooms designed for comfort and relaxation.",
+  },
+  {
+    title: "Private Balconies",
+    des: "Luxurious rooms designed for comfort and relaxation.",
+  },
+  {
+    title: "King-Sized Bed Sleep soundly in a spacious and luxurious bed.",
+    des: " Sleep soundly in a spacious and luxurious bed.",
+  },
+  {
+    title: "En-Suite Bathroom ",
+    des: "Relax in your own private bathroom with premium amenities.",
+  },
+  {
+    title: "Complimentary Wi-Fi",
+    des: "Stay connected with high-speed internet access.",
+  },
+  {
+    title: "Room Service",
+    des: "24/7 room service to cater to your needs.",
+  },
+  {
+    title: "Relaxation Areas",
+    des: "  Cozy corners and seating areas for unwinding with a book or beverage.",
+  },
+  {
+    title: "Daily Housekeeping",
+    des: "Return to a refreshed and tidy space every day",
+  },
+  {
+    title: "Personalized Amenities",
+    des: "Tailored services to enhance your stay, such as turndown service or pillow menus.",
+  },
 ];
