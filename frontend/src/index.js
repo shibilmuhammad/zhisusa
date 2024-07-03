@@ -8,6 +8,8 @@ import Gallery from './pages/Gallery';
 import Works from './pages/Works';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
 import Contactus from './pages/Contactus';
+import Events from './pages/Events';
+
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/contactus",
         element: <Contactus />,
+      },
+      {
+        path: "/events",
+        element: <Events />,
       },
       
       
