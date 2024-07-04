@@ -22,7 +22,7 @@ const WeeklyRetreat = () => {
       }
     />
   <PackagesButton activeButton={"weekly"}/>
-  <PackageCard data={weeklyEscapeCard}  />
+  <PackageCard title={"A Week of Tranquility"} data={weeklyEscapeCard}  />
     <div className="mt-4">
     <h1 className="flex justify-center items-center text-2xl font-bold font-futura my-6   ">
           Experience  your {" "}

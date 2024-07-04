@@ -23,7 +23,7 @@ const Packages = () => {
         }
       />
     <PackagesButton activeButton={"daily"}/>
-    <PackageCard DailyEscapeCard={DailyEscapeCard}  />
+    <PackageCard title={"A Day and Night "} data={DailyEscapeCard}  />
       <div className="mt-4">
       <h1 className="flex justify-center items-center text-2xl font-bold font-futura my-6   ">
             Experience  your {" "}

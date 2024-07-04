@@ -1,13 +1,13 @@
 import React from "react";
 import Slider from "react-slick";
 import settings from "../utils/sliderSettings";
-const PackageCard = ({data}) => {
+const PackageCard = ({title,data}) => {
   return (
     <div>
       <div className="mt-5 border border-black lg:mx-10 lg:px-5  p-2 mx-2 rounded-lg ">
         <div>
           <h1 className="flex justify-center lg:hidden lg:ml-3 lg:mt-3 items-center text-2xl font-semibold font-poppins ">
-            A Day and Night{" "}
+            {title}{" "}
             <span className="ml-2 text-PrimaryBlue-normal"> With Us</span>
           </h1>
           <div className="lg:flex">
@@ -50,7 +50,7 @@ const PackageCard = ({data}) => {
             </div>
             <div className="lg:w-1/2 ">
               <h1 className="lg:block justify-center hidden lg:ml-3 lg:mt-3 items-center text-2xl font-semibold font-poppins ">
-                A Day and Night{" "}
+                {title}{" "}
                 <span className="ml-2 text-PrimaryBlue-normal"> With Us</span>
               </h1>
               <div className=" space-y-3 mt-4 ">
