@@ -1,6 +1,7 @@
 import React from 'react'
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { dailyEscape } from '../utils/packages';
+import {MdTaskAlt} from 'react-icons/md'
 const PackagesPricingCard = ({amenities,title,per}) => {
   return (
     <div>
@@ -12,7 +13,7 @@ const PackagesPricingCard = ({amenities,title,per}) => {
                         <div className="lg:grid space-y-4  grid-cols-2 gap-x-28 gap-y-5 text-sm font-medium "> 
                             <div className="flex space-x-2 items-center  ">
                                 <div className="text-xl">
-                                    <IoIosCheckmarkCircle/>
+                                    <MdTaskAlt/>
                                 </div>
                                 <p>Private Luxuary room</p>
                             </div>
@@ -20,7 +21,7 @@ const PackagesPricingCard = ({amenities,title,per}) => {
                                 return(
                                     <div className="flex space-x-2 items-center  ">
                                     <div className="text-xl">
-                                        <IoIosCheckmarkCircle/>
+                                        <MdTaskAlt/>
                                     </div>
                                     <p>{data.title}</p>
                                     </div>
