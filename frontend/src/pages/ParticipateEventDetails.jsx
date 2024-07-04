@@ -19,7 +19,7 @@ const ParticipateEventDetails = () => {
 					title: "Music Fest By Anirudh R",
 				}}
 			/>
-			<div className=" flex md:flex-row-reverse font-poppins p-4 md:gap-10 xl:gap-32 md:px-24">
+			<div className=" md:flex md:flex-row-reverse font-poppins p-4 md:gap-10 xl:gap-32 md:px-24">
 				<div className="md:w-5/12">
 					<h1 className="md:hidden text-xl font-medium border-b-2 border-gray-400 pb-1">
 						About
