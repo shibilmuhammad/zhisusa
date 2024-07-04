@@ -7,6 +7,10 @@ import Aboutus from './pages/Aboutus';
 import Gallery from './pages/Gallery';
 import Works from './pages/Works';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+
+import Packages from './pages/Packages';
+import WeeklyRetreat from './pages/WeeklyRetreat';
+
 import Contactus from './pages/Contactus';
 import Events from './pages/Events';
 import ParticipateEventDetails from './pages/ParticipateEventDetails';
@@ -15,6 +19,8 @@ import ParticipateEventBookingStatus from './pages/ParticipateEventBookingStatus
 import Home from './pages/Home';
 import ParticipateEventIntro from './components/ParticipateEventIntro';
 import ParticipateEvents from './pages/ParticipateEvents';
+import MonthlyHaven from './pages/MonthlyHaven';
+
 
 
 const router = createBrowserRouter([
@@ -35,8 +41,16 @@ const router = createBrowserRouter([
         element: <Aboutus />,
       },
       {
+        path: "/dailyescape",
+        element:<Packages />,
+      },
+      {
+        path: "/weeklyretreat",
+        element:<WeeklyRetreat />,
+      },
+      {
         path: "/contactus",
-        element: <Contactus />,
+        element: <Contactus />
       },
       {
         path: "/events",
@@ -57,6 +71,12 @@ const router = createBrowserRouter([
       {
         path: "/eventBookingStatus",
         element: <ParticipateEventBookingStatus />,
+
+      },
+      {
+        path: "/monthlyhaven",
+        element: <MonthlyHaven />,
+
       },
       
       
