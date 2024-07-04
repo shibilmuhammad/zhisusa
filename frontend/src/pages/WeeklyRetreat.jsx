@@ -1,10 +1,9 @@
 import React from "react";
 import FullScreenPage from "../components/FullScreenPage";
 
-import { DailyEscapeCard, weeklyEscape, weeklyEscapeCard } from "../utils/packages";
+import { weeklyEscape, weeklyEscapeCard } from "../utils/packages";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { dailyEscape } from "../utils/packages";
 import PackageFeatureCard from "../components/PackageFeatureCard";
 
 import PackagesButton from "../components/PackagesButton";
@@ -26,7 +25,7 @@ const WeeklyRetreat = () => {
     <div className="mt-4">
     <h1 className="flex justify-center items-center text-2xl font-bold font-futura my-6   ">
           Experience  your {" "}
-          <span className="ml-2 text-PrimaryBlue-normal"> Perfect Day</span>
+          <span className="ml-2 text-PrimaryBlue-normal"> Perfect Week</span>
         </h1>
         <div className="px-5 pb-10 mt-5 space-y-5 lg:space-y-0 lg:grid grid-cols-3 gap-4 lg:px-10">
           {weeklyEscape.map((data)=>{

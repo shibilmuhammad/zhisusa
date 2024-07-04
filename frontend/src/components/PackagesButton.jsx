@@ -12,9 +12,9 @@ const PackagesButton = ({activeButton}) => {
           <Link to={'/weeklyretreat'} className={`py-2 lg:px-20 px-4  lg:text-base flex justify-center items-center border-r ${activeButton=="weekly"?"bg-blue-500 text-white":":bg-white text-black"}`}>
             <span>Weekly Retreat</span>
           </Link>
-          <div className={`py-2 lg:px-20 px-4  lg:text-base flex justify-center items-center border-r ${activeButton=="monthly"?"bg-blue-500 text-white":":bg-white text-black"}`}>
+          <Link  to={'/monthlyhaven'} className={`py-2 lg:px-20 px-4  lg:text-base flex justify-center items-center border-r ${activeButton=="monthly"?"bg-blue-500 text-white":":bg-white text-black"}`}>
             <span>Monthly haven</span>
-          </div>
+          </Link>
           <div className={`py-2 lg:px-20 px-4 hidden lg:text-base lg:flex justify-center items-center border-r rounded-r-full ${activeButton=="yearly"?"bg-blue-500 text-white":":bg-white text-black"}`}>
             <span>Yearly Sanctury</span>
           </div>
