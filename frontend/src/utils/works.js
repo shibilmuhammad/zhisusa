@@ -6,23 +6,30 @@ export const workSpecsData = [
     {
         thumbnail : '../images/quirezone.jpeg',
         title : 'Quiet Zones',
+        shortDec : 'Dedicated areas for focused, distraction-free work.',
+        buttonText : 'Find a spot',
         description : 'Retreat to our quiet zone for uninterrupted focus and concentration. Designed for individuals who require a tranquil environment, this space offers peace and serenity away from distractions, allowing you to maximize productivity and creativity.'
+    },
+    
+    {
+        thumbnail : '../images/privateoffice.jpeg',
+        title : 'Private Office',
+        shortDec : 'Secure, fully-equipped offices for individual work or small teams.',
+        buttonText : 'Book Now',
+        description : ' Elevate your productivity in our private office suites. Enjoy the privacy and comfort of your own dedicated workspace, complete with ergonomic furniture, high-speed internet, and personalized amenities.'
+    },
+    {
+        thumbnail : '../images/conference.jpeg',
+        title : 'Conference Room',
+        shortDec : 'Modern meeting rooms with audiovisual equipment for presentations and meetings.',
+        buttonText : 'Schedule a meeting',
+        description : ' Host successful meetings and presentations in our state-of-the-art conference rooms. Equipped with advanced audiovisual technology,and professional ambiance, our conference rooms provide the ideal setting for productive discussions and impactful presentations.'
     },
     {
         thumbnail : '../images/coworkingspace.jpeg',
         title : 'Co-working Spaces',
         description : 'Collaborate and network in our vibrant co-working space. Connect with like-minded professionals, share ideas, and foster innovation in a dynamic and inspiring environment.'
     },
-    {
-        thumbnail : '../images/privateoffice.jpeg',
-        title : 'Private Office',
-        description : ' Elevate your productivity in our private office suites. Enjoy the privacy and comfort of your own dedicated workspace, complete with ergonomic furniture, high-speed internet, and personalized amenities.'
-    },
-    {
-        thumbnail : '../images/conference.jpeg',
-        title : 'Conference Room',
-        description : ' Host successful meetings and presentations in our state-of-the-art conference rooms. Equipped with advanced audiovisual technology,and professional ambiance, our conference rooms provide the ideal setting for productive discussions and impactful presentations.'
-    }
 ]
 export const workFeaturesIntro = {
     title : 'Explore Our Features',
