@@ -1,8 +1,7 @@
 import React from "react";
 import FullScreenPage from "../components/FullScreenPage";
-import { IoIosMenu } from "react-icons/io";
-import SimpleSlider, { Slideshow } from "../components/Slideshow";
 
+import { DailyEscapeCard } from "../utils/packages";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { dailyEscape } from "../utils/packages";
@@ -23,8 +22,8 @@ const Packages = () => {
           "Rejuvenate with a day in nature with our Daily Escape package. Enjoy a gourmet meal, peaceful garden walks, serene lake boating, and relaxing yoga and meditation sessions. Perfect for a quick getaway to refresh and recharge."
         }
       />
-    <PackagesButton />
-    <PackageCard />
+    <PackagesButton activeButton={"daily"}/>
+    <PackageCard title={"A Day and Night "} data={DailyEscapeCard}  />
       <div className="mt-4">
       <h1 className="flex justify-center items-center text-2xl font-bold font-futura my-6   ">
             Experience  your {" "}
@@ -39,7 +38,7 @@ const Packages = () => {
          
           </div>
       </div>
-            <PackagesPricingCard />
+            <PackagesPricingCard per={"Day"} title={"Daily Escape"} amenities={dailyEscape}/>
     </div>
   );
 };
