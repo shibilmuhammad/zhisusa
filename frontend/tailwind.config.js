@@ -10,7 +10,8 @@ module.exports = {
           normal: '#fb9216',
           active : '#feddb7',
           normal_hover : '#e28314',
-          dark_hover : '#97580d'
+          dark_hover : '#97580d',
+          light : '#fff4e8'
         },
         navyBlue: {
           normal: '#0c264c',
@@ -20,6 +21,7 @@ module.exports = {
         
         skyBlue: {
           normal: '#bcdcff',
+          dark_active : '#556373'
         },
         PrimaryBlue: {
           normal: '#1071db',

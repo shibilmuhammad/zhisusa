@@ -16,12 +16,7 @@ import Works from "./pages/Works";
 function App() {
   return (
     <div className="App">
-
       <Outlet />
-
-
-
-     
     </div>
   );
 }
