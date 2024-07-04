@@ -31,3 +31,50 @@ export const dailyEscape = [
   },
   
 ];
+export const allPackages = [
+  {
+    title : 'Daily Escape',
+    img : '../images/daily.png',
+    description : 'Rejuvenate with a day in nature. Enjoy peaceful garden walks,thrilling boating and more.',
+    features : [
+      "Dining",
+      "Boating",
+      "Natual Walking",
+      "Yoga & Meditation Classes"
+    ]
+  },
+  {
+    title : 'Weekly Retreat',
+    img : '../images/weekly.png',
+    description : 'Unwind and recharge your healthy mind with our Weekly Retreat package.',
+    features : [
+      "Daily Package Amenities +",
+      "Private Workspace",
+      "Wellness Programs",
+      
+    ]
+  },
+  {
+    title : 'Monthly Haven',
+    img : '../images/monthly.png',
+    description : 'Immerse yourself in a month-long journey of relaxation with our Monthly Haven package.',
+    features : [
+      "Weekly Package Amenities +",
+      "Cultural Activities",
+      "Recreational Activities",
+      "Community Events"
+    ]
+  },
+  {
+    title : 'Yearly Sanctuary',
+    img : '../images/yearly.png',
+    description : 'Commit to a year of tranquility and productivity. Enjoy continous access to all our amenities.',
+    features : [
+      "Monthly Package Amenities +",
+      "Unlimited Access on Private Work Space",
+      "Exclusive Benefits",
+      
+    ]
+  },
+
+]

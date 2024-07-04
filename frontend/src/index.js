@@ -12,6 +12,9 @@ import Events from './pages/Events';
 import ParticipateEventDetails from './pages/ParticipateEventDetails';
 import ParticipateEventBooking from './pages/ParticipateEventBooking';
 import ParticipateEventBookingStatus from './pages/ParticipateEventBookingStatus';
+import Home from './pages/Home';
+import ParticipateEventIntro from './components/ParticipateEventIntro';
+import ParticipateEvents from './pages/ParticipateEvents';
 
 
 const router = createBrowserRouter([
@@ -19,6 +22,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "/",
+        element: <Home/>,
+      },
       {
         path: "/gallary",
         element: <Gallery />,
@@ -34,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/events",
         element: <Events />,
+      },
+      {
+        path: "/eventsParticipate",
+        element: <ParticipateEvents />,
       },
       {
         path: "/eventDetails",
