@@ -10,9 +10,11 @@ import PackageFeatureCard from "../components/PackageFeatureCard";
 import PackagesButton from "../components/PackagesButton";
 import PackageCard from "../components/PackageCard";
 import PackagesPricingCard from "../components/PackagesPricingCard";
+import Header from '../components/Header';
 const Yearly = () => {
   return (
     <div>
+         <Header />
     <FullScreenPage
       Heading={"Yearly"}
       span={"Sanctury"}

@@ -6,13 +6,14 @@ import { monthlyEscape, monthlyHavenCard, weeklyEscape, weeklyEscapeCard } from 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PackageFeatureCard from "../components/PackageFeatureCard";
-
+import Header from '../components/Header';
 import PackagesButton from "../components/PackagesButton";
 import PackageCard from "../components/PackageCard";
 import PackagesPricingCard from "../components/PackagesPricingCard";
 const MonthlyHaven = () => {
   return (
     <div>
+       <Header />
       <FullScreenPage
         Heading={"Monthly"}
         span={"Haven"}

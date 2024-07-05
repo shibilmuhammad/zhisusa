@@ -2,10 +2,11 @@ import React from "react";
 import SimplePageIntro from "../components/SimplePageIntro";
 import ContactForm from "../components/ContactForm";
 import ContactAddress from "../components/ContactAddress";
-
+import Header from '../components/Header';
 const Contactus = () => {
 	return (
 		<div>
+			 <Header />
 			<SimplePageIntro
 				data={{
 					thumb: "../images/tent.jpg",
