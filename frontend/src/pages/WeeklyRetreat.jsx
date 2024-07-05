@@ -17,17 +17,17 @@ const WeeklyRetreat = () => {
       span={"Retreat"}
       button={"Book Your Slot "}
       Description={
-        "Escape the everyday with our Weekly Retreat package, designed for a perfect balance of work and leisure. Immerse yourself in a serene environment that enhances productivity and relaxation. Enjoy luxurious accommodations, gourmet meals, and a variety of activities tailored to rejuvenate your mind and body. Whether you're seeking solitude for focused work or opportunities for wellness and recreation, our Weekly Retreat offers an ideal sanctuary for your needs."
+        "Escape the everyday with our Weekly Retreat package, balancing work and leisure. Enjoy luxurious accommodations, gourmet meals, and activities to rejuvenate your mind and body. Whether you seek focused solitude or wellness and recreation, our retreat is your perfect sanctuary."
       }
     />
   <PackagesButton activeButton={"weekly"}/>
   <PackageCard title={"A Week of Tranquility"} data={weeklyEscapeCard}  />
     <div className="mt-4">
-    <h1 className="flex justify-center items-center text-2xl font-bold font-futura my-6   ">
+    <h1 className="flex justify-center items-center text-xl font-bold font-futura my-6   ">
           Experience  your {" "}
           <span className="ml-2 text-PrimaryBlue-normal"> Perfect Week</span>
         </h1>
-        <div className="px-5 pb-10 mt-5 space-y-5 lg:space-y-0 lg:grid grid-cols-3 gap-4 lg:px-10">
+        <div className="px-5 pb-10 mt-5 space-y-5 lg:space-y-0 lg:grid grid-cols-4 lg:gap-10 gap-4 lg:px-10">
           {weeklyEscape.map((data)=>{
               return(
              <PackageFeatureCard data={data} />

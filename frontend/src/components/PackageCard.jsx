@@ -6,7 +6,7 @@ const PackageCard = ({title,data}) => {
     <div>
       <div className="mt-5 border border-black lg:mx-10 lg:px-5  p-2 mx-2 rounded-lg ">
         <div>
-          <h1 className="flex justify-center lg:hidden lg:ml-3 lg:mt-3 items-center text-2xl font-semibold font-poppins ">
+          <h1 className="flex justify-center lg:hidden lg:ml-3 lg:mt-3 items-center text- xl font-semibold font-poppins ">
             {title}{" "}
             <span className="ml-2 text-PrimaryBlue-normal"> With Us</span>
           </h1>

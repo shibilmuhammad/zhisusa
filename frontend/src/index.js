@@ -20,6 +20,7 @@ import Home from './pages/Home';
 import ParticipateEventIntro from './components/ParticipateEventIntro';
 import ParticipateEvents from './pages/ParticipateEvents';
 import MonthlyHaven from './pages/MonthlyHaven';
+import Yearly from './pages/Yearly';
 
 
 
@@ -76,7 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/monthlyhaven",
         element: <MonthlyHaven />,
-
+      },
+      {
+        path: "/yearly",
+        element: <Yearly />,
       },
       
       
