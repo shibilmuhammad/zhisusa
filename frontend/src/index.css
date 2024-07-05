@@ -14,6 +14,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.strokeText{
+  -webkit-text-stroke: 0.5px #fff;
+  -webkit-text-fill-color: transparent;
+}
+.large{
+  
+}
 .trapezoid{
   clip-path: polygon(31% 0, 100% 0, 100% 100%, 0% 100%);
 
