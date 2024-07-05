@@ -4,10 +4,11 @@ import Features from '../components/Features'
 import PageIntro from '../components/PageIntro'
 import { workFeatures, workFeaturesIntro, workSpecsData } from '../utils/works'
 import { workIntro } from '../utils/works'
-
+import Header from '../components/Header';
 const Works = () => {
   return (
     <div className=''>
+       <Header />
         <PageIntro data={workIntro}/>
         <Features intro={workFeaturesIntro} data={workFeatures}/>
         <div className=' py-8 flex flex-col gap-5 md:gap-10 md:mt-12 '>

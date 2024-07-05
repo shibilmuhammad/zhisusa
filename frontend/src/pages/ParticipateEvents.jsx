@@ -4,10 +4,11 @@ import MobileStripedIntro from "../components/MobileStripedIntro";
 import { eventsParticipateIntro } from "../utils/events";
 import EventCard from "../components/EventCard";
 import PastEvents from "../components/PastEvents";
-
+import Header from '../components/Header';
 const ParticipateEvents = () => {
 	return (
 		<div>
+			 <Header />
             
 			<div className="hidden md:block">
 				<StripedIntro type={"participate"} data={eventsParticipateIntro} />

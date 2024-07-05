@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import SimplePageIntro from "../components/SimplePageIntro";
 import { gallery, galleryIntro } from "../utils/gallery";
-
+import Header from '../components/Header';
 const Gallery = () => {
 	const [selection, setSelection] = useState("All Images");
 	const [updatedImages, setUpdatedImages] = useState(gallery);
@@ -12,6 +12,7 @@ const Gallery = () => {
 
 	return (
 		<div>
+			 <Header />
 			<SimplePageIntro
 				data={{
 					thumb: "../images/tent.jpg",

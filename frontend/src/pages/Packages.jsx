@@ -1,6 +1,6 @@
 import React from "react";
 import FullScreenPage from "../components/FullScreenPage";
-
+import Header from '../components/Header';
 import { DailyEscapeCard } from "../utils/packages";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,6 +14,7 @@ const Packages = () => {
   
   return (
     <div>
+       <Header />
       <FullScreenPage
         Heading={"Daily"}
         span={"Escape"}

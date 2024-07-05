@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import EventBookingInformation from "../components/EventBookingInformation";
 import EventBookingSummary from "../components/EventBookingSummary";
 import SimplePageIntro from "../components/SimplePageIntro";
-
+import Header from '../components/Header';
 const ParticipateEventBooking = () => {
 	const [filled, setFilled] = useState(false);
 	return (
 		<div className="h-[90vh]">
+			 <Header />
 			<div className="bg-navyBlue-normal flex justify-between w-full p-3 h-12 md:hidden"></div>
 			<div className="hidden md:block">
 				<SimplePageIntro

@@ -31,7 +31,7 @@ const PackagesPricingCard = ({amenities,title,per}) => {
                         </div>
                         <div className="flex flex-col space-y-3 justify-center items-center mt-4">
                             <p className="lg:text-3xl text-xl font-semibold">$500/{per}</p>
-                            <button className="lg;px-8 w-full py-2 text-black bg-skyBlue-normal font-semibold font-poppins rounded-lg">Book Your Slot</button>
+                            <button className="lg;px-8 w-full py-2 text-black bg-skyBlue-normal hover:bg-[#a9c6e6] font-semibold font-poppins rounded-lg">Book Your Slot</button>
                         </div>
                     </div>
             </div>

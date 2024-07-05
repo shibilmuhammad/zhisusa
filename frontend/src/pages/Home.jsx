@@ -8,10 +8,11 @@ import HomeWorkSection from "../components/HomeWorkSection";
 import HostEventIntro from "../components/HostEventIntro";
 import ParticipateEventIntro from "../components/ParticipateEventIntro";
 import HomeActivitySection from "../components/HomeActivitySection";
-
+import Header from '../components/Header';
 const Home = () => {
 	return (
 		<div className=" ">
+			 <Header />
 			<HomeHeroSection />
 			<HomeAboutSection />
 			<div className="md:px-24 p-4 space-y-3">

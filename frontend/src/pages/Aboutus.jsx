@@ -3,9 +3,11 @@ import SimplePageIntro from "../components/SimplePageIntro";
 import AboutusCard from "../components/AboutusCard";
 import { aboutSpecsData } from "../utils/aboutus";
 import { Link,ScrollLink } from "react-scroll";
+import Header from '../components/Header';
 const Aboutus = () => {
 	return (
 		<div>
+			 <Header />
 			<SimplePageIntro
 				data={{
 					thumb: "../images/tent.jpg",
