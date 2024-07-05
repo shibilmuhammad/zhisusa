@@ -21,6 +21,7 @@ import ParticipateEventIntro from './components/ParticipateEventIntro';
 import ParticipateEvents from './pages/ParticipateEvents';
 import MonthlyHaven from './pages/MonthlyHaven';
 import Yearly from './pages/Yearly';
+import Amenites from './pages/Amenites';
 
 
 
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/yearly",
         element: <Yearly />,
+      },
+      {
+        path: "/amenities",
+        element: <Amenites />,
       },
       
       
