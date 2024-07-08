@@ -60,7 +60,6 @@ export const allPackages = [
     features : [
       "Weekly Package Amenities +",
       "Cultural Activities",
-      "Recreational Activities",
       "Community Events"
     ]
   },
@@ -70,7 +69,7 @@ export const allPackages = [
     description : 'Commit to a year of tranquility and productivity. Enjoy continous access to all our amenities.',
     features : [
       "Monthly Package Amenities +",
-      "Unlimited Access on Private Work Space",
+      "Unlimited Access on Work Space",
       "Exclusive Benefits",
       
     ]

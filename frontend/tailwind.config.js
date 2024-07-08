@@ -1,8 +1,11 @@
+import keepPreset from "keep-react/preset";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "node_modules/keep-react/**/*.{js,jsx,ts,tsx}"
   ],
+  presets: [keepPreset],
   theme: {
     extend: {
       colors:{
@@ -34,12 +37,10 @@ module.exports = {
         futura: ['Futura', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
       },
-      backgroundImage: {
-        work_intro: "url('../public/images/work-intro.jpg')",
-        live_intro: "url('../public/images/live-intro.jpg')",
-        
-       
-      }
+      gridTemplateRows: {
+        // Custom row templates
+        'custom-layout': '1fr 1fr 0.5fr 1fr',
+      },
     },
   },
   plugins: [],
