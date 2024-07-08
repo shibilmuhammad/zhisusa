@@ -20,6 +20,10 @@ import Home from './pages/Home';
 import ParticipateEventIntro from './components/ParticipateEventIntro';
 import ParticipateEvents from './pages/ParticipateEvents';
 import MonthlyHaven from './pages/MonthlyHaven';
+import Yearly from './pages/Yearly';
+import Amenites from './pages/Amenites';
+import Accomodation from './pages/Accomodation';
+import Activities from './pages/Activities';
 
 
 
@@ -33,7 +37,7 @@ const router = createBrowserRouter([
         element: <Home/>,
       },
       {
-        path: "/gallary",
+        path: "/gallery",
         element: <Gallery />,
       },
       {
@@ -76,9 +80,27 @@ const router = createBrowserRouter([
       {
         path: "/monthlyhaven",
         element: <MonthlyHaven />,
-
       },
-      
+      {
+        path: "/yearly",
+        element: <Yearly />,
+      },
+      {
+        path: "/amenities",
+        element: <Amenites />,
+      },
+      {
+        path: "/accommodation",
+        element: <Accomodation/>,
+      },
+      {
+        path:"/activites",
+        element:<Activities />
+      },
+      {
+        path:"/bookspace",
+        element:<Works />
+      }
       
     ],
     errorElement: <Works />,

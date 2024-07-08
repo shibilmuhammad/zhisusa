@@ -4,10 +4,11 @@ import { workSpecsData } from '../utils/works'
 import SpecsCard from '../components/SpecsCard'
 import { eventsHostIntro, eventsSpecsData } from '../utils/events'
 import MobileStripedIntro from '../components/MobileStripedIntro'
-
+import Header from '../components/Header';
 const HostEvents = () => {
   return (
     <div>
+       <Header />
         <div className='hidden md:block'>
           <StripedIntro type={'host'} data={eventsHostIntro}/>
         </div>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import Header from '../components/Header';
 import SimplePageIntro from "../components/SimplePageIntro";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { MdDateRange } from "react-icons/md";
@@ -13,6 +13,7 @@ import EventRelatedCard from "../components/EventRelatedCard";
 const ParticipateEventDetails = () => {
 	return (
 		<div className="relative">
+			 <Header />
 			<SimplePageIntro
 				data={{
 					thumb: "../images/music.jpg",

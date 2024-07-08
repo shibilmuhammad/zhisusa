@@ -7,7 +7,7 @@ import animationData from "../lottie/success.json";
 import Lottie from "react-lottie";
 import { useNavigate } from "react-router-dom";
 import EventRelatedCard from "../components/EventRelatedCard";
-
+import Header from '../components/Header';
 const ParticipateEventBookingStatus = () => {
 	const navigate = useNavigate()
 	const defaultOptions = {
@@ -21,6 +21,7 @@ const ParticipateEventBookingStatus = () => {
 	const [filled, setFilled] = useState(false);
 	return (
 		<div className="h-[90vh] font-poppins">
+			 <Header />
 			<div className="bg-navyBlue-normal flex justify-between w-full p-3 h-12 md:hidden"></div>
 			<div className="hidden md:block">
 				<SimplePageIntro
