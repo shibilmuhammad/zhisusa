@@ -18,14 +18,14 @@ const HostEventIntro = () => {
 			</div>
 			<div className="grid grid-cols-2 mt-5 md:mt-16 gap-4 md:grid-cols-4 w-full md:px-8">
 				{eventHostCardsData.map((item) => (
-					<div className="relative rounded-3xl h-40 md:h-44">
+					<div className="relative rounded-3xl h-40 md:h-44 xl:h-60">
 						<img
 							className="absolute object-cover h-full w-full rounded-3xl z-0"
 							src={item.img}
 							alt="thumb"
 						/>
 						<div className="absolute bg-transparent p-8 w-full bg-gradient-to-t from-black  z-10 bottom-0 rounded-3xl"></div>
-						<span className="absolute z-30 bottom-3 left-3 text-white font-poppins">
+						<span className="absolute z-30 bottom-3 left-3 text-white font-poppins xl:text-xl">
 							{item.title}
 						</span>
 					</div>

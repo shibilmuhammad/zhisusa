@@ -15,9 +15,9 @@ const Home = () => {
 			 <Header />
 			<HomeHeroSection />
 			<HomeAboutSection />
-			<div className="md:px-24 p-4 space-y-3">
-                <h1 className="text-2xl font-poppins font-bold">Choose your Perfect &nbsp;<span className="text-PrimaryBlue-normal">Escape </span></h1>
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4  mt-5">
+			<div className="md:px-24 p-4 space-y-3 md:flex md:flex-col items-center gap-8 2xl:px-44 md:pb-12">
+                <h1 className="text-2xl font-poppins font-bold md:text-4xl">Choose your Perfect &nbsp;<span className="text-PrimaryBlue-normal">Escape </span></h1>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4  mt-5 md:gap-12 2xl:gap-24 2xl:gap-x-36">
 					{allPackages.map((item, id) => (
 						<PackageInfoCard data={item} id={id + 1} />
 					))}

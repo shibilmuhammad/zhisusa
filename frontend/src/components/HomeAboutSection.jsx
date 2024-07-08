@@ -4,8 +4,8 @@ import { FiArrowUpRight } from "react-icons/fi";
 const HomeAboutSection = () => {
 	const letters = ["Z", "H", "I", "S", "U", "S", "A"];
 	return (
-		<div className="p-4 relative">
-			<div className="space-y-10 ">
+		<div className="p-4 relative md:flex gap-10 md:px-24 md:h-[80vh] items-center 2xl:px-44">
+			<div className="space-y-10 md:hidden">
 				<div className="rounded-xl relative ">
 					<div className="absolute inset-0 z-10  h-full rounded-xl bg-black opacity-70"></div>
 					<video
@@ -37,8 +37,12 @@ const HomeAboutSection = () => {
 					))}
 				</div>
 			</div>
-			<div className="mt-5 space-y-4">
-				<p className="font-poppins text-skyBlue-dark_active">
+
+			<div className="mt-5 space-y-4 md:w-7/12 md:space-y-8 2xl:space-y-14">
+				<h1 className="text-7xl 2xl:text-8xl font-poppins font-extrabold text-PrimaryBlue-normal hidden md:block">
+					ZHISUSA
+				</h1>
+				<p className="font-poppins text-skyBlue-dark_active 2xl:w-5/6">
 					This proposal outlines the development of a retreat home on a 60-cent
 					property located in Chennai, overlooking the serene Alamparai
 					backwaters. The project is designed by a team of skillful architects
@@ -47,11 +51,20 @@ const HomeAboutSection = () => {
 					luxury and nature, providing an idyllic escape from the hustle and
 					bustle of city life.
 				</p>
-                <button className="border-PrimaryBlue-normal flex items-center gap-5 pl-8 justify-between font-poppins border-[1px] rounded-full ">
-                    <span className="text-PrimaryBlue-normal">Know More</span>
-            
-                    <FiArrowUpRight className=" rounded-full h-10 w-10 bg-PrimaryBlue-normal text-white p-2"/>
-                </button>
+				<button className="border-PrimaryBlue-normal flex items-center gap-5 pl-8 justify-between font-poppins border-[1px] rounded-full ">
+					<span className="text-PrimaryBlue-normal">Know More</span>
+
+					<FiArrowUpRight className=" rounded-full h-10 w-10 bg-PrimaryBlue-normal text-white p-2" />
+				</button>
+			</div>
+			<div className="hidden md:block md:w-5/12">
+				<div class="container">
+					<div class="letter-z">
+						<img src="../images/surfing.jpg" alt="Image1" />
+						
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	);
