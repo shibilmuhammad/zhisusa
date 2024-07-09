@@ -24,6 +24,7 @@ import Yearly from './pages/Yearly';
 import Amenites from './pages/Amenites';
 import Accomodation from './pages/Accomodation';
 import Activities from './pages/Activities';
+import BookRoom from './pages/BookRoom';
 
 
 
@@ -100,6 +101,10 @@ const router = createBrowserRouter([
       {
         path:"/bookspace",
         element:<Works />
+      },
+      {
+        path:"/bookroom",
+        element:<BookRoom />
       }
       
     ],
