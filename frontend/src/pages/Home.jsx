@@ -12,7 +12,7 @@ import Header from '../components/Header';
 const Home = () => {
 	return (
 		<div className=" ">
-			 <Header />
+			<Header />
 			<HomeHeroSection />
 			<HomeAboutSection />
 			<div className="md:px-24 p-4 space-y-3 md:flex md:flex-col items-center gap-8 2xl:px-44 md:pb-12">
