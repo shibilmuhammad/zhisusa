@@ -14,7 +14,8 @@ module.exports = {
           active : '#feddb7',
           normal_hover : '#e28314',
           dark_hover : '#97580d',
-          light : '#fff4e8'
+          light : '#fff4e8',
+          light_hover : '#dbeafa'
         },
         navyBlue: {
           normal: '#0c264c',

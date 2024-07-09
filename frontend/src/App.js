@@ -11,14 +11,16 @@ import Packages from "./pages/Packages";
 import ParticipateEvents from "./pages/ParticipateEvents";
 import WeeklyRetreat from "./pages/WeeklyRetreat";
 import Works from "./pages/Works";
+import { Provider } from "react-redux";
+import store from "./utils/store";
 
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
       
       <Outlet />
-    </div>
+    </Provider>
   );
 }
 
