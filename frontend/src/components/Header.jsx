@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { IoPerson } from "react-icons/io5";
 import { IoMenu } from "react-icons/io5";
 
-const Header = () => {
+const Header = ({bgColor}) => {
   return (
     <div>
-        <div className='flex items-center justify-between bg-transparent text-white font-poppins font-semibold px-6 lg:px-10 py-6 fixed top-0 z-50 w-full'>
+        <div className={` flex items-center justify-between bg-transparent ${bgColor=='white'? "text-black bg-white " : "text-white"}  font-poppins font-semibold px-6 lg:px-10 py-6 fixed top-0 z-50 w-full `}>
             <Link to={'/'} className='lg:text-2xl text-xl'>LOGO</Link>
             <div className='flex items-center  space-x-4 lg:space-x-10'>
                 <div className='lg:hidden'>LOGIN/JOIN</div>
-                <div className='text-2xl text-white lg:hidden'>
+                <div className='text-2xl  lg:hidden'>
                     <IoMenu  />
                 </div>
                
