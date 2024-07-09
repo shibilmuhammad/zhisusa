@@ -15,7 +15,7 @@ const BookRoom = () => {
     <div>
       <Header bgColor={"white"} />
       <div className="mt-16">
-        <BookRoomProgressCard />
+        <BookRoomProgressCard  active={1}/>
       </div>
       <div className="block lg:hidden">
         <RoomDeatilsModificationButton />
