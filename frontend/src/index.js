@@ -25,6 +25,7 @@ import Amenites from './pages/Amenites';
 import Accomodation from './pages/Accomodation';
 import Activities from './pages/Activities';
 import BookRoom from './pages/BookRoom';
+import ConfirmStay from './pages/ConfirmStay';
 
 
 
@@ -105,6 +106,10 @@ const router = createBrowserRouter([
       {
         path:"/bookroom",
         element:<BookRoom />
+      },
+      {
+        path:"/confirmstay",
+        element:<ConfirmStay />
       }
       
     ],
