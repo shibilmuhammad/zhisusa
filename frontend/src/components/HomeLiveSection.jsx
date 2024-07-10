@@ -12,12 +12,12 @@ const HomeLiveSection = () => {
 		<div className="  lg:relative bg-navyBlue-light w-full px-4 py-6 lg:py-0 lg:px-0 space-y-4 lg:space-y-0 lg:flex lg:h-[100vh] items-center">
 			<img className="lg:absolute h-full w-full z-0 hidden lg:block" src="../images/naturalresott.jpeg" alt="th" />
 			<div className="lg:absolute hidden lg:block inset-0 z-10 h-[100vh] bg-black opacity-70"></div>
-			<div className=" lg:w-full z-20 lg:px-16 lg:flex lg:flex-col gap-5 lg:gap-10 justify-center xl:w-5/6">
+			<div className=" lg:w-full z-20 lg:px-16 lg:flex lg:flex-col gap-5 lg:gap-10 space-y-3 lg:space-y-0 justify-center xl:w-5/6">
 				<div className="font-futura text-3xl flex flex-col font-bold lg:text-5xl">
 					<span className="text-PrimaryBlue-normal lg:text-white">Escape to Your</span>
 					<span className="lg:text-orange-normal"> Perfect Stay</span>
 				</div>
-				<p className="font-poppins text-navyBlue-normal lg:text-lg lg:text-white lg:w-9/12">
+				<p className="font-poppins text-navyBlue-normal text-sm lg:text-lg lg:text-white lg:w-9/12">
 					Discover a range of luxurious accommodations designed for your
 					ultimate comfort and relaxation. Choose from private villas, cozy
 					cottages, glamping tents, and more, all set in serene natural
