@@ -117,8 +117,8 @@ const HomeSearchCard = () => {
 						<DropdownContent className="">
 							{rooms?.map((item) => <RoomsQuantityCard data={item} />)}
 							
-							<button onClick={()=> dispatch(addRoom(rooms.length+1))} className="mt-4 flex flex-col text-white justify-center items-center w-full">
-								<span className="underline">Add More Rooms</span>
+							<button onClick={()=> dispatch(addRoom(rooms.length+1))} className="mt-4 flex flex-col dark:text-white justify-center items-center w-full">
+								<span className="underline ">Add More Rooms</span>
 							</button>
 						</DropdownContent>
 					</Dropdown>

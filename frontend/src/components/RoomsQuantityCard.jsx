@@ -16,15 +16,15 @@ const RoomsQuantityCard = ({ data }) => {
 		<div className="w-full space-y-3 mb-3">
 			<div className="flex font-poppins w-full justify-between items-center">
 				<div className="space-y-2 w-full">
-					<span className="dark:text-white">{data.name}</span>
-					<div className="bg-white h-[1px] w-full rounded-full" />
+					<span className="dark:text-white text-black">{data.name}</span>
+					<div className="dark:bg-white bg-black h-[1px] w-full rounded-full" />
 				</div>
 				{data.id > 1 && (
 					<IoClose
 						onClick={() => {
 							if (data.id > 1) dispatch(removeRoom({ id: data.id }));
 						}}
-						className="text-white text-xl"
+						className="dark:text-white text-black text-xl"
 					/>
 				)}
 			</div>
@@ -34,10 +34,10 @@ const RoomsQuantityCard = ({ data }) => {
 					<div className="flex items-center ">
 						<button
 							onClick={() => dispatch(decrementAdults({ id: data.id }))}
-							className="text-white bg-PrimaryBlue-normal text-base h-6 w-6 rounded-full flex items-center justify-center">
+							className="dark:text-white text-black bg-PrimaryBlue-normal text-base h-6 w-6 rounded-full flex items-center justify-center">
 							<FaMinus />
 						</button>
-						<span className="text-xl dark:text-white w-8 text-center">
+						<span className="text-xl dark:text-white text w-8 text-center">
 							{data.adults}
 						</span>
 						<button
