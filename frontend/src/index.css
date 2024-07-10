@@ -3,55 +3,73 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+		"Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
 }
-.strokeText{
-  -webkit-text-stroke: 0.5px #fff;
-  -webkit-text-fill-color: transparent;
+.strokeText {
+	-webkit-text-stroke: 0.5px #fff;
+	-webkit-text-fill-color: transparent;
 }
 .custom-calendar.rmdp-wrapper,
 .rmdp-container .custom-calendar.ep-arrow::after {
-  height: 400px;
-  width: 400px;
-  font-size: 56px;
+	height: 400px;
+	width: 400px;
+	font-size: 56px;
 }
-.trapezoid{
-  clip-path: polygon(31% 0, 100% 0, 100% 100%, 0% 100%);
-
+.trapezoid {
+	clip-path: polygon(31% 0, 100% 0, 100% 100%, 0% 100%);
 }
-.parellelogram{
-  clip-path: polygon(44% 0, 100% 0, 56% 100%, 0% 100%);
+.parellelogram {
+	clip-path: polygon(44% 0, 100% 0, 56% 100%, 0% 100%);
 }
 .container {
-  position: relative;
-  width: 450px;
-  height: 450px;
+	position: relative;
+	width: 450px;
+	height: 450px;
 }
 
 .letter-z {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  clip-path: polygon(0 0, 35% 0%, 100% 0, 100% 25%, 63% 72%, 100% 72%, 100% 100%, 0 100%, 52% 26%, 0 26%);
-  display: flex;
-  flex-direction: column;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	clip-path: polygon(
+		0 0,
+		35% 0%,
+		100% 0,
+		100% 25%,
+		63% 72%,
+		100% 72%,
+		100% 100%,
+		0 100%,
+		52% 26%,
+		0 26%
+	);
+	display: flex;
+	flex-direction: column;
 }
 
 .letter-z img {
-  flex: 1;
-  width: 100%;
-  height: 33.33%;
-  object-fit: cover;
+	flex: 1;
+	width: 100%;
+	height: 33.33%;
+	object-fit: cover;
 }
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
+.glass {
+	/* From https://css.glass */
+background: rgba(255, 255, 255, 0.15);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(3.1px);
+-webkit-backdrop-filter: blur(3.1px);
+border: 1px solid rgba(255, 255, 255, 0.24);
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");

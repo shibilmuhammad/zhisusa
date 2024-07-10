@@ -23,22 +23,22 @@ const HomeSearchCard = () => {
 		setSelectedTab(title)
 	}
 	return (
-		<div className="hidden z-20 border-[1px] border-white md:block backdrop-blur-md bg-white/30 p-3 rounded-lg w-5/6 h-max 2xl:w-9/12">
+		<div className="hidden z-20 border-[0.5px] border-white md:block glass p-3 rounded-3xl xl:w-8/12 h-max">
 			<div className="flex w-full gap-20 px-8 h-12">
 				{tabs.map((item,index) => (
 					<>
-						<button onClick={()=>tabChange(item?.title)} className={`flex items-center gap-5 justify-center px-8 w-full  ${item.title === selectedTab ? 'bg-PrimaryBlue-normal':'bg-none'} p-2 rounded-lg text-white font-poppins`}>
-							<item.icon className="text-2xl" />
-							<span className="text-lg">{item?.title}</span>
+						<button onClick={()=>tabChange(item?.title)} className={`flex items-center gap-5 justify-center px-6 w-full  ${item.title === selectedTab ? 'bg-PrimaryBlue-normal':'bg-none'} p-1 rounded-lg text-white font-poppins`}>
+							<item.icon className="text-xl" />
+							<span className="">{item?.title}</span>
 						</button>
 						{index < 2 && <div className="h-full w-[2px] bg-white"></div>}
 						
 					</>
 				))}
 			</div>
-			<div className="rounded-lg bg-white p-3 w-full mt-4 flex px-6 h-32 gap-5">
-				<div className="font-poppins space-y-3 flex flex-col items-center w-full">
-					<h2 className="text-lg font-bold">Accommodation</h2>
+			<div className="rounded-3xl bg-white p-2 w-full mt-2 flex px-4 h-max gap-3">
+				<div className="font-poppins space-y-2 flex flex-col items-center w-full">
+					<h2 className=" font-bold">Accommodation</h2>
 					<div className="flex gap-3 rounded-lg border-[1px] border-PrimaryBlue-normal p-3 px-6 ">
 						<LuBedDouble className="text-2xl text-PrimaryBlue-normal " />
 						<select
@@ -52,9 +52,9 @@ const HomeSearchCard = () => {
 						</select>
 					</div>
 				</div>
-				<div className="h-full w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
-				<div className="font-poppins space-y-3 flex flex-col items-center w-full">
-					<h2 className="text-lg font-bold">Check In & Check Out</h2>
+				<div className="h-24 w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
+				<div className="font-poppins space-y-2 flex flex-col items-center w-full">
+					<h2 className="font-bold">Check In & Check Out</h2>
 
 					<div className="flex gap-3 rounded-lg border-[1px] border-PrimaryBlue-normal px-6 ">
 						<div className="dark:bg-white">
@@ -71,7 +71,7 @@ const HomeSearchCard = () => {
 												{format(selected?.to ?? new Date(), "LLL dd, y")}
 											</>
 										) : (
-											<span>Select Check In & Check Out Date</span>
+											<span>Select Dates</span>
 										)}
 									</Button>
 								</PopoverTrigger>
@@ -88,9 +88,9 @@ const HomeSearchCard = () => {
 						</div>
 					</div>
 				</div>
-				<div className="h-full w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
-				<div className="font-poppins space-y-3 flex flex-col items-center w-full">
-					<h2 className="text-lg font-bold">Quests & Rooms</h2>
+				<div className="h-24 w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
+				<div className="font-poppins space-y-2 flex flex-col items-center w-full">
+					<h2 className=" font-bold">Quests & Rooms</h2>
 
 					<Dropdown className="w-max " placement="top">
 						<DropdownAction className="hover:bg-white p-3 bg-none bg-inherit border-[1px] border-PrimaryBlue-normal flex items-center gap-5">
@@ -102,17 +102,17 @@ const HomeSearchCard = () => {
 						</DropdownContent>
 					</Dropdown>
 				</div>
-				<div className="h-full w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
-				<div className="font-poppins space-y-3 flex flex-col">
-					<h2 className="text-lg font-bold">Availability</h2>
-					<button className="flex gap-3 rounded-lg bg-PrimaryBlue-normal p-3 px-6 text-white w-max">
+				<div className="h-24 w-[2px] bg-PrimaryBlue-normal rounded-full"></div>
+				<div className="font-poppins space-y-2 flex flex-col items-center">
+					<h2 className="font-bold">Availability</h2>
+					<button className="flex gap-3 rounded-lg bg-PrimaryBlue-normal p-3 px-6 text-white w-max items-center">
 						<CiSearch className="text-2xl " />
-						<span className="font-poppins "> Search</span>
+						<span className="font-poppins text-sm"> Search</span>
 					</button>
 				</div>
 			</div>
 		</div>
 	);
-};
+}; 
 
 export default HomeSearchCard;
