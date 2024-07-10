@@ -5,7 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 const PriceCard = () => {
   return (
-    <div className="lg:w-4/12 "> 
+    <div className="lg:w-4/12 font-poppins"> 
       <div className="  px-3 py-4 bg-[#F4F4F4] border-[#666666] border-[.2px] rounded-lg mt-3 hidden lg:block">
         <div className="border-b-[.2px] border-b-[#666666]">
           <h1 className="text-2xl">Your Stay Details</h1>

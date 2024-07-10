@@ -127,7 +127,7 @@ export const packageSelected = [
 		count: 0,
 	},
 	{
-		name: "Bonfire Gathering",
+		name: "Bonfire Gatherings",
 		count: 0,
 	},
 	{
@@ -183,7 +183,7 @@ export const packageSelected = [
 		count: 0,
 	},
 	{
-		name: "Stargazing",
+		name: "Startgazing",
 		count: 0,
 	},
 ];

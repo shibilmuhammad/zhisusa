@@ -13,8 +13,12 @@ import {
 	incrementCount,
 	resetCount,
 } from "../utils/packageSlice";
+import useIsMobile from "../hooks/useIsMobile";
+
 
 const PersonalizeAccordion = ({ type }) => {
+	const [desktop,setDesktop] = useState(false)
+	const isMobile = useIsMobile()
 	const data = useSelector((state) => state?.package?.data);
 	const dispatch = useDispatch();
 	const list = roomPersonalize.filter((item) => item.type === type);
@@ -44,16 +48,18 @@ const PersonalizeAccordion = ({ type }) => {
 					id={``}
 					className={`${
 						selectedPackage === item.category
-							? "bg-[#F4F4F4] rounded-lg border-[1px] border-skyBlue-dark_active pb-4 px-3"
+							? "bg-[#F4F4F4] md:bg-white md:rounded-none md:border-none rounded-lg border-[1px] border-skyBlue-dark_active pb-4 px-3"
 							: "bg-white"
 					}`}>
 					<div
-						onClick={() => openAccordion(index)}
+						onClick={() => {
+							if(isMobile) openAccordion(index)
+						}}
 						className="flex cursor-pointer justify-between w-full p-2 ">
-						<span className="font-bold">
+						<span className="font-bold md:text-lg">
 							{index + 1}. {item.category}
 						</span>
-						<button>
+						<button className="md:hidden">
 							{selectedPackage === list[index].category ? (
 								<MdOutlineKeyboardArrowUp className="text-2xl" />
 							) : (
@@ -62,14 +68,14 @@ const PersonalizeAccordion = ({ type }) => {
 						</button>
 					</div>
 
-					{item.category === selectedPackage && (
-						<div className="">
+					{(item.category === selectedPackage || !isMobile) && (
+						<div className="md:flex">
 							{item?.subList?.map((item, index) => (
-								<div className="space-y-5">
+								<div className="space-y-5 ">
 									<div
 										className={`${
 											data.find((pkg) => pkg.name === item).count > 0
-												? "border-[1px] mb-3 border-gray-300 rounded-lg w-max py-2"
+												? "border-[1px] mb-3 border-gray-300 rounded-lg w-max py-2 md:mr-3"
 												: ""
 										} space-y-2`}>
 										<div className="flex gap-2 items-center px-4 my-2">
@@ -92,7 +98,7 @@ const PersonalizeAccordion = ({ type }) => {
 
 											<span>{item}</span>
 										</div>
-										{data.find((pkg) => pkg.name === item).count > 0 && (
+										{data.find((pkg) => pkg.name === item).count > 0 && !desktop &&(
 											<div className="flex items-center gap-5 font-poppins w-full px-4">
 												<span className="text-sm text-gray-500">Guests</span>
 												<div className="flex gap-2 items-center">
