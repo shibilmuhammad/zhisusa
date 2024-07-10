@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const RoomDetailsCard = () => {
+  const navigate = useNavigate()
   return (
     <div className="w-full lg:w-8/12">
       <div className="p-2 mt-4 m-2 border-[.2px] border-[#666666]   bg-white rounded-lg shadow-2xl  lg:flex lg:space-x-3">
@@ -53,7 +55,7 @@ const RoomDetailsCard = () => {
               <p className="font-medium text-sm">Per Night</p>
               <p className="text-sm text-[#666666]">Excluding Taxes and Fees</p>
             </div>
-            <button className="w-full flex justify-center bg-[#E28314] text-white mt-4 py-2 rounded-md font-semibold text-lg">
+            <button onClick={() => navigate('/personalize')} className="w-full flex justify-center bg-[#E28314] text-white mt-4 py-2 rounded-md font-semibold text-lg">
               Book Now
             </button>
             <p className="text-sm my-2">

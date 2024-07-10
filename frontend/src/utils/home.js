@@ -52,3 +52,26 @@ export const sliderData = [
         title : 'Explore'
     },
 ]
+export const textFormat = [
+    {
+        type : 'Work',
+        title : 'Work Type',
+        date : 'Booking Duration',
+        count : 'Number of People',
+        list : ["Private Office","Conference Room","Queit Zone","Co-working Space"]
+    },
+    {
+        type : 'Live',
+        title : 'Accomodation',
+        date : 'Check in & Checkout',
+        count : 'Guests & Rooms',
+        list : ["Private Villa","Tents","View Suit Rooms","Tree House Suites"]
+    },
+    {
+        type : 'Leisure',
+        title : 'Type',
+        date : 'Booking Duration',
+        count : 'Number of People',
+        list : ["Events","Activities"]
+    },
+]

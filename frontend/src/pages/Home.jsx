@@ -9,10 +9,12 @@ import HostEventIntro from "../components/HostEventIntro";
 import ParticipateEventIntro from "../components/ParticipateEventIntro";
 import HomeActivitySection from "../components/HomeActivitySection";
 import Header from '../components/Header';
+import AvailabilitySideBar from "../components/AvailabilitySideBar";
 const Home = () => {
 	return (
 		<div className=" ">
 			<Header />
+			<AvailabilitySideBar/>
 			<HomeHeroSection />
 			<HomeAboutSection />
 			<div className="md:px-24 p-4 space-y-3 md:flex md:flex-col items-center gap-8 2xl:px-44 md:pb-12">
