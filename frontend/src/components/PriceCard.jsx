@@ -43,10 +43,7 @@ const PriceCard = () => {
             <RiArrowDropDownLine className="text-3xl font-thin text-[#555555]" />
           </div>
           <div className="flex  space-x-5 mt-2">
-            <div className="flex items-center space-x-1 underline text-[#333333] cursor-pointer">
-              <MdEdit />
-              <p>Edit</p>
-            </div>
+         
             <div className="flex items-center space-x-1 underline text-[#333333] cursor-pointer">
               <MdDelete className="text-xl" />
               <p>Remove</p>
