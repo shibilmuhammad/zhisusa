@@ -125,11 +125,7 @@ const ConfirmStayForm = () => {
           </div>
         </div>
 
-        <div className="px-4  lg:flex justify-end">
-          <button className="w-full lg:w-fit lg:px-5 justify-center items-center py-2 bg-orange-normal text-white rounded-lg font-medium">
-            Confirm Stay
-          </button>
-        </div>
+        
       </form>
     </div>
   );
