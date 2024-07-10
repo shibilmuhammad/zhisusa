@@ -9,7 +9,7 @@ import { accomodationSpecsData } from "../utils/accomodation";
 
 const HomeLiveSection = () => {
 	return (
-		<div className="xl:gap-10 bg-navyBlue-light w-full px-4 py-6 space-y-4 md:flex md:h-[100vh] items-center">
+		<div className="xl:gap-10 bg-gray-50 w-full px-4 py-6 space-y-4 md:flex md:h-[100vh] items-center">
 			<div className="md:w-full md:px-12 md:flex md:flex-col gap-5 justify-center xl:w-5/6">
 				<div className="font-futura text-3xl flex flex-col font-bold md:text-5xl">
 					<span className="text-PrimaryBlue-normal">Escape to Your</span>
