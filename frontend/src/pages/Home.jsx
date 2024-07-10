@@ -9,9 +9,11 @@ import HostEventIntro from "../components/HostEventIntro";
 import ParticipateEventIntro from "../components/ParticipateEventIntro";
 import HomeActivitySection from "../components/HomeActivitySection";
 import Header from '../components/Header';
+import { Sidebar } from "flowbite-react";
 const Home = () => {
 	return (
 		<div className=" ">
+
 			<Header />
 			<HomeHeroSection />
 			<HomeAboutSection />

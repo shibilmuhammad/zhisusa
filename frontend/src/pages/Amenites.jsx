@@ -3,7 +3,7 @@ import { amenitiesData } from "../utils/ameniities";
 import AmenitiesCard from "../components/AmenitiesCard";
 import FullScreenPage from "../components/FullScreenPage";
 import Header from "../components/Header";
-
+import SideBar  from "../components/SideBar";
 const Amenites = () => {
   return (
     <div className="">

@@ -10,12 +10,10 @@ const PackagesButton = ({ activeButton }) => {
   const handleMenu = () => {
     setIsPopupVisible(!isPopupVisible);
   };
-
   const handleClickOutside = (event) => {
     if(!popupContainer.current.contains(event.target) ){
       setIsPopupVisible(false)
     }
-    
   };
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
