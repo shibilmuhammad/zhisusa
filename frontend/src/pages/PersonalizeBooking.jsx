@@ -11,7 +11,7 @@ const PersonalizeBooking = () => {
 		<div>
 			<Header bgColor={"white"} />
 			<div className="mt-16">
-				<BookRoomProgressCard />
+				<BookRoomProgressCard active={2} />
 			</div>
 			<div className="md:hidden">
 				<RoomDeatilsModificationButton />

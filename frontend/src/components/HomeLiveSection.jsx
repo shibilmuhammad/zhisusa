@@ -9,39 +9,41 @@ import { accomodationSpecsData } from "../utils/accomodation";
 
 const HomeLiveSection = () => {
 	return (
-		<div className="xl:gap-10 bg-navyBlue-light w-full px-4 py-6 space-y-4 md:flex md:h-[100vh] items-center">
-			<div className="md:w-full md:px-12 md:flex md:flex-col gap-5 justify-center xl:w-5/6">
-				<div className="font-futura text-3xl flex flex-col font-bold md:text-5xl">
-					<span className="text-PrimaryBlue-normal">Escape to Your</span>
-					<span> Perfect Stay</span>
+		<div className="  lg:relative bg-navyBlue-light w-full px-4 py-6 lg:py-0 lg:px-0 space-y-4 lg:space-y-0 lg:flex lg:h-[100vh] items-center">
+			<img className="lg:absolute h-full w-full z-0 hidden lg:block" src="../images/naturalresott.jpeg" alt="th" />
+			<div className="lg:absolute hidden lg:block inset-0 z-10 h-[100vh] bg-black opacity-70"></div>
+			<div className=" lg:w-full z-20 lg:px-16 lg:flex lg:flex-col gap-5 lg:gap-10 justify-center xl:w-5/6">
+				<div className="font-futura text-3xl flex flex-col font-bold lg:text-5xl">
+					<span className="text-PrimaryBlue-normal lg:text-white">Escape to Your</span>
+					<span className="lg:text-orange-normal"> Perfect Stay</span>
 				</div>
-				<p className="font-poppins text-navyBlue-normal md:text-lg">
+				<p className="font-poppins text-navyBlue-normal lg:text-lg lg:text-white lg:w-9/12">
 					Discover a range of luxurious accommodations designed for your
 					ultimate comfort and relaxation. Choose from private villas, cozy
 					cottages, glamping tents, and more, all set in serene natural
 					surroundings. Whether you seek solitude or adventure, find your
 					perfect escape here.
 				</p>
-				<div className="w-full pb-5 hidden md:block">
-					<button className="bg-PrimaryBlue-normal rounded-full px-4 p-2 font-poppins text-white flex items-center justify-between w-max gap-6">
+				<div className="w-full pb-5 hidden lg:block">
+					<button className="bg-PrimaryBlue-normal lg:bg-transparent lg:border-[1px] lg:border-r-white rounded-full px-4 p-2 font-poppins text-white flex items-center justify-between w-max gap-6 h-max">
 						<span>Discover More</span>
 						<GoArrowRight className="text-2xl " />
 					</button>
 				</div>
 			</div>
 
-			<div className="md:w-full xl:w-5/6">
-				<div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:grid-rows-custom-layout">
+			<div className="lg:w-full xl:w-5/6 lg:z-20 lg:pr-16">
+				<div className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:grid-rows-custom-layout">
 					{accomodationSpecsData.map((item, index) => (
 						<div
-							className={`rounded-xl relative h-48 md:h-[12rem]  ${
+							className={`rounded-xl relative h-48 lg:h-[12rem]  ${
 								index === 0
-									? "md:col-start-1 md:col-span-1 md:row-start-1 md:row-span-1 "
+									? "lg:col-start-1 lg:col-span-1 lg:row-start-1 lg:row-span-1 "
 									: index === 1
-									? "md:col-start-2 md:col-span-1 md:row-start-1 md:row-span-2 md:h-[24.6rem]"
+									? "lg:col-start-2 lg:col-span-1 lg:row-start-1 lg:row-span-2 lg:h-[24.6rem]"
 									: index === 2
-									? "md:col-start-1 md:col-span-1 md:row-start-2 md:row-span-1"
-									: "md:col-start-1 md:col-span-2 md:row-start-3 md:row-span-3 md:h-[16rem]"
+									? "lg:col-start-1 lg:col-span-1 lg:row-start-2 lg:row-span-1"
+									: "lg:col-start-1 lg:col-span-2 lg:row-start-3 lg:row-span-3 lg:h-[16rem]"
 							} `}>
 							<img
 								className="absolute h-full w-full object-cover rounded-xl z-0"
@@ -60,7 +62,7 @@ const HomeLiveSection = () => {
 				</div>
 			</div>
 
-			<div className="w-full px-20 pb-5 md:hidden">
+			<div className="w-full px-20 pb-5 lg:hidden">
 				<button className="bg-PrimaryBlue-normal rounded-full px-4 p-2 font-poppins text-white flex items-center justify-between w-full">
 					<span>Discover More</span>
 					<GoArrowRight className="text-2xl " />

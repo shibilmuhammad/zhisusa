@@ -14,15 +14,15 @@ const HomeHeroSection = () => {
 			/>
 			<div className=" z-20 flex flex-col gap-5 md:gap-0 justify-between md:justify-center items-center h-[40vh]  px-6 md:px-24 md:items-center">
 				<div className="space-y-3 ">
-					<h3 className="text-orange-normal text-center text-xl md:text-3xl font-poppins font-medium">
+					<h3 className="text-orange-normal text-center text-xl lg:text-xl font-poppins font-medium">
 						Work, Live, and Leisure
 					</h3>
-					<h1 className="text-white font-futura text-3xl md:text-5xl text-center font-extrabold md:text-center ">
+					<h1 className="text-white font-futura text-3xl lg:text-4xl text-center font-extrabold md:text-center ">
 						Discover Your Oasis of Calm
 					</h1>
 				</div>
 
-				<span className="text-white font-poppins text-center mt-10 md:text-2xl md:w-4/6">
+				<span className="text-white font-poppins text-center mt-10 lg:text-lg md:w-4/6">
 					Work, Live, and Leisure in Harmony - Tailored Experiences for Every
 					Lifestyle
 				</span>
