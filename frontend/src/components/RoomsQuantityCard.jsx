@@ -34,7 +34,7 @@ const RoomsQuantityCard = ({ data }) => {
 					<div className="flex items-center ">
 						<button
 							onClick={() => dispatch(decrementAdults({ id: data.id }))}
-							className="dark:text-white text-black bg-PrimaryBlue-normal text-base h-6 w-6 rounded-full flex items-center justify-center">
+							className="text-white bg-PrimaryBlue-normal text-base h-6 w-6 rounded-full flex items-center justify-center">
 							<FaMinus />
 						</button>
 						<span className="text-xl dark:text-white text w-8 text-center">
