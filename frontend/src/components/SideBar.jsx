@@ -25,7 +25,7 @@ const SideBar = ({setOpen ,open}) => {
     
 
   return (
-    <div className={`h-screen ${open?"translate-x-0":"translate-x-full" } transition-transform duration-500 w-full bg-white  fixed  z-[9999] `}>
+    <div className={`h-screen ${open?"translate-x-0":"translate-x-full" } transition-transform duration-500 w-full bg-white top-0  fixed  z-[9999] `}>
       <div className="flex items-center  justify-between px-4 py-4 bg-navyBlue-normal text-white">
         <p className="font-bold text-lg">LOGO</p>
         <div className="flex items-center space-x-5">
