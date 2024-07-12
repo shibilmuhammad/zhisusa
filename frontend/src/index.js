@@ -29,9 +29,9 @@ import BookRoom from './pages/BookRoom';
 import ConfirmStay from './pages/ConfirmStay';
 import PersonalizeBooking from './pages/PersonalizeBooking';
 
-import Subcategories from './components/Admin/Subcategories';
 
 import ActivityDetailsMob from './pages/ActivityDetailsMob';
+import Categories from './pages/Admins/Categories';
 
 
 
@@ -125,7 +125,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/admin",
-        element:<Subcategories />
+        element:<Categories />
       },
       {path:"/activityDetails",
         element:<ActivityDetailsMob/>
