@@ -19,10 +19,10 @@ const ConfirmStay = () => {
       </div>
       <div className="flex lg:space-x-8 lg:px-10 lg:pt-3">
         <ConfirmStayForm />
-        <div className="flex flex-col w-4/12">
+        <div className="flex flex-col lg:w-4/12">
 					<PriceCard  />
 
-					<button onClick={() => navigate('/confirmstay')} className="w-full lg:mt-6 lg:w-fit lg:px-5 justify-center items-center py-2 bg-orange-normal text-white rounded-lg font-medium">
+					<button onClick={() => navigate('/confirmstay')} className="w-full hidden lg:block lg:mt-6 lg:w-fit lg:px-5 justify-center items-center py-2 bg-orange-normal text-white rounded-lg font-medium">
 						Confirm Stay
 					</button>
 				</div>
