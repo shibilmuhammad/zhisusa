@@ -1,9 +1,9 @@
-import React from "react";
-import { IoIosCloseCircle } from "react-icons/io";
+import React from 'react'
+import { IoIosCloseCircle } from 'react-icons/io'
 
-const CategoriesEditPopup = ({setShowEdit}) => {
-	return (
-		<div
+const CategoriesAddPopup = ({setShowAdd}) => {
+  return (
+    <div
 			class="font-poppins fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.3)]"
 			id="categoryEditPopup">
 			<form
@@ -74,12 +74,12 @@ const CategoriesEditPopup = ({setShowEdit}) => {
 				</div>
 				<button
 					class="absolute -top-2 cursor-pointer right-2 text-3xl"
-					onClick={()=> setShowEdit(false)}>
+					onClick={()=> setShowAdd(false)}>
 					<IoIosCloseCircle/>
 				</button>
 			</form>
 		</div>
-	);
-};
+  )
+}
 
-export default CategoriesEditPopup;
+export default CategoriesAddPopup

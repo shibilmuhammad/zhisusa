@@ -1,29 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
-import { MdDashboard } from "react-icons/md";
-import { MdBedroomParent } from "react-icons/md";
-import { MdSurfing } from "react-icons/md";
-import { GiOfficeChair } from "react-icons/gi";
-import { MdCategory } from "react-icons/md";
-import { BsCake2Fill } from "react-icons/bs";
-import { FaMusic } from "react-icons/fa6";
-import { FaClipboardList } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { MdAdd } from "react-icons/md";
+import SideBar from "../../components/Admin/SideBar";
+import DeletePopup from "../../components/Admin/DeletePopup";
+import CategoriesEditPopup from "../../components/Admin/CategoriesEditPopup";
+import CategoriesAddPopup from "../../components/Admin/CategoriesAddPopup";
+
 const Categories = () => {
-  const sideBar = [
-    { title: "Dashboard", src: "", icon: MdDashboard },
-    { title: "Bookings", src: "", icon: FaClipboardList },
-    { title: "Categories", src: "", icon: MdCategory },
-    { title: "Live Types", src: "", icon: MdBedroomParent },
-    { title: "Work Types", src: "", icon: GiOfficeChair },
-    { title: "Activity Types", src: "", icon: MdSurfing },
-    { title: "Event Types", src: "", icon: BsCake2Fill },
-    { title: "Zhisusa Events", src: "", icon: FaMusic },
-  ];
+  const [showDelete,setShowDelete] = useState(false)
+  const [showEdit,setShowEdit] = useState(false)
+  const [showAdd,setShowAdd] = useState(false)
+  const openDelete = (id) => {
+    setShowDelete(true)
+  }
+  const openEdit = (id) => {
+    setShowEdit(true)
+  }
   return (
     <div className="bg-[#F2F2F2] min-h-screen">
+      {showDelete && <DeletePopup type="product" setShowDelete={setShowDelete}/> }
+      {showEdit && <CategoriesEditPopup setShowEdit={setShowEdit}/>}
+      {showAdd && <CategoriesAddPopup setShowAdd={setShowAdd}/>}
       <div className="h-16 bg-PrimaryBlue-normal flex justify-between px-10 items-center">
         <a href="">
           <img className="w-40" src="/images/Logo.png" alt="" />
@@ -33,22 +30,10 @@ const Categories = () => {
         </a>
       </div>
       <main className="px-10 flex">
-        <div className="left mt-28 pr-10  space-y-4 border-r-[.1px] border-gray-400 w-fit pt-1 pb-1 pr-2 ">
-          {sideBar.map((item) => (
-            <Link
-              to={item.src}
-              className="flex items-center  whitespace-nowrap space-x-2 cursor-pointer hover:bg-gray-200 rounded-sm px-3 py-3"
-            >
-              <item.icon />
-              <h2 className="text-base font-semibold text-[#7E7878] ">
-                {item.title}
-              </h2>
-            </Link>
-          ))}
-        </div>
-
-        <div className="right mt-20 ml-16 w-full ">
-          <div className="searchandsort items-center flex justify-between mb-3">
+        
+        <SideBar/>
+        <div className="right mt-20 ml-16 w-full">
+          <div className="searchandsort flex justify-between">
             <div className="flex space-x-7">
               <div className="flex space-x-7">
                 <form
@@ -144,8 +129,8 @@ const Categories = () => {
                 </td>
                 <td className="py-2">
                   <div className="flex space-x-4">
-                    <MdEdit className="text-PrimaryBlue-normal text-lg cursor-pointer" />
-                    <MdDelete className="text-red-600 text-lg cursor-pointer" />
+                    <MdEdit onClick={() => openEdit(1)} className="text-PrimaryBlue-normal text-lg cursor-pointer" />
+                    <MdDelete onClick={() => openDelete(1)} className="text-red-600 text-lg cursor-pointer" />
                   </div>
                 </td>
               </tr>
