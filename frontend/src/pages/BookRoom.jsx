@@ -44,7 +44,7 @@ const BookRoom = () => {
       </div>
      <div className="flex lg:space-x-8 lg:px-10 lg:pt-3">
         <RoomDetailsCard />
-        <div className="w-4/12">
+        <div className="lg:w-4/12">
         <PriceCard />
         </div>
      </div>

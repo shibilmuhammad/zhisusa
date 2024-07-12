@@ -28,6 +28,7 @@ import BookRoom from './pages/BookRoom';
 
 import ConfirmStay from './pages/ConfirmStay';
 import PersonalizeBooking from './pages/PersonalizeBooking';
+import Subcategories from './components/Admin/Subcategories';
 
 
 
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
       {
         path:"/personalize",
         element:<PersonalizeBooking />
+      },
+      {
+        path:"/admin",
+        element:<Subcategories />
       }
       
     ],
