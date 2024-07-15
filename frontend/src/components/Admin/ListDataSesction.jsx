@@ -5,10 +5,8 @@ import DeletePopup from "./DeletePopup";
 import CategoriesEditPopup from "./CategoriesEditPopup";
 import CategoriesAddPopup from "./CategoriesAddPopup";
 
-const ListDataSesction = () => {
-	const [showDelete, setShowDelete] = useState(false);
-	const [showEdit, setShowEdit] = useState(false);
-	const [showAdd, setShowAdd] = useState(false);
+const ListDataSesction = ({setShowAdd,setShowDelete,setShowEdit,setRowID}) => {
+
 
 	const openDelete = (id) => {
 		setShowDelete(true);
@@ -18,11 +16,7 @@ const ListDataSesction = () => {
 	};
 	return (
 		<div className="right mt-20 ml-16 w-full">
-			{showDelete && (
-				<DeletePopup type="product" setShowDelete={setShowDelete} />
-			)}
-			{showEdit && <CategoriesEditPopup setShowEdit={setShowEdit} />}
-			{showAdd && <CategoriesAddPopup setShowAdd={setShowAdd} />}
+
 			<div className="searchandsort flex justify-between">
 				<div className="flex space-x-7">
 					<div className="flex space-x-7">

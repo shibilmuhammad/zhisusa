@@ -1,7 +1,7 @@
 import React from 'react'
 import { TiWarningOutline } from "react-icons/ti";
 
-const DeletePopup = ({type,setShowDelete}) => {
+const DeletePopup = ({type,setShowDelete,id}) => {
   return (
     <div class="fixed inset-0 flex font-poppins justify-center items-center bg-[rgba(0,0,0,0.3)]" id="productDelete">
         <form action="/admin/products/delete" method="post" class=" bg-white rounded-lg w-fit  py-3 px-5  text-sm ">

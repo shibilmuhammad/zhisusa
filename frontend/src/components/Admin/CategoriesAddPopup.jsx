@@ -1,25 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IoIosCloseCircle } from 'react-icons/io'
+import axios from 'axios'
 
 const CategoriesAddPopup = ({setShowAdd}) => {
+	const [formData, setFormData] = useState({
+		title: '',
+		status: 'Active',
+		main : 'Select'
+	  });
+	  const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+		  ...formData,
+		  [name]: value
+		});
+	  };
+	  const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (validateForm()) {
+		  try {
+			const response = await axios.post('http://localhost:8080/api/admin/addCategory', formData);
+			setShowAdd(false)
+		  } catch (error) {
+			console.error('Error submitting form:', error);
+		  }
+		}
+	  };
+	
+	  const validateForm = () => {
+		if (!formData.title || formData.main === 'Select') {
+		  return false;
+		}
+		return true;
+	  };
   return (
     <div
 			class="font-poppins fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.3)]"
 			id="categoryEditPopup">
 			<form
-				action="/admin/category/update"
-				id="CategoryEditsubmit"
-				method="post"
-				enctype="multipart/form-data"
+				onSubmit={handleSubmit}
 				class=" bg-white rounded-lg w-fit  py-8 px-5 relative space-y-3 text-sm pr-8 pt-10">
 				<div class="space-x-10 flex justify-between items-center">
 					<label for="">Category</label>
 					<div>
 						<input
-							
+							onChange={handleChange}
 							type="text"
-							name="categoryName"
-							id="categoryEditName"
+							name="title"
+							value={formData.title}
 							class="px-2 border-gray-400 border-[.1px] w-80 p-2 rounded-lg "
 						/>
 						<span
@@ -29,15 +57,31 @@ const CategoriesAddPopup = ({setShowAdd}) => {
 						</span>
 					</div>
 				</div>
+				<div class="space-x-16 flex w-full items-center">
+					<label for="">Main Category</label>
+					<select
+						class="border-gray-400 border-[.1px] w-4/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+						name="main"
+						onChange={handleChange}
+						value={formData.main}
+						>
+						<option value="Select" selected disabled>Select</option>
+						<option value="Live">Live</option>
+						<option value="Work" >Work</option>
+						<option value="Liesure">Liesure</option>
+					</select>
+				</div>
 
 				<div class="space-x-16 flex w-full items-center">
 					<label for="">Status</label>
 					<select
 						class="border-gray-400 border-[.1px] w-4/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 						name="status"
-						id="categoryEditStatus">
-						<option value="Active">Active</option>
-						<option value="Blocked">Blocked</option>
+						onChange={handleChange}
+						value={formData.status}
+						>
+						<option value="Active" selected>Active</option>
+						<option value="Disable">Disable</option>
 					</select>
 				</div>
 				
@@ -45,8 +89,6 @@ const CategoriesAddPopup = ({setShowAdd}) => {
 				
 				<div class="w-full ">
 					<button
-						id="CategorysubmitButton"
-						type="submit"
 						class="bg-[#DAA520] text-white w-full rounded-full p-2 text-base font-normal flex justify-center items-center mt-5">
 						<span id="saveSpanEdit">Save</span>
 						<div

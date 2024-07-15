@@ -8,6 +8,6 @@ const categoryController = require('../controllers/Admin/categoryController');
 //categories
 router.post('/deletecategory',categoryController.deleteCategory)
 router.get('/getallcategories',categoryController.getCategories)
-router.post('/addCategory',categoryController.addCategory)
+router.post('/addcategory',categoryController.addCategory)
 
 module.exports = router
