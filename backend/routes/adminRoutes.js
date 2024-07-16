@@ -8,8 +8,8 @@ const loginController = require('../controllers/Admin/loginController')
 //categories
 router.post('/deleteCategory',categoryController.deleteCategory)
 router.post('/updateCategory',categoryController.upadateCategory)
-router.get('/getAllCategories',categoryController.getCategories)
-router.post('/addCategory',categoryController.addCategory)
+router.get('/getAllCategories',adminAuthMiddleWare.verifyToken,categoryController.getCategories)
+router.post('/addCategory',adminAuthMiddleWare.verifyToken,categoryController.addCategory)
 
 
 //adminLogin

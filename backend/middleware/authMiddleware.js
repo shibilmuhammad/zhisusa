@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const verifyToken = (req,res,next)=>{
-    console.log("this is auth midddle ware");
     const token = req.cookies.jwt;
     if (!token) {
         return res.status(401).json({ message: 'Access denied. No token provided' });

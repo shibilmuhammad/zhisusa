@@ -5,10 +5,10 @@ module.exports = {
 		try {
 			const data = await categorySchema.find();
 
-			res.json(data);
+			res.status(200).json(data);
 		} catch (error) {
-			res.json({
-				status: "failed",
+			res.status(500).json({
+				message: "Internal Server Error",
 			});
 		}
 	},
