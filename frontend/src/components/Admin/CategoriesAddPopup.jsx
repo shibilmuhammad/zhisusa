@@ -1,54 +1,59 @@
-import React, { useState } from 'react'
-import { IoIosCloseCircle } from 'react-icons/io'
-import axios from 'axios'
+import React, { useState } from "react";
+import { IoIosCloseCircle } from "react-icons/io";
+import axios from "axios";
 
-const CategoriesAddPopup = ({setShowAdd}) => {
+const CategoriesAddPopup = ({ setShowAdd }) => {
 	const [formData, setFormData] = useState({
-		title: '',
-		status: 'Active',
-		main : 'Select'
-	  });
-	  const handleChange = (e) => {
+		title: "",
+		status: "Active",
+		main: "Select",
+	});
+	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({
-		  ...formData,
-		  [name]: value
+			...formData,
+			[name]: value,
 		});
-	  };
-	  const handleSubmit = async (e) => {
+	};
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (validateForm()) {
-		  try {
-			const response = await axios.post('http://localhost:8080/api/admin/addCategory', formData);
-			setShowAdd(false)
-		  } catch (error) {
-			console.error('Error submitting form:', error);
-		  }
+			try {
+				const response = await axios.post(
+					"http://localhost:8080/api/admin/addCategory",
+					formData
+				);
+				setShowAdd(false);
+			} catch (error) {
+				console.error("Error submitting form:", error);
+			}
 		}
-	  };
-	
-	  const validateForm = () => {
-		if (!formData.title || formData.main === 'Select') {
-		  return false;
+	};
+
+	const validateForm = () => {
+		if (!formData.title || formData.main === "Select") {
+			return false;
 		}
 		return true;
-	  };
-  return (
-    <div
-			class="font-poppins fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.3)]"
+	};
+	return (
+		<div
+			class="font-poppins fixed inset-0 flex justify-center z-[999] items-center bg-[rgba(0,0,0,0.3)]"
 			id="categoryEditPopup">
 			<form
 				onSubmit={handleSubmit}
-				class=" bg-white rounded-lg w-fit  py-8 px-5 relative space-y-3 text-sm pr-8 pt-10">
-				<div class="space-x-10 flex justify-between items-center">
-					<label for="">Category</label>
-					<div>
+				class=" bg-white rounded-lg w-4/12  py-8 px-5 relative space-y-3 text-sm pr-8 pt-10">
+				<div class="w-full flex justify-between items-center">
+					<label className="w-4/12" for="">
+						Category
+					</label>
+					<div className="w-8/12">
 						<input
 							onChange={handleChange}
 							type="text"
 							name="title"
 							value={formData.title}
-							class="px-2 border-gray-400 border-[.1px] w-80 p-2 rounded-lg "
+							class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 						/>
 						<span
 							id="categoryNameEditError"
@@ -57,39 +62,46 @@ const CategoriesAddPopup = ({setShowAdd}) => {
 						</span>
 					</div>
 				</div>
-				<div class="space-x-16 flex w-full items-center">
-					<label for="">Main Category</label>
-					<select
-						class="border-gray-400 border-[.1px] w-4/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
-						name="main"
-						onChange={handleChange}
-						value={formData.main}
-						>
-						<option value="Select" selected disabled>Select</option>
-						<option value="Live">Live</option>
-						<option value="Work" >Work</option>
-						<option value="Liesure">Liesure</option>
-					</select>
+				<div class=" flex w-full items-center justify-between">
+					<label className="w-4/8" for="">
+						Main Category
+					</label>
+					<div className="w-8/12">
+						<select
+							class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+							name="main"
+							onChange={handleChange}
+							value={formData.main}>
+							<option value="Select" selected disabled>
+								Select
+							</option>
+							<option value="Live">Live</option>
+							<option value="Work">Work</option>
+							<option value="Liesure">Liesure</option>
+						</select>
+					</div>
 				</div>
 
-				<div class="space-x-16 flex w-full items-center">
-					<label for="">Status</label>
-					<select
-						class="border-gray-400 border-[.1px] w-4/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
-						name="status"
-						onChange={handleChange}
-						value={formData.status}
-						>
-						<option value="Active" selected>Active</option>
-						<option value="Disable">Disable</option>
-					</select>
+				<div class=" flex w-full items-center justify-between">
+					<label className="w-4/12" for="">
+						Status
+					</label>
+					<div className="w-8/12">
+						<select
+							class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+							name="status"
+							onChange={handleChange}
+							value={formData.status}>
+							<option value="Active" selected>
+								Active
+							</option>
+							<option value="Disable">Disable</option>
+						</select>
+					</div>
 				</div>
-				
 
-				
-				<div class="w-full ">
-					<button
-						class="bg-[#DAA520] text-white w-full rounded-full p-2 text-base font-normal flex justify-center items-center mt-5">
+				<div class="w-full flex justify-end">
+					<button class="bg-[#DAA520] text-white rounded-full p-2 text-base font-normal flex justify-center items-center mt-5 w-44">
 						<span id="saveSpanEdit">Save</span>
 						<div
 							class="flex items-center justify-center font-normal hidden"
@@ -116,12 +128,12 @@ const CategoriesAddPopup = ({setShowAdd}) => {
 				</div>
 				<button
 					class="absolute -top-2 cursor-pointer right-2 text-3xl"
-					onClick={()=> setShowAdd(false)}>
-					<IoIosCloseCircle/>
+					onClick={() => setShowAdd(false)}>
+					<IoIosCloseCircle />
 				</button>
 			</form>
 		</div>
-  )
-}
+	);
+};
 
-export default CategoriesAddPopup
+export default CategoriesAddPopup;

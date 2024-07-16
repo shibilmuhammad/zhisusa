@@ -1,23 +1,11 @@
 const categorySchema = require("../../models/categoryModel");
+const mainSchema = require("../../models/mainModel");
 module.exports = {
 	getCategories: async (req, res) => {
 		try {
-			const count = await categorySchema.aggregate([
-				{
-					$lookup: {
-						from: "projects",
-						let: { title: "$title" },
-						pipeline: [
-							{ $match: { $expr: { $eq: ["$$title", "$category"] } } },
-						],
-						as: "project_count",
-					},
-				},
-				{ $addFields: { project_count: { $size: "$project_count" } } },
-			]);
+			const data = await categorySchema.find();
 
-			res.json(count);
-			console.log(count);
+			res.json(data);
 		} catch (error) {
 			res.json({
 				status: "failed",
@@ -25,20 +13,52 @@ module.exports = {
 		}
 	},
 	addCategory: async (req, res) => {
-		const { title, status,main } = req.body;
-		console.log(req.body);
+		const { title, status, main } = req.body;
 		try {
 			const newData = new categorySchema({
 				title: title,
 				status: status,
 				main_category: main,
-				types : []
+				types: [],
 			});
-			await newData.save()
+			const data = await newData.save();
+			
+			const addToMain = await mainSchema.updateOne({title:main},{$push:{categories:data?.['_id'].toString()}})
+			console.log(addToMain);
+			
 			res.json({
 				status: "success",
 			});
+		} catch (error) {
+			res.json({
+				status: "failed",
+			});
+		}
+	},
+	upadateCategory: async (req, res) => {
+		const { title, status, main, id } = req.body;
+
+		try {
+			const data = await mainSchema.find({title:main})
+			const oldCategory = await categorySchema.findById(id)
 			
+			if(!(oldCategory.main_category === main)){
+				const addId = await mainSchema.updateOne({title:main},{$push:{categories:id}})
+				const deleteId = await mainSchema.updateOne({title:oldCategory.main_category},{$pull : {categories : id}})
+
+			}
+			
+			const updateData = await categorySchema.findByIdAndUpdate(id, {
+				title: title,
+				status: status,
+				main_category: main,
+			});
+			
+		
+			
+			res.json({
+				status: "success",
+			});
 		} catch (error) {
 			res.json({
 				status: "failed",
@@ -48,8 +68,10 @@ module.exports = {
 	deleteCategory: async (req, res) => {
 		try {
 			const data = await categorySchema.findByIdAndDelete({ _id: req.body.id });
-			const newData = await categorySchema.find();
-			res.json(newData);
+			const addToMain = await mainSchema.updateOne({title:req.body.main},{$pull : {categories : req.body.id}})
+			res.json({
+				status: "success",
+			});
 		} catch (error) {
 			res.json({
 				status: "failed",
