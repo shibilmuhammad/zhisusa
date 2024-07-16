@@ -32,3 +32,4 @@ coverage/*
 # Temporary folders
 temp/
 .tmp/
+backend/seedAdmin.js

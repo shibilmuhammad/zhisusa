@@ -8,11 +8,13 @@ import CategoriesAddPopup from "../../components/Admin/CategoriesAddPopup";
 import TableControllBar from "../../components/Admin/TableControllBar";
 import axios from "axios";
 import ListDataSection from "../../components/Admin/ListDataSection";
-
+import { useNavigate } from "react-router-dom";
 const Categories = () => {
+	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
 	const [showEdit, setShowEdit] = useState(false);
 	const [showAdd, setShowAdd] = useState(false);
+	const [error,setError] = useState("")
 	const [rowID, setRowID] = useState("");
 	const tableHeaders = [
 		"Category ID",
@@ -31,8 +33,17 @@ const Categories = () => {
 	const [categoryList,setCategoryList] = useState([])
 	useEffect(() => {
 		async function getData (){
-			const {data} = await axios.get('/api/admin/getAllCategories')
-			setCategoryList(data)
+			try{
+				const {data} = await axios.get('/api/admin/getAllCategories')
+				setCategoryList(data)
+			}catch(err){
+				if (err.response.status === 401 ) {
+                    setError('Unauthorized');
+					navigate('/admin/login')
+                } else {
+                    setError('Server error: ' + error.response.status);
+                }
+			}
 		}
 		getData()
 	},[showAdd,showDelete,showEdit])
