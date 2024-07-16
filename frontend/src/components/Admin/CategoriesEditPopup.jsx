@@ -1,26 +1,58 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 
-const CategoriesEditPopup = ({setShowEdit}) => {
+const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
+	const [formData, setFormData] = useState({
+		title: dataList[rowID]?.title,
+		status: dataList[rowID]?.status,
+		main: dataList[rowID]?.main_category,
+		id: dataList[rowID]?._id,
+	});
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (validateForm()) {
+			try {
+				const response = await axios.post(
+					`${process.env.REACT_APP_API_URL}/api/admin/updateCategory`,
+					formData
+				);
+				setShowEdit(false);
+			} catch (error) {
+				console.error("Error submitting form:", error);
+			}
+		}
+	};
+
+	const validateForm = () => {
+		if (!formData.title || formData.main === "Select") {
+			return false;
+		}
+		return true;
+	};
 	return (
 		<div
-			class="font-poppins fixed inset-0 flex justify-center items-center bg-[rgba(0,0,0,0.3)]"
+			class="font-poppins fixed inset-0 flex justify-center items-center z-10 bg-[rgba(0,0,0,0.3)]"
 			id="categoryEditPopup">
 			<form
-				action="/admin/category/update"
-				id="CategoryEditsubmit"
-				method="post"
-				enctype="multipart/form-data"
-				class=" bg-white rounded-lg w-fit  py-8 px-5 relative space-y-3 text-sm pr-8 pt-10">
-				<div class="space-x-10 flex justify-between items-center">
-					<label for="">Category</label>
-					<div>
+				onSubmit={handleSubmit}
+				class=" bg-white rounded-lg w-4/12 py-8 px-5 relative space-y-3 text-sm pr-8 pt-10">
+				<div class="w-full flex justify-between items-center gap">
+					<label for="w-4/12">Category</label>
+					<div className="w-8/12">
 						<input
-							
+							value={formData?.title}
 							type="text"
-							name="categoryName"
-							id="categoryEditName"
-							class="px-2 border-gray-400 border-[.1px] w-80 p-2 rounded-lg "
+							name="title"
+							onChange={handleChange}
+							class="px-2 border-gray-400 border-[.1px] p-2 rounded-lg w-full"
 						/>
 						<span
 							id="categoryNameEditError"
@@ -29,25 +61,41 @@ const CategoriesEditPopup = ({setShowEdit}) => {
 						</span>
 					</div>
 				</div>
-
-				<div class="space-x-16 flex w-full items-center">
-					<label for="">Status</label>
+				<div class=" flex w-full items-center justify-between">
+					<label for="w-4/12">Main Category</label>
 					<select
-						class="border-gray-400 border-[.1px] w-4/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
-						name="status"
-						id="categoryEditStatus">
-						<option value="Active">Active</option>
-						<option value="Blocked">Blocked</option>
+						class="border-gray-400 border-[.1px] w-8/12  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+						name="main"
+						onChange={handleChange}
+						value={formData.main}>
+						<option value="Select" selected disabled>
+							Select
+						</option>
+						<option value="Live">Live</option>
+						<option value="Work">Work</option>
+						<option value="Liesure">Liesure</option>
 					</select>
 				</div>
-				
 
-				
-				<div class="w-full ">
+				<div class=" flex w-full items-center justify-between">
+					<label for="w-4/12">Status</label>
+					<div className="w-8/12">
+						<select
+							class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+							name="status"
+							value={formData?.status}
+							onChange={handleChange}>
+							<option value="Active">Active</option>
+							<option value="Blocked">Blocked</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="w-full flex items-center justify-end">
 					<button
 						id="CategorysubmitButton"
 						type="submit"
-						class="bg-[#DAA520] text-white w-full rounded-full p-2 text-base font-normal flex justify-center items-center mt-5">
+						class="bg-[#DAA520] text-white w-44 rounded-full p-2 text-base font-normal flex justify-center items-center mt-5">
 						<span id="saveSpanEdit">Save</span>
 						<div
 							class="flex items-center justify-center font-normal hidden"
@@ -74,8 +122,8 @@ const CategoriesEditPopup = ({setShowEdit}) => {
 				</div>
 				<button
 					class="absolute -top-2 cursor-pointer right-2 text-3xl"
-					onClick={()=> setShowEdit(false)}>
-					<IoIosCloseCircle/>
+					onClick={() => setShowEdit(false)}>
+					<IoIosCloseCircle />
 				</button>
 			</form>
 		</div>
