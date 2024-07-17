@@ -1,57 +1,124 @@
 import React, { useState } from "react";
-import { IoMdSearch } from "react-icons/io";
 import { MdDelete, MdEdit } from "react-icons/md";
-import DeletePopup from "./DeletePopup";
-import CategoriesEditPopup from "./CategoriesEditPopup";
-import CategoriesAddPopup from "./CategoriesAddPopup";
-import TableControllBar from "./TableControllBar";
+import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
-const ListDataSection = ({
-	dataList,
-	setShowDelete,
-	setShowEdit,
-	tableHeaders,
-	tableValues,
-	setRowID
-}) => {
+
+const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableValues,setRowID,newList,setList,setTableHeaders}) => {
 	const openDelete = (id) => {
-		setRowID(id)
+		setRowID(id);
 		setShowDelete(true);
 	};
 	const openEdit = (id) => {
-		setRowID(id)
+		setRowID(id);
 		setShowEdit(true);
 	};
+	const [idSort, setIdSort] = useState(true);
+	const sortHandler = (value, type, order,asc,index) => {
+		if (value === "id") {
+			const sortedList = newList.reverse();
+			setList(sortedList);
+			setIdSort(!idSort);
+		} else {
+			const updatedList = [...tableHeaders];
+			updatedList[index] = { ...updatedList[index], ...{asc:!asc}} ;
+			setTableHeaders(updatedList);
+
+			if (type === "number") {
+				if (order === "asc") {
+					const sortedList = [...newList].sort((a, b) => a[value] - b[value]);
+					setList(sortedList);
+				} else {
+					const sortedList = [...newList].sort((a, b) => b[value] - a[value]);
+					setList(sortedList);
+				}
+			} else {
+				if (order === "asc") {
+					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? -1 :  ((b[value] > a[value]) ? 1 : 0));
+
+					setList(sortedList);
+				} else {
+					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? 1 :  ((b[value] > a[value]) ? -1 : 0));
+					setList(sortedList);
+				}
+			}
+		}
+	
+	}
 	return (
 		<div className="right w-full">
 			<table className="w-full mt-2">
-				<thead>
-					<tr className="bg-PrimaryBlue-normal text-white text-left font-medium">
-						{tableHeaders.map((item, index) => (
+				<thead className="">
+					<tr className="bg-PrimaryBlue-normal  text-white text-left font-medium ">
+						<th className="rounded-tl-md font-medium ps-3 flex items-center gap-2 py-2 text-left">
+							S NO
+							<div className="text-white rounded-t-md -space-y-1">
+								{idSort ? 
+									<IoMdArrowDropup
+										className="cursor-pointer"
+										onClick={() => sortHandler("id", "number", "desc")}
+									/>
+								 : 
+									<IoMdArrowDropdown
+										className="cursor-pointer"
+										onClick={() => sortHandler("id", "number", "asc")}
+									/>
+								}
+							</div>
+						</th>
+						{tableHeaders?.map((item, index) => (
 							<th
 								className={`${
-									index === 0
-										? "rounded-tl-md"
-										: index + 1 === tableHeaders.length
+									index + 1 === tableHeaders.length
 										? "rounded-tr-md"
 										: "rounded-none"
-								} font-medium ps-3  py-2 text-left`}>
-								{item}
+								} font-medium py-2 text-left `}>
+								<div className="flex items-center gap-3">
+									{item.name}
+									{item.sort && (
+										<div className="text-white -space-y-1">
+											{item.asc ? (<IoMdArrowDropup
+												onClick={() =>
+													sortHandler(
+														item.value,
+														item.type,
+														"desc",
+														item.asc,index
+													)
+												}
+												className="cursor-pointer "
+											/>):(
+											<IoMdArrowDropdown
+												onClick={() =>
+													sortHandler(item.value, item.type, "asc",item.asc,index)
+												}
+												className="cursor-pointer "
+											/>)}
+										</div>
+									)}
+								</div>
 							</th>
 						))}
 					</tr>
 				</thead>
 				<tbody id="table-container ">
-					{dataList?.map((item,index) => (
+					{dataList?.map((item, index) => (
 						<tr className="bg-white text-base">
-							{tableValues.map((key) => <td className="text-left pl-4 py-2">{item?.[key]}</td>)}
-							
-							<td className="flex justify-center items-center mt-1 py-2 -translate-x-4">
-								<div className={`${item?.status === 'Active' ? 'bg-[#DBFCDF] text-[#189E34]' :'bg-red-50 text-red-500'} font-poppins font-bold py-1 w-2/3 px-2  rounded-full text-center`}>
+							<td className="text-left pl-4 py-2"># {index + 1}</td>
+							{tableValues.map((key) => (
+								<td className="text-left py-2">{item?.[key]}</td>
+							))}
+
+							<td className="flex justify-center items-center mt-1 py-2 -translate-x-8">
+								<div
+									className={`${
+										item?.status === "Active"
+											? "bg-[#DBFCDF] text-[#189E34]"
+											: "bg-red-50 text-red-500"
+									} font-poppins font-bold py-1 w-2/3 px-2  rounded-full text-center`}>
 									{item?.status}
 								</div>
 							</td>
-							<td className="py-2 pl-4">
+							<td className="py-2">
 								<div className="flex space-x-4">
 									<MdEdit
 										onClick={() => openEdit(index)}

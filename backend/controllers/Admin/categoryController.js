@@ -3,7 +3,18 @@ const mainSchema = require("../../models/mainModel");
 module.exports = {
 	getCategories: async (req, res) => {
 		try {
-			const data = await categorySchema.find();
+			const data = await categorySchema.aggregate([
+				{
+					$project : {
+						title : 1,
+						main_category : 1,
+						status : 1,
+						count : {
+							$size : '$types'
+						}
+					}
+				}
+			]);
 
 			res.json(data);
 		} catch (error) {
