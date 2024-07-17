@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-
+import { useNavigate } from "react-router-dom";
 const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
+	const navigate = useNavigate();
+	const [error,setError] = useState("")
 	const [formData, setFormData] = useState({
 		title: dataList[rowID]?.title,
 		status: dataList[rowID]?.status,
@@ -26,7 +28,12 @@ const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 				);
 				setShowEdit(false);
 			} catch (error) {
-				console.error("Error submitting form:", error);
+				if (error.response.status === 401 ) {
+                    setError('Unauthorized');
+					navigate('/admin/login')
+                } else {
+                    setError('Server error: ' + error.response.status);
+                }
 			}
 		}
 	};
