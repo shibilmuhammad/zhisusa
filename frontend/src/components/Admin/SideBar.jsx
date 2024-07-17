@@ -5,7 +5,7 @@ import { GiOfficeChair } from 'react-icons/gi';
 import { MdBedroomParent, MdCategory, MdDashboard, MdSurfing } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-const SideBar = () => {
+const SideBar = ({active}) => {
     const sideBar = [
     
         { title: "Dashboard", src: "", icon: MdDashboard },
@@ -18,14 +18,14 @@ const SideBar = () => {
         { title: "Zhisusa Events", src: "", icon: FaMusic },
       ];
   return (
-    <div className="left mt-28  space-y-4 border-r-[.1px] border-gray-400 w-fit pt-1 pb-1 pr-2">
+    <div className="left mt-28  space-y-4 border-r-[.1px] border-gray-400 w-fit pt-1 pb-1 pr-10">
             {sideBar.map((item)=>
                 <Link
                 to={item.src}
-                className="flex items-center whitespace-nowrap space-x-2 cursor-pointer hover:bg-gray-200 rounded-sm px-3 py-3"
+                className={`${active === item.title ? 'bg-PrimaryBlue-normal text-white rounded-lg hover:bg-PrimaryBlue-normal' : 'bg-transparent rounded-sm'} flex items-center whitespace-nowrap space-x-2 cursor-pointer hover:bg-gray-200 px-3 py-3`}
             >
                 <item.icon />
-                <h2 className="text-base font-semibold text-[#7E7878]">
+                <h2 className={`${active === item.title ? ' text-white' : 'text-[#7E7878]'} text-base font-semibold `}>
                 {item.title}
                 </h2>
             </Link>
