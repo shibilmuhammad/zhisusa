@@ -8,7 +8,7 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
 	const handleSubmit = async (e) => {
 		try {
 			const response = await axios.post(
-				`${process.env.REACT_APP_API_URL}/api/admin/deleteCategory`,
+				`/api/admin/deleteCategory`,
 				{ id: dataList[rowID]?._id,main: dataList[rowID]?.main_category,title : dataList[rowID]?.title}
 			);
 			setShowDelete(false);

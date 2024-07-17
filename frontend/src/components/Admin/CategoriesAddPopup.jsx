@@ -22,7 +22,7 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 		if (validateForm()) {
 			try {
 				const response = await axios.post(
-					"http://localhost:8080/api/admin/addCategory",
+					"/api/admin/addCategory",
 					formData
 				);
 				setShowAdd(false);
