@@ -9,6 +9,7 @@ import TableControllBar from "../../components/Admin/TableControllBar";
 import axios from "axios";
 import ListDataSection from "../../components/Admin/ListDataSection";
 import { useNavigate } from "react-router-dom";
+import Header from "../../components/Admin/Header";
 const Categories = () => {
 	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
@@ -59,14 +60,7 @@ const Categories = () => {
 			)}
 			{showEdit && <CategoriesEditPopup rowID={rowID} setShowEdit={setShowEdit} dataList={categoryList} />}
 			{showAdd && <CategoriesAddPopup rowID={rowID} setShowAdd={setShowAdd} />}
-			<div className="h-16 bg-PrimaryBlue-normal flex justify-between px-10 items-center">
-				<a href="">
-					<img className="w-40" src="/images/Logo.png" alt="" />
-				</a>
-				<a href="/admin/logOut">
-					<img className="h-5" src="/images/logout white.png" alt="" />
-				</a>
-			</div>
+			{<Header />}
 			<main className="px-10 flex w-full">
 				<SideBar />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
