@@ -59,6 +59,7 @@ const Categories = () => {
 			try{
 				const {data} = await axios.get(`/api/admin/getAllCategories`)
 				setCategoryList(data)
+				setCategoryListDup(data)
 			}catch(err){
 				console.log(err);
 				if (err?.response?.status === 401 ) {
@@ -77,7 +78,7 @@ const Categories = () => {
 			{showDelete && (
 				<DeletePopup
 					rowID={rowID}
-					type="product"
+					type="category"
 					setShowDelete={setShowDelete}
 					dataList={categoryList}
 				/>

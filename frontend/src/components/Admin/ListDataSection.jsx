@@ -48,10 +48,10 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 		<div className="right w-full">
 			<table className="w-full mt-2">
 				<thead className="">
-					<tr className="bg-PrimaryBlue-normal  text-white text-left font-medium ">
-						<th className="rounded-tl-md font-medium ps-3 flex items-center gap-2 py-2 text-left">
+					<tr className="bg-PrimaryBlue-normal  text-white text-left font-medium rounded-tl-md">
+						<th className="rounded-tl-md font-medium ps-3 flex items-center gap-2 py-2 text-left " >
 							S NO
-							<div className="text-white rounded-t-md -space-y-1">
+							<div className="text-white -space-y-1">
 								{idSort ? 
 									<IoMdArrowDropup
 										className="cursor-pointer"
