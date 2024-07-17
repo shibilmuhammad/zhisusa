@@ -15,6 +15,7 @@ const Categories = () => {
 	const [showAdd, setShowAdd] = useState(false);
 	const [error,setError] = useState("")
 	const [rowID, setRowID] = useState("");
+	const [loadData, setLoadData] = useState(false);
 	const [tableHeaders, setTableHeaders] =
 		useState
 			([{
@@ -72,7 +73,7 @@ const Categories = () => {
 			}
 		}
 		getData();
-	}, [showAdd, showDelete, showEdit]);
+	}, [loadData]);
 	return (
 		<div className="bg-[#F2F2F2] min-h-screen">
 			{showDelete && (
@@ -81,6 +82,8 @@ const Categories = () => {
 					type="category"
 					setShowDelete={setShowDelete}
 					dataList={categoryList}
+					setLoadData={setLoadData}
+					loadData={loadData}
 				/>
 			)}
 			{showEdit && (
@@ -88,12 +91,14 @@ const Categories = () => {
 					rowID={rowID}
 					setShowEdit={setShowEdit}
 					dataList={categoryList}
+					setLoadData={setLoadData}
+					loadData={loadData}
 				/>
 			)}
-			{showAdd && <CategoriesAddPopup rowID={rowID} setShowAdd={setShowAdd} />}
+			{showAdd && <CategoriesAddPopup loadData={loadData} rowID={rowID} setLoadData={setLoadData} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
-				<SideBar />
+				<SideBar active={"Categories"} />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
 						setList={setCategoryList}
