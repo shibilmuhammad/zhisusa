@@ -23,7 +23,7 @@ const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 		if (validateForm()) {
 			try {
 				const response = await axios.post(
-					`${process.env.REACT_APP_API_URL}/api/admin/updateCategory`,
+					`/api/admin/updateCategory`,
 					formData
 				);
 				setShowEdit(false);

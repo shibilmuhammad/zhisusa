@@ -57,7 +57,7 @@ const Categories = () => {
 	useEffect(() => {
 		async function getData (){
 			try{
-				const {data} = await axios.get(`${process.env.REACT_APP_API_URL}/api/admin/getAllCategories`)
+				const {data} = await axios.get(`/api/admin/getAllCategories`)
 				setCategoryList(data)
 			}catch(err){
 				console.log(err);
