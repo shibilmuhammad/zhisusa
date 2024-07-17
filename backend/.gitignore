@@ -14,3 +14,4 @@ yarn-error.log*
 # Coverage directory used by testing tools
 coverage/
 coverage/*
+/seedAdmin.js

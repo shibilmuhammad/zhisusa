@@ -1,8 +1,10 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import { TiWarningOutline } from "react-icons/ti";
-
+import { useNavigate } from "react-router-dom";
 const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
+	const navigate = useNavigate();
+	const [error,setError] = useState("")
 	const handleSubmit = async (e) => {
 		try {
 			const response = await axios.post(
@@ -11,7 +13,12 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
 			);
 			setShowDelete(false);
 		} catch (error) {
-			console.error("Error submitting form:", error);
+			if (error.response.status === 401 ) {
+				setError('Unauthorized');
+				navigate('/admin/login')
+			} else {
+				setError('Server error: ' + error.response.status);
+			}
 		}
 	};
 	return (

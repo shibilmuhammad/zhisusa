@@ -6,11 +6,14 @@ import CategoriesAddPopup from "../../components/Admin/CategoriesAddPopup";
 import TableControllBar from "../../components/Admin/TableControllBar";
 import axios from "axios";
 import ListDataSection from "../../components/Admin/ListDataSection";
-
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Admin/Header";
 const Categories = () => {
+	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
 	const [showEdit, setShowEdit] = useState(false);
 	const [showAdd, setShowAdd] = useState(false);
+	const [error,setError] = useState("")
 	const [rowID, setRowID] = useState("");
 	const [tableHeaders, setTableHeaders] =
 		useState
@@ -52,10 +55,18 @@ const Categories = () => {
 	const [categoryList, setCategoryList] = useState([]);
 	const [categoryListDup, setCategoryListDup] = useState([]);
 	useEffect(() => {
-		async function getData() {
-			const { data } = await axios.get("/api/admin/getAllCategories");
-			setCategoryList(data);
-			setCategoryListDup(data);
+		async function getData (){
+			try{
+				const {data} = await axios.get('/api/admin/getAllCategories')
+				setCategoryList(data)
+			}catch(err){
+				if (err.response.status === 401 ) {
+                    setError('Unauthorized');
+					navigate('/admin/login')
+                } else {
+                    setError('Server error: ' + error.response.status);
+                }
+			}
 		}
 		getData();
 	}, [showAdd, showDelete, showEdit]);
@@ -77,14 +88,7 @@ const Categories = () => {
 				/>
 			)}
 			{showAdd && <CategoriesAddPopup rowID={rowID} setShowAdd={setShowAdd} />}
-			<div className="h-16 bg-PrimaryBlue-normal flex justify-between px-10 items-center">
-				<a href="">
-					<img className="w-40" src="/images/Logo.png" alt="" />
-				</a>
-				<a href="/admin/logOut">
-					<img className="h-5" src="/images/logout white.png" alt="" />
-				</a>
-			</div>
+			{<Header />}
 			<main className="px-10 flex w-full">
 				<SideBar />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">

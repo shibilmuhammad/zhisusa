@@ -32,6 +32,7 @@ import PersonalizeBooking from './pages/PersonalizeBooking';
 
 import ActivityDetailsMob from './pages/ActivityDetailsMob';
 import Categories from './pages/Admins/Categories';
+import Login from './components/Admin/Login';
 
 
 
@@ -130,6 +131,9 @@ const router = createBrowserRouter([
       {path:"/activityDetails",
         element:<ActivityDetailsMob/>
       },
+      {path:"/admin/login",
+      element:<Login/>
+    },
       
     ],
     errorElement: <Works />,
