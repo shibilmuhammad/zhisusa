@@ -4,7 +4,6 @@ import { IoMdSearch } from "react-icons/io";
 const TableControllBar = ({
 	setShowAdd,
 	setList,
-	sortValues,
 	filterValues,
 	searchValues,
 	dataList,

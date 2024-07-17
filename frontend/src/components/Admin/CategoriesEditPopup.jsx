@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 	const navigate = useNavigate();
 	const [error,setError] = useState("")
+	const [progress,setProgress] = useState(false)
 	const [formData, setFormData] = useState({
 		title: dataList[rowID]?.title,
 		status: dataList[rowID]?.status,
@@ -19,15 +20,20 @@ const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 		});
 	};
 	const handleSubmit = async (e) => {
+		
 		e.preventDefault();
 		if (validateForm()) {
+			setProgress(true)
 			try {
 				const response = await axios.post(
 					`/api/admin/updateCategory`,
 					formData
 				);
+				setProgress(false)
 				setShowEdit(false);
+				
 			} catch (error) {
+				setProgress(false)
 				if (error.response.status === 401 ) {
                     setError('Unauthorized');
 					navigate('/admin/login')
@@ -101,11 +107,11 @@ const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 				<div class="w-full flex items-center justify-end">
 					<button
 						id="CategorysubmitButton"
-						type="submit"
+						type={`${progress ? 'button' : 'submit'}`}
 						class="bg-[#DAA520] text-white w-44 rounded-full p-2 text-base font-normal flex justify-center items-center mt-5">
-						<span id="saveSpanEdit">Save</span>
+						{!progress ? <span id="saveSpanEdit">Save</span> : (
 						<div
-							class="flex items-center justify-center font-normal hidden"
+							class="flex items-center justify-center font-normal"
 							id="loadingEdit">
 							<svg
 								aria-hidden="true"
@@ -123,8 +129,8 @@ const CategoriesEditPopup = ({ setShowEdit, dataList, rowID }) => {
 									fill="currentColor"
 								/>
 							</svg>
-							Uploading ...
-						</div>
+							Uploading
+						</div>)}
 					</button>
 				</div>
 				<button
