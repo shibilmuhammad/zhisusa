@@ -37,6 +37,7 @@ module.exports = {
 	},
 	upadateCategory: async (req, res) => {
 		const { title, status, main, id } = req.body;
+		console.log("this is updtate" ,req.body);
 
 		try {
 			const data = await mainSchema.find({title:main})

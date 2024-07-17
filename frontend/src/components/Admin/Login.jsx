@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineVisibility } from "react-icons/md";
 import { MdOutlineVisibilityOff } from "react-icons/md";
 import { FaLock } from "react-icons/fa6";
-import Cookies from 'js-cookie';
+
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'
 const Login = () => {
@@ -11,6 +11,22 @@ const Login = () => {
   const [username,setUsername] = useState("");
   const [password,setPassword] = useState("");
   const [errorMsg,setErrorMsg] = useState("");
+
+  useEffect(()=>{
+    const checkToken = async ()=>{
+      try {
+
+        const response = await axios.get('/api/admin/validatetoken', { withCredentials: true });
+        console.log(response);
+        if (response.status === 200) {
+            navigate(window.history.back());
+        }
+    } catch (error) {
+        console.error('Invalid token:', error);
+    }
+    }
+    checkToken()
+  },[])
  const handleFormSubmit = async(e)=>{
     e.preventDefault();
     if(username.trim()=="")return setErrorMsg("username cannot be empty");

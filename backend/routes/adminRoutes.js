@@ -6,12 +6,14 @@ const loginController = require('../controllers/Admin/loginController')
 
 
 //categories
-router.post('/deleteCategory',categoryController.deleteCategory)
-router.post('/updateCategory',categoryController.upadateCategory)
+router.post('/deleteCategory',adminAuthMiddleWare.verifyToken,categoryController.deleteCategory)
+router.post('/updateCategory',adminAuthMiddleWare.verifyToken,categoryController.upadateCategory)
 router.get('/getAllCategories',adminAuthMiddleWare.verifyToken,categoryController.getCategories)
 router.post('/addCategory',adminAuthMiddleWare.verifyToken,categoryController.addCategory)
 
 
 //adminLogin
 router.post('/login',loginController.postLogin)
+router.post('/logout',loginController.logout)
+router.get('/validatetoken',loginController.validateToken)
 module.exports = router
