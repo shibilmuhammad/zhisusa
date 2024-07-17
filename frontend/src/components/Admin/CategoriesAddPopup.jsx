@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const CategoriesAddPopup = ({ setShowAdd }) => {
+	const navigate = useNavigate();
+	const [error,setError] = useState("")
 	const [formData, setFormData] = useState({
 		title: "",
 		status: "Active",
@@ -25,7 +27,12 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 				);
 				setShowAdd(false);
 			} catch (error) {
-				console.error("Error submitting form:", error);
+				if (error.response.status === 401 ) {
+                    setError('Unauthorized');
+					navigate('/admin/login')
+                } else {
+                    setError('Server error: ' + error.response.status);
+                }
 			}
 		}
 	};
