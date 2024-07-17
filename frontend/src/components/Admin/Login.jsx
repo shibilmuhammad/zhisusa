@@ -37,10 +37,11 @@ const Login = () => {
       else setErrorMsg("seomthing went wrong")
       navigate('/admin')
     }catch(err){
+      console.log(err);
       if (err.response && err.response.status === 400) {
         setErrorMsg(err.response.data.message);
       } else {
-        setErrorMsg('An unexpected error occurred');
+        setErrorMsg('An unexpected error occurred',err.response.data.message);
       }
     }
  }
