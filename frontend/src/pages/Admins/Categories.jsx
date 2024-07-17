@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { IoMdSearch } from "react-icons/io";
-import { MdDelete, MdEdit } from "react-icons/md";
 import SideBar from "../../components/Admin/SideBar";
 import DeletePopup from "../../components/Admin/DeletePopup";
 import CategoriesEditPopup from "../../components/Admin/CategoriesEditPopup";
@@ -17,21 +15,45 @@ const Categories = () => {
 	const [showAdd, setShowAdd] = useState(false);
 	const [error,setError] = useState("")
 	const [rowID, setRowID] = useState("");
-	const tableHeaders = [
-		"Category ID",
-		"Category",
-		"Main Category",
-		"Types Count",
-		"Status",
-		"Action",
+	const [tableHeaders, setTableHeaders] =
+		useState
+			([{
+				name: "Category",
+				sort: true,
+				sortType: "letter",
+				value: "title",
+				asc: true,
+			},
+			{
+				name: "Main Category",
+				sort: false,
+				sortType: "",
+				value: "",
+				asc: true,
+			},
+			{
+				name: "Types Count",
+				sort: true,
+				sortType: "number",
+				value: "count",
+				asc: true,
+			},
+			{ name: "Status", sort: false, sortType: "", value: "", asc: true },
+			{ name: "Action", sort: false, sortType: "", value: "", asc: true }
+		]);
+	const tableValues = ["title", "main_category", "count"];
+	const sortValues = [
+		{ text: "Category ID", value: "id" },
+		{ text: "Category", value: "title" },
+		{ text: "Types Count", value: "count" },
 	];
-	const tableValues = [
-		"_id",
-		"title",
-		"main_category",
-		"types_count",
+	const filterValues = ["All", "Active", "Blocked"];
+	const searchValues = [
+		{ text: "Category", value: "title" },
+		{ text: "Main Category", value: "main_category" },
 	];
-	const [categoryList,setCategoryList] = useState([])
+	const [categoryList, setCategoryList] = useState([]);
+	const [categoryListDup, setCategoryListDup] = useState([]);
 	useEffect(() => {
 		async function getData (){
 			try{
@@ -46,8 +68,8 @@ const Categories = () => {
                 }
 			}
 		}
-		getData()
-	},[showAdd,showDelete,showEdit])
+		getData();
+	}, [showAdd, showDelete, showEdit]);
 	return (
 		<div className="bg-[#F2F2F2] min-h-screen">
 			{showDelete && (
@@ -58,14 +80,37 @@ const Categories = () => {
 					dataList={categoryList}
 				/>
 			)}
-			{showEdit && <CategoriesEditPopup rowID={rowID} setShowEdit={setShowEdit} dataList={categoryList} />}
+			{showEdit && (
+				<CategoriesEditPopup
+					rowID={rowID}
+					setShowEdit={setShowEdit}
+					dataList={categoryList}
+				/>
+			)}
 			{showAdd && <CategoriesAddPopup rowID={rowID} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
 				<SideBar />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
-					<TableControllBar setShowAdd={setShowAdd} />
-					<ListDataSection setRowID={setRowID} setShowDelete={setShowDelete} setShowEdit={setShowEdit} tableValues={tableValues} tableHeaders={tableHeaders} dataList={categoryList} />
+					<TableControllBar
+						setList={setCategoryList}
+						dataList={categoryListDup}
+						searchValues={searchValues}
+						filterValues={filterValues}
+						sortValues={sortValues}
+						setShowAdd={setShowAdd}
+					/>
+					<ListDataSection
+						setTableHeaders={setTableHeaders}
+						setList={setCategoryList}
+						newList={categoryListDup}
+						setRowID={setRowID}
+						setShowDelete={setShowDelete}
+						setShowEdit={setShowEdit}
+						tableValues={tableValues}
+						tableHeaders={tableHeaders}
+						dataList={categoryList}
+					/>
 				</div>
 			</main>
 		</div>
