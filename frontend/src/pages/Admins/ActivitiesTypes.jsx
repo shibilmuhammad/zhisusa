@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import SideBar from "../../components/Admin/SideBar";
 import DeletePopup from "../../components/Admin/DeletePopup";
 import CategoriesEditPopup from "../../components/Admin/CategoriesEditPopup";
-import CategoriesAddPopup from "../../components/Admin/CategoriesAddPopup";
 import TableControllBar from "../../components/Admin/TableControllBar";
 import axios from "axios";
 import ListDataSection from "../../components/Admin/ListDataSection";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Admin/Header";
-const Categories = () => {
+import ActivitiesAddPopup from "../../components/Admin/ActivitiesAddPopup";
+const ActivitiesTypes = () => {
 	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
 	const [showEdit, setShowEdit] = useState(false);
@@ -58,7 +58,7 @@ const Categories = () => {
 	useEffect(() => {
 		async function getData (){
 			try{
-				const {data} = await axios.get(`/api/admin/getAllCategories`)
+				const {data} = await axios.get(`/api/admin/getAllActivities`)
 				setCategoryList(data)
 				setCategoryListDup(data)
 			}catch(err){
@@ -79,7 +79,7 @@ const Categories = () => {
 			{showDelete && (
 				<DeletePopup
 					rowID={rowID}
-					type="category"
+					type="activity"
 					setShowDelete={setShowDelete}
 					dataList={categoryList}
 					setLoadData={setLoadData}
@@ -95,10 +95,10 @@ const Categories = () => {
 					loadData={loadData}
 				/>
 			)}
-			{showAdd && <CategoriesAddPopup loadData={loadData} rowID={rowID} setLoadData={setLoadData} setShowAdd={setShowAdd} />}
+			{showAdd && <ActivitiesAddPopup loadData={loadData} rowID={rowID} setLoadData={setLoadData} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
-				<SideBar active={"Categories"} />
+				<SideBar active={"Activity Types"} />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
 						setList={setCategoryList}
@@ -125,4 +125,4 @@ const Categories = () => {
 	);
 };
 
-export default Categories;
+export default ActivitiesTypes;

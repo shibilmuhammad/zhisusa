@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const CategoriesAddPopup = ({ setShowAdd }) => {
+const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
+	const [er2, seter2] = useState(false);
 	const [progress, setProgress] = useState(false);
 	const [formData, setFormData] = useState({
 		title: "",
@@ -30,6 +31,7 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 			try {
 				const response = await axios.post("/api/admin/addCategory", formData);
 				setProgress(false);
+				setLoadData(!loadData);
 				setShowAdd(false);
 			} catch (error) {
 				setProgress(false);
@@ -37,6 +39,7 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 					setError("Unauthorized");
 					navigate("/admin/login");
 				} else {
+					setErrMsg((errMsg) => ({ ...errMsg, server: true }));
 					setError("Server error: " + error.response.status);
 				}
 			}
@@ -44,12 +47,12 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 	};
 
 	const validateForm = () => {
-		setErrMsg({ ...errMsg, title: false, main: false });
+		setErrMsg((errMsg) => ({ ...errMsg, title: false, main: false }));
 		if (!formData.title) {
-			setErrMsg({ ...errMsg, title: true });
+			setErrMsg((errMsg) => ({ ...errMsg, title: true }));
 			return false;
 		} else if (formData.main === "Select") {
-			setErrMsg({ ...errMsg, main: true });
+			setErrMsg((errMsg) => ({ ...errMsg, main: true }));
 			return false;
 		}
 		return true;
@@ -122,6 +125,11 @@ const CategoriesAddPopup = ({ setShowAdd }) => {
 						</select>
 					</div>
 				</div>
+				{errMsg.server && (
+					<span class=" text-[10px] text-red-600 space-y-0">
+						Unexpected Error Occured ! Please Try again.
+					</span>
+				)}
 
 				<div class="w-full flex justify-end">
 					<button

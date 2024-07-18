@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { TiWarningOutline } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
-const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
+const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData }) => {
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
 	const [progress, setProgress] = useState(false);
@@ -15,7 +15,9 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
 				title: dataList[rowID]?.title,
 			});
 			setProgress(false)
+			setLoadData(!loadData)
 			setShowDelete(false);
+
 		} catch (error) {
 			setProgress(false)
 			if (error.response.status === 401) {
@@ -77,7 +79,7 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList }) => {
 							<button
 								onClick={() => setShowDelete(false)}
 								type="button"
-								disabled={`${progress ? true : false}`}
+								
 								class="w-full border border-gray-400 cursor-pointer text-black font-medium p-2 rounded-sm  flex items-center justify-center">
 								Cancel
 							</button>
