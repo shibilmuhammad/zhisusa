@@ -26,8 +26,6 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		const state = validateForm();
-		console.log(errMsg.title);
 		if (validateForm()) {
 			setProgress(true);
 			try {
