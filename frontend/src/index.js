@@ -33,6 +33,7 @@ import ActivityDetailsMob from "./pages/ActivityDetailsMob";
 import Categories from "./pages/Admins/Categories";
 import Login from "./components/Admin/Login";
 
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -124,7 +125,8 @@ const router = createBrowserRouter([
 			},
 			{ path: "/activityDetails", element: <ActivityDetailsMob /> },
 			{ path: "/admin/login", element: <Login /> },
-      { path: "/admin/activity", element: <ActivitiesTypes/> },
+      		{ path: "/admin/activity", element: <ActivitiesTypes/> },
+			
 		],
 		errorElement: <Works />,
 	},

@@ -4,7 +4,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import PackageInputCard from "./PackageInputCard";
 import ImageCard from "./ImageCard";
-const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
+const ActivitiesEditPopup = ({
+	setShowEdit,
+	setLoadData,
+	loadData,
+	dataList,
+	rowID,
+}) => {
 	const navigate = useNavigate();
 	const [error, setError] = useState({
 		title: false,
@@ -34,10 +40,11 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		startTime: "09:00",
 		endTime: "18:00",
 	});
+
 	const [formData, setFormData] = useState({
-		packages: [],
-		images: [],
-		finalImages: [],
+		packages: dataList[rowID]?.details?.packageIncludes,
+		images: dataList[rowID]?.details?.images,
+		finalImages: dataList[rowID]?.details?.images,
 	});
 	const addPackage = (newPackage) => {
 		if (newPackage) {
@@ -106,7 +113,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 				);
 				setProgress(false);
 				setLoadData(!loadData);
-				setShowAdd(false);
+				setShowEdit(false);
 			} catch (error) {
 				setProgress(false);
 				if (error.response.status === 401) {
@@ -137,21 +144,19 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			}
 		});
 		if (formData.packages.length < 1) {
-			
-			setError(prevError => ({ ...prevError, packages: true }));
+			setError((prevError) => ({ ...prevError, packages: true }));
 			isValid = false;
 			return false;
-		}else{
-			setError(prevError => ({ ...prevError, packages: false }));
+		} else {
+			setError((prevError) => ({ ...prevError, packages: false }));
 			isValid = true;
 		}
 		if (formData.images.length < 1) {
-			
-			setError(prevError => ({ ...prevError, images: true }));
+			setError((prevError) => ({ ...prevError, images: true }));
 			isValid = false;
 			return false;
-		}else{
-			setError(prevError => ({ ...prevError, images: false }));
+		} else {
+			setError((prevError) => ({ ...prevError, images: false }));
 			isValid = true;
 		}
 
@@ -159,6 +164,16 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 
 		return isValid;
 	};
+	useEffect(() => {
+		console.log(dataList[rowID]);
+		formRefs.current.title.value = dataList[rowID]?.title || "";
+		formRefs.current.capacity.value = dataList[rowID]?.details?.capacity || "";
+		formRefs.current.description.value = dataList[rowID]?.details?.description || "";
+		formRefs.current.location.value = dataList[rowID]?.details?.location?.place || "";
+		formRefs.current.proximity.value = dataList[rowID]?.details?.location?.proximityToAmenities || "";
+		formRefs.current.priceHour.value = dataList[rowID]?.details?.price?.perSession || "";
+		formRefs.current.priceDay.value = dataList[rowID]?.details?.price?.perDay || "";
+	}, []);
 
 	return (
 		<div
@@ -180,6 +195,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									onChange={handleChange}
 									type="text"
 									name="title"
+									ref={(el) => (formRefs.current.title = el)}
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 								/>
 								{error.title && (
@@ -215,6 +231,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									onChange={handleChange}
 									type="number"
 									name="capacity"
+									ref={(el) => (formRefs.current.capacity = el)}
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 								/>
 								{error.capacity && (
@@ -233,8 +250,9 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="status"
 									onChange={handleChange}
+									ref={(el) => (formRefs.current.status = el)}
 									defaultValue={"Available"}>
-									<option value="Available" selected>
+									<option value="Available">
 										Available
 									</option>
 									<option value="Available">Not Available</option>
@@ -253,8 +271,9 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="availability"
 									onChange={handleChange}
+									ref={(el) => (formRefs.current.availability = el)}
 									defaultValue={"All Days"}>
-									<option value="All Days" selected>
+									<option value="All Days">
 										All Days
 									</option>
 									<option value="Weekend">Weekend</option>
@@ -274,6 +293,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 										min="09:00"
 										max="18:00"
 										defaultValue={"09:00"}
+										
 										onChange={handleChange}
 									/>
 								</div>
@@ -305,6 +325,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								onChange={handleChange}
 								type="text"
 								name="description"
+								ref={(el) => (formRefs.current.description = el)}
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 							/>
 							{error.description && (
@@ -323,6 +344,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							<div className="">
 								<input
 									onChange={handleChange}
+									ref={(el) => (formRefs.current.location = el)}
 									type="text"
 									name="location"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -343,6 +365,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									onChange={handleChange}
 									type="text"
 									name="proximity"
+									ref={(el) => (formRefs.current.proximity = el)}
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 								/>
 								{error.proximity && (
@@ -368,6 +391,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									className="w-full px-2 h-full"
 									type="number"
 									name="priceHour"
+									ref={(el) => (formRefs.current.priceHour = el)}
 									onChange={handleChange}
 								/>
 								<div className="bg-gray-100 p-2 px-6 flex items-center justify-end">
@@ -378,6 +402,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									className="w-full px-2 rounded-r-lg h-full"
 									type="number"
 									name="priceDay"
+									ref={(el) => (formRefs.current.priceDay = el)}
 									onChange={handleChange}
 								/>
 							</div>
@@ -509,7 +534,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 					</div>
 					<button
 						class="absolute -top-2 cursor-pointer right-5 text-3xl"
-						onClick={() => setShowAdd(false)}>
+						onClick={() => setShowEdit(false)}>
 						<IoIosCloseCircle />
 					</button>
 				</div>
@@ -518,4 +543,4 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	);
 };
 
-export default ActivitiesAddPopup;
+export default ActivitiesEditPopup;

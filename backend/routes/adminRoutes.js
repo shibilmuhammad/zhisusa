@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const adminAuthMiddleWare = require('../middleware/authMiddleware')
 const categoryController = require('../controllers/Admin/categoryController');
+const activityController = require('../controllers/Admin/activityController');
 const loginController = require('../controllers/Admin/loginController')
+const upload = require('../utils/upload')
 
 
 //categories
@@ -11,6 +13,11 @@ router.post('/updateCategory',adminAuthMiddleWare.verifyToken,categoryController
 router.get('/getAllCategories',adminAuthMiddleWare.verifyToken,categoryController.getCategories)
 router.post('/addCategory',adminAuthMiddleWare.verifyToken,categoryController.addCategory)
 
+//activities
+router.post('/deleteActivity',adminAuthMiddleWare.verifyToken,activityController.deleteActivity)
+router.post('/updateActivity',adminAuthMiddleWare.verifyToken,activityController.upadateActivity)
+router.get('/getAllActivities',adminAuthMiddleWare.verifyToken,activityController.getActivities)
+router.post('/addActivity',adminAuthMiddleWare.verifyToken,upload.array('images',10),activityController.addActivity)
 
 //adminLogin
 router.post('/login',loginController.postLogin)

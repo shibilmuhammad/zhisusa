@@ -8,6 +8,7 @@ import ListDataSection from "../../components/Admin/ListDataSection";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Admin/Header";
 import ActivitiesAddPopup from "../../components/Admin/ActivitiesAddPopup";
+import ActivitiesEditPopup from "../../components/Admin/ActivitiesEditPopup";
 const ActivitiesTypes = () => {
 	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
@@ -16,51 +17,28 @@ const ActivitiesTypes = () => {
 	const [error,setError] = useState("")
 	const [rowID, setRowID] = useState("");
 	const [loadData, setLoadData] = useState(false);
-	const [tableHeaders, setTableHeaders] =
-		useState
-			([{
-				name: "Category",
-				sort: true,
-				sortType: "letter",
-				value: "title",
-				asc: true,
-			},
-			{
-				name: "Main Category",
-				sort: false,
-				sortType: "",
-				value: "",
-				asc: true,
-			},
-			{
-				name: "Types Count",
-				sort: true,
-				sortType: "number",
-				value: "count",
-				asc: true,
-			},
+	const [tableHeaders, setTableHeaders] = useState([
+			{name: "Title",sort: true,sortType: "letter",value: "title",asc: true,},
+			{name: "Main Category",sort: false,sortType: "",value: "",asc: true,},
+			{name: "Place",sort: false,sortType: "",value: "details.location.place",asc: true,},
 			{ name: "Status", sort: false, sortType: "", value: "", asc: true },
 			{ name: "Action", sort: false, sortType: "", value: "", asc: true }
 		]);
-	const tableValues = ["title", "main_category", "count"];
-	const sortValues = [
-		{ text: "Category ID", value: "id" },
-		{ text: "Category", value: "title" },
-		{ text: "Types Count", value: "count" },
-	];
-	const filterValues = ["All", "Active", "Blocked"];
+	const tableValues = ["title", "mainCategory", "details.location.place"];
+	const filterValues = ["All", "Available", "Not Available"];
 	const searchValues = [
-		{ text: "Category", value: "title" },
-		{ text: "Main Category", value: "main_category" },
+		{ text: "Title", value: "title" },
+		{ text: "Main Category", value: "mainCategory" },
+		{ text: "Place", value: "details.location.place" },
 	];
-	const [categoryList, setCategoryList] = useState([]);
-	const [categoryListDup, setCategoryListDup] = useState([]);
+	const [activityList, setActiviyList] = useState([]);
+	const [activityListDup, setActivityListDup] = useState([]);
 	useEffect(() => {
 		async function getData (){
 			try{
 				const {data} = await axios.get(`/api/admin/getAllActivities`)
-				setCategoryList(data)
-				setCategoryListDup(data)
+				setActiviyList(data)
+				setActivityListDup(data)
 			}catch(err){
 				console.log(err);
 				if (err?.response?.status === 401 ) {
@@ -81,16 +59,16 @@ const ActivitiesTypes = () => {
 					rowID={rowID}
 					type="activity"
 					setShowDelete={setShowDelete}
-					dataList={categoryList}
+					dataList={activityList}
 					setLoadData={setLoadData}
 					loadData={loadData}
 				/>
 			)}
 			{showEdit && (
-				<CategoriesEditPopup
+				<ActivitiesEditPopup
 					rowID={rowID}
 					setShowEdit={setShowEdit}
-					dataList={categoryList}
+					dataList={activityList}
 					setLoadData={setLoadData}
 					loadData={loadData}
 				/>
@@ -101,23 +79,22 @@ const ActivitiesTypes = () => {
 				<SideBar active={"Activity Types"} />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
-						setList={setCategoryList}
-						dataList={categoryListDup}
+						setList={setActiviyList}
+						dataList={activityListDup}
 						searchValues={searchValues}
 						filterValues={filterValues}
-						sortValues={sortValues}
 						setShowAdd={setShowAdd}
 					/>
 					<ListDataSection
 						setTableHeaders={setTableHeaders}
-						setList={setCategoryList}
-						newList={categoryListDup}
+						setList={setActiviyList}
+						newList={activityListDup}
 						setRowID={setRowID}
 						setShowDelete={setShowDelete}
 						setShowEdit={setShowEdit}
 						tableValues={tableValues}
 						tableHeaders={tableHeaders}
-						dataList={categoryList}
+						dataList={activityList}
 					/>
 				</div>
 			</main>
