@@ -9,10 +9,11 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData
 	const handleSubmit = async (e) => {
 		setProgress(true)
 		try {
-			const response = await axios.post(`/api/admin/deleteCategory`, {
+			const endpoint = type === 'activity' ? 'deleteActivity' : 'deleteCategory'
+			const response = await axios.post(`/api/admin/${endpoint}`, {
 				id: dataList[rowID]?._id,
-				main: dataList[rowID]?.main_category,
-				title: dataList[rowID]?.title,
+				main: dataList[rowID]?.main_category || null,
+				title: dataList[rowID]?.title || null,
 			});
 			setProgress(false)
 			setLoadData(!loadData)
