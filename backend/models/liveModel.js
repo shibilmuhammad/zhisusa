@@ -10,7 +10,12 @@ const liveSchema = new mongoose.Schema(
     },
     details: {
       capacity: {
-        type: Number,
+        adult:{
+          type:Number,
+        },
+        child:{
+          type:Number,
+        },
       },
       size: {
         type: String,

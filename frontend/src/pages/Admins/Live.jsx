@@ -9,7 +9,8 @@ import ListDataSection from "../../components/Admin/ListDataSection";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Admin/Header";
 import RoomsAddPoupup from "../../components/Admin/RoomsAddPopup";
-
+import {useDispatch, useSelector} from 'react-redux'
+import { addToCategories } from "../../utils/categoriesDataSlice";
 const Live = () => {
     const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
@@ -56,14 +57,17 @@ const Live = () => {
 	];
 	const [categoryList, setCategoryList] = useState([]);
 	const [categoryListDup, setCategoryListDup] = useState([]);
+	const dispatch = useDispatch();
+	const categoiesFromRedux = useSelector((state)=>state.adminCategories.categories);
+	console.log('catogiesredux',categoiesFromRedux);
 	useEffect(() => {
 		async function getData (){
 			try{
 				const {data} = await axios.get(`/api/admin/getAllCategories`)
-				setCategoryList(data)
-				setCategoryListDup(data)
+				setCategoryList(data);
+				const filteredData = categoryList.filter((item)=>item?.main_category =='Live');
+				setCategoryListDup(filteredData)
 			}catch(err){
-				console.log(err);
 				if (err?.response?.status === 401 ) {
                     setError('Unauthorized');
 					navigate('/admin/login')
@@ -92,7 +96,7 @@ const Live = () => {
 					dataList={categoryList}
 				/>
 			)}
-			{showAdd && <RoomsAddPoupup setShowAdd={setShowAdd} />}
+			{showAdd && <RoomsAddPoupup categoryList={categoryListDup} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
 				<SideBar />
