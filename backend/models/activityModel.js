@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const activitySchema = new mongoose.Schema({
-  mainCategoryId: mongoose.Schema.Types.ObjectId, // Reference to Subcategory ID
+  mainCategory: String, // Reference to Subcategory ID
   title: String, // or "Boating", etc.
+  status : String,
   details: {
     description: String,
     capacity: Number,
@@ -12,10 +13,10 @@ const activitySchema = new mongoose.Schema({
     },
     packageIncludes : [String],
     schedule: {
-      availability: Stirng,
+      availability: String,
       time: String
     },
-    status : String,
+    
     location: {
       place: String,
 	  proximityToAmenities: String

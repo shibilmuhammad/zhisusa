@@ -34,6 +34,7 @@ import Categories from "./pages/Admins/Categories";
 import Login from "./components/Admin/Login";
 import Live from "./pages/Admins/Live";
 
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -125,8 +126,13 @@ const router = createBrowserRouter([
 			},
 			{ path: "/activityDetails", element: <ActivityDetailsMob /> },
 			{ path: "/admin/login", element: <Login /> },
+
       { path: "/admin/activity", element: <ActivitiesTypes/> },
       { path: "/admin/live", element: <Live/> },
+
+      		{ path: "/admin/activity", element: <ActivitiesTypes/> },
+			
+
 		],
 		errorElement: <Works />,
 	},

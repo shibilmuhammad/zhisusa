@@ -12,6 +12,10 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 		setRowID(id);
 		setShowEdit(true);
 	};
+	//to get nested object values
+	const getNestedValue = (obj, path) => {
+		return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+	  };
 	const [idSort, setIdSort] = useState(true);
 	const sortHandler = (value, type, order,asc,index) => {
 		if (value === "id") {
@@ -105,13 +109,13 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 						<tr className="bg-white text-base">
 							<td className="text-left pl-4 py-2"># {index + 1}</td>
 							{tableValues.map((key) => (
-								<td className="text-left py-2">{item?.[key]}</td>
+								<td className="text-left py-2">{getNestedValue(item,key)}</td>
 							))}
 
 							<td className="flex justify-center items-center mt-1 py-2 -translate-x-8">
 								<div
 									className={`${
-										item?.status === "Active"
+										item?.status === "Active" || item?.status === "Available"
 											? "bg-[#DBFCDF] text-[#189E34]"
 											: "bg-red-50 text-red-500"
 									} font-poppins font-bold py-1 w-2/3 px-2  rounded-full text-center`}>

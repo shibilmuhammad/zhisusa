@@ -1,15 +1,13 @@
 import React from 'react'
+import { IoClose } from "react-icons/io5";
 
-const ImageCard = ({img,index,setImagesPreview,imagesPreview}) => {
-  const removeHandler = () => {
-    setImagesPreview(imagesPreview.splice(index,1))
-    console.log(imagesPreview);
-  }
+const ImageCard = ({img,index,removeImage}) => {
+  
   return (
-    <div className='border-2 rounded-md p-1 h-28 relative'>
-        <img className='h-full w-full object-contain' src={img} alt='icon' />
-        { <button type='button' onClick={removeHandler} className='absolute top-0 right-0 bg-slate-50 h-7 w-7 rounded-full' >
-            <i className="bi bi-x text-xl"></i>
+    <div className='border-2 rounded-md  h-28 relative'>
+        <img className='h-full w-full object-cover rounded-md' src={img} alt='icon' />
+        { <button type='button' onClick={() => removeImage(index)} className='absolute top-0 right-0 bg-slate-50 h-5 w-5 rounded-full flex items-center justify-center' >
+           <IoClose className='text-PrimaryBlue-normal'/>
         </button> }
     </div>
   )
