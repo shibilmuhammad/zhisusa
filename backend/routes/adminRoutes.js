@@ -4,6 +4,8 @@ const adminAuthMiddleWare = require('../middleware/authMiddleware')
 const categoryController = require('../controllers/Admin/categoryController');
 const activityController = require('../controllers/Admin/activityController');
 const loginController = require('../controllers/Admin/loginController')
+
+const livetypesController = require('../controllers/Admin/livetypesController')
 const upload = require('../utils/upload')
 
 
@@ -24,3 +26,8 @@ router.post('/login',loginController.postLogin)
 router.post('/logout',loginController.logout)
 router.get('/validatetoken',loginController.validateToken)
 module.exports = router
+
+//live types
+
+router.get('/getlivetypes',livetypesController.getroomsData);
+router.post('/addrooms',livetypesController.addrooms)

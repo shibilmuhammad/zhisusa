@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import packageSlice from './packageSlice';
 import roomCountSlice from './roomCountSlice';
 import activityDetailsSlice from './activityDetailsSlice';
+import categoriesDataSlice from './categoriesDataSlice';
 
 const store = configureStore({
   reducer: {
     package: packageSlice,
     roomCount : roomCountSlice,
-    activities : activityDetailsSlice
+    activities : activityDetailsSlice,
+    adminCategories : categoriesDataSlice,
   },
 });
 
