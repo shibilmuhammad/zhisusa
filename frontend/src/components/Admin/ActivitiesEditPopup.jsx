@@ -31,20 +31,19 @@ const ActivitiesEditPopup = ({
 		description: null,
 		location: null,
 		proximity: null,
-		price: null,
-		main: "Activities",
-		status: "Available",
+		main: null,
+		status: null,
 		priceHour: null,
 		priceDay: null,
-		availability: "All Days",
-		startTime: "09:00",
-		endTime: "18:00",
+		availability: null,
+		startTime: null,
+		endTime: null,
 	});
 
 	const [formData, setFormData] = useState({
 		packages: dataList[rowID]?.details?.packageIncludes,
 		images: dataList[rowID]?.details?.images,
-		finalImages: dataList[rowID]?.details?.images,
+		finalImages: [dataList[rowID]?.details?.images],
 	});
 	const addPackage = (newPackage) => {
 		if (newPackage) {
@@ -73,6 +72,7 @@ const ActivitiesEditPopup = ({
 			...prevState,
 			finalImages: [...prevState.finalImages, ...files],
 		}));
+		console.log(formRefs.current.title.value);
 	};
 	const removeImage = (index) => {
 		setFormData((prevState) => ({
@@ -89,27 +89,36 @@ const ActivitiesEditPopup = ({
 		main: false,
 		server: false,
 	});
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		formRefs.current[name] = value;
-	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const finalFormData = new FormData();
-		for (let i = 0; i < formData.finalImages.length; i++) {
-			finalFormData.append("images", formData.finalImages[i]);
-		}
-		console.log(formRefs.current);
+		
 		for (let key in formRefs.current) {
-			finalFormData.append(key, formRefs.current[key]);
+			finalFormData.append(key, formRefs.current[key]?.value);
 		}
+
+		for (let i = 0; i < formData.finalImages.length; i++) {
+			if (formData.finalImages[i] instanceof File) {
+				finalFormData.append("files", formData.finalImages[i]);
+			}
+		}
+
 		finalFormData.append("packages", formData.packages);
+		finalFormData.append("id", dataList[rowID]?._id);
+		const pattern = /^((http|https|ftp):\/\/)/;
+		const filteredLink = formData.images.filter((item) => pattern.test(item));
+		finalFormData.append("image_links", filteredLink);
 		if (validateForm()) {
 			setProgress(true);
 			try {
 				const response = await axios.post(
-					"/api/admin/addActivity",
-					finalFormData
+					"/api/admin/updateActivity",
+					finalFormData,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data",
+						},
+					}
 				);
 				setProgress(false);
 				setLoadData(!loadData);
@@ -132,9 +141,7 @@ const ActivitiesEditPopup = ({
 		let isValid = true;
 
 		Object.keys(formRefs.current).forEach((key) => {
-			console.log(formRefs.current);
 			if (!formRefs.current[key]) {
-				console.log(formRefs.current[key], "empty ");
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
@@ -165,15 +172,30 @@ const ActivitiesEditPopup = ({
 		return isValid;
 	};
 	useEffect(() => {
-		console.log(dataList[rowID]);
-		formRefs.current.title.value = dataList[rowID]?.title || "";
-		formRefs.current.capacity.value = dataList[rowID]?.details?.capacity || "";
-		formRefs.current.description.value = dataList[rowID]?.details?.description || "";
-		formRefs.current.location.value = dataList[rowID]?.details?.location?.place || "";
-		formRefs.current.proximity.value = dataList[rowID]?.details?.location?.proximityToAmenities || "";
-		formRefs.current.priceHour.value = dataList[rowID]?.details?.price?.perSession || "";
-		formRefs.current.priceDay.value = dataList[rowID]?.details?.price?.perDay || "";
-	}, []);
+		if (dataList && dataList[rowID]) {
+			formRefs.current.title.value = dataList[rowID]?.title || "";
+			formRefs.current.main.value = dataList[rowID]?.mainCategory || "";
+			formRefs.current.capacity.value = 
+				dataList[rowID]?.details?.capacity || "";
+			formRefs.current.description.value = 
+				dataList[rowID]?.details?.description || "";
+			formRefs.current.location.value = 
+				dataList[rowID]?.details?.location?.place || "";
+			formRefs.current.proximity.value =  
+				dataList[rowID]?.details?.location?.proximityToAmenities || "";
+			formRefs.current.priceHour.value = 
+				dataList[rowID]?.details?.price?.perSession || "";
+			formRefs.current.priceDay.value =  
+				dataList[rowID]?.details?.price?.perDay || "";
+			formRefs.current.availability.value = 
+				dataList[rowID]?.details?.schedule?.availability || "";
+			formRefs.current.status.value = dataList[rowID]?.status;
+			formRefs.current.startTime.value = 
+				dataList[rowID]?.details?.schedule?.time.split(" to ")[0];
+			formRefs.current.endTime.value = 
+				dataList[rowID]?.details?.schedule?.time.split(" to ")[1];
+		}
+	}, [dataList,rowID]);
 
 	return (
 		<div
@@ -192,7 +214,7 @@ const ActivitiesEditPopup = ({
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+						
 									type="text"
 									name="title"
 									ref={(el) => (formRefs.current.title = el)}
@@ -214,6 +236,7 @@ const ActivitiesEditPopup = ({
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="main"
 									disabled
+									ref={(el) => (formRefs.current.main = el)}
 									defaultValue={"Activities"}>
 									<option value="Activities">Activities</option>
 								</select>
@@ -228,7 +251,6 @@ const ActivitiesEditPopup = ({
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
 									type="number"
 									name="capacity"
 									ref={(el) => (formRefs.current.capacity = el)}
@@ -249,12 +271,9 @@ const ActivitiesEditPopup = ({
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="status"
-									onChange={handleChange}
 									ref={(el) => (formRefs.current.status = el)}
 									defaultValue={"Available"}>
-									<option value="Available">
-										Available
-									</option>
+									<option value="Available">Available</option>
 									<option value="Available">Not Available</option>
 								</select>
 							</div>
@@ -270,12 +289,9 @@ const ActivitiesEditPopup = ({
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="availability"
-									onChange={handleChange}
 									ref={(el) => (formRefs.current.availability = el)}
 									defaultValue={"All Days"}>
-									<option value="All Days">
-										All Days
-									</option>
+									<option value="All Days">All Days</option>
 									<option value="Weekend">Weekend</option>
 								</select>
 							</div>
@@ -292,9 +308,8 @@ const ActivitiesEditPopup = ({
 										id=""
 										min="09:00"
 										max="18:00"
-										defaultValue={"09:00"}
-										
-										onChange={handleChange}
+										ref={(el) => (formRefs.current.startTime = el)}
+
 									/>
 								</div>
 								<div className="px-6 bg-gray-100 flex justify-center items-center">
@@ -308,8 +323,7 @@ const ActivitiesEditPopup = ({
 										id=""
 										min="09:00"
 										max="18:00"
-										defaultValue={"16:00"}
-										onChange={handleChange}
+										ref={(el) => (formRefs.current.endTime = el)}
 									/>
 								</div>
 							</div>
@@ -322,7 +336,6 @@ const ActivitiesEditPopup = ({
 						</label>
 						<div className="">
 							<textarea
-								onChange={handleChange}
 								type="text"
 								name="description"
 								ref={(el) => (formRefs.current.description = el)}
@@ -343,7 +356,6 @@ const ActivitiesEditPopup = ({
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
 									ref={(el) => (formRefs.current.location = el)}
 									type="text"
 									name="location"
@@ -362,7 +374,6 @@ const ActivitiesEditPopup = ({
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
 									type="text"
 									name="proximity"
 									ref={(el) => (formRefs.current.proximity = el)}
@@ -392,7 +403,6 @@ const ActivitiesEditPopup = ({
 									type="number"
 									name="priceHour"
 									ref={(el) => (formRefs.current.priceHour = el)}
-									onChange={handleChange}
 								/>
 								<div className="bg-gray-100 p-2 px-6 flex items-center justify-end">
 									<span>Day </span>
@@ -403,7 +413,6 @@ const ActivitiesEditPopup = ({
 									type="number"
 									name="priceDay"
 									ref={(el) => (formRefs.current.priceDay = el)}
-									onChange={handleChange}
 								/>
 							</div>
 							{(error.priceDay || error.priceHour) && (
@@ -471,7 +480,6 @@ const ActivitiesEditPopup = ({
 											id="dropzone-file"
 											type="file"
 											multiple
-											name="images"
 											className="hidden"
 											accept="image/*"
 											onChange={handleImageUpload}
