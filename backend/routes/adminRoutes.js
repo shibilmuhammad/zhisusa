@@ -30,4 +30,4 @@ module.exports = router
 //live types
 
 router.get('/getlivetypes',livetypesController.getroomsData);
-router.post('/addrooms',livetypesController.addrooms)
+router.post('/addrooms',upload.array('images',10),livetypesController.addrooms)

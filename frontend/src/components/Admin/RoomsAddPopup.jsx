@@ -6,18 +6,20 @@ import PackageInputCard from "./PackageInputCard";
 import ImageCard from "./ImageCard";
 const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
   const [errMsg, setErrMsg] = useState(false);
-  const [amenitites,setAmenities] = useState([])
+  const [imageFiles, setImageFiles] = useState([]);
   const amenityRef = useRef(null);
-  const [images,setImages] = useState([]);
+  const [amenitites, setAmenities] = useState([]);
+  const [images, setImages] = useState([]);
+  const [progress,setProgress] = useState(false)
   const formData = useRef({
     title: null,
     subCategory: null,
     shortDescription: null,
     description: null,
     adultCapacity: null,
-	childCapacity:null,
+    childCapacity: null,
     size: null,
-    status: 'active',
+    status: "active",
     roomNumber: null,
     floor: null,
     view: null,
@@ -26,43 +28,69 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
     perNight: null,
     perWeek: null,
     perMonth: null,
-    amenitites: [],
-    images: [],
   });
-  useEffect(() => {
-    async function getCategoriesData() {
-      await axios.get("");
-    }
-  }, []);
   const handleChange = (e) => {
     const { name, value } = e.target;
     formData.current[name] = value;
-    console.log(formData);
   };
-  const AddAmenitites = (value) =>{
-	amenityRef.current.value = ''
-	setAmenities((list)=>[...list,value]);
+  const AddAmenitites = (value) => {
+    amenityRef.current.value = "";
+    setAmenities((list) => [...list, value]);
+  };
+  const removePackage = (index) => {
+    const filterddata = amenitites.filter((_, i) => i !== index);
+    setAmenities(filterddata);
+  };
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const imagesBlob = files.map((image) => URL.createObjectURL(image));
+    setImages((prev) => [...prev, ...imagesBlob]);
+    setImageFiles((prev) => [...prev, ...files]);
+  };
+  const removeImage = (index) => {
+    const filteredData = images.filter((_, i) => i !== index);
+    const filteredDataFiles = imageFiles.filter((_, i) => i !== index);
+    setImages(filteredData);
+    setImageFiles(filteredDataFiles);
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setProgress(true)
+    const data = new FormData();
 
-  }
-  const removePackage = (index) =>{
-	const filterddata =  amenitites.filter((_,i)=> i!==index);
-	setAmenities(filterddata)
-  }
-  const handleImageUpload = (e) =>{
-	const files = Array.from(e.target.files)
-	const imagesBlob = files.map((image)=>URL.createObjectURL(image))
+    Object.entries(formData.current).forEach(([key, value]) => {
+      data.append(key, value);
+    });
 
-	setImages((prev)=>[...prev, ...imagesBlob])
-  }
-  useEffect(()=>{
-	console.log('images is ',images);
-  },[images])
+    // Append amenities
+    amenitites.forEach((amenity, index) => {
+      data.append(`amenities[${index}]`, amenity);
+    });
+
+    // Append images
+    imageFiles.forEach((image, index) => {
+      data.append(`images`, image);
+    });
+    try {
+      const response = await axios.post("/api/admin/addrooms", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setProgress(false)
+      setShowAdd(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setErrMsg({ server: true });
+    }
+  };
   return (
     <div
       class="font-poppins fixed inset-0 flex justify-center z-[999]  items-center bg-[rgba(0,0,0,0.3)]"
       id="categoryEditPopup"
     >
-      <form class="  w-6/12  h-[80vh] relative">
+      <form onSubmit={handleSubmit} class="  w-6/12  h-[80vh] relative">
         <div className="rounded-lg bg-white w-full   py-8 px-5  space-y-3 text-sm pr-8 pt-10 h-full overflow-auto  ">
           {/* title & main */}
           <div className="flex gap-5">
@@ -117,7 +145,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
             <div className="">
               <textarea
                 type="text"
-				onChange={handleChange}
+                onChange={handleChange}
                 name="shortDescription"
                 class="min-h-12 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
               />
@@ -136,7 +164,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
             <div className="">
               <textarea
                 type="text"
-				onChange={handleChange}
+                onChange={handleChange}
                 name="description"
                 class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
               />
@@ -154,26 +182,25 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 Capacity
               </label>
               <div className="flex border rounded-lg">
-				<div className="flex items-center">
-					<p className="p-2 bg-gray-100 rounded-l-lg"> Adult</p>
-					<input
-					type="text"
-					name="adultCapacity"
-					class="px-2 w-full p-2 "
-					onChange={handleChange}
-					/>
-				</div>
-               
-				<div className="flex items-center">
-					<p className="p-2 bg-gray-100">Child</p>
-					<input
-					type="text"
-					name="childCapacity"
-					class="px-2  w-full p-2 rounded-r-lg "
-					onChange={handleChange}
-					/>
-				</div>
+                <div className="flex items-center">
+                  <p className="p-2 bg-gray-100 rounded-l-lg"> Adult</p>
+                  <input
+                    type="text"
+                    name="adultCapacity"
+                    class="px-2 w-full p-2 "
+                    onChange={handleChange}
+                  />
+                </div>
 
+                <div className="flex items-center">
+                  <p className="p-2 bg-gray-100">Child</p>
+                  <input
+                    type="text"
+                    name="childCapacity"
+                    class="px-2  w-full p-2 rounded-r-lg "
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
             <div class="w-full space-y-1">
@@ -184,7 +211,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="size"
-				  onChange={handleChange}
+                  onChange={handleChange}
                   class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
                 />
                 {errMsg.title && (
@@ -202,7 +229,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <select
                   class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
                   name="status"
-				  onChange={handleChange}
+                  onChange={handleChange}
                 >
                   <option value="active" selected>
                     Active
@@ -223,7 +250,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="roomNumber"
-				  onChange={handleChange}
+                  onChange={handleChange}
                   class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
                 />
                 {errMsg.title && (
@@ -241,7 +268,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="floor"
-				  onChange={handleChange}
+                  onChange={handleChange}
                   class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
                 />
                 {errMsg.title && (
@@ -259,7 +286,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="view"
-				  onChange={handleChange}
+                  onChange={handleChange}
                   class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
                 />
                 {errMsg.title && (
@@ -280,7 +307,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <select
                   class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
                   name="availability"
-				  onChange={handleChange}
+                  onChange={handleChange}
                 >
                   <option value="available" selected>
                     Available
@@ -297,7 +324,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="proximityToAmenities"
-				  onChange={handleChange}
+                  onChange={handleChange}
                   class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
                 />
                 {errMsg.title && (
@@ -322,7 +349,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 className="w-full px-2 py-1.5 h-full"
                 type="number"
                 name="perNight"
-				onChange={handleChange}
+                onChange={handleChange}
                 id=""
               />
               <div className="bg-gray-100 p-2 px-2 flex items-center justify-end">
@@ -333,7 +360,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 className="w-full px-2 py-1.5 "
                 type="number"
                 name="perWeek"
-				onChange={handleChange}
+                onChange={handleChange}
                 id=""
               />
               <div className="bg-gray-100 p-2 px-2 flex items-center justify-end">
@@ -344,7 +371,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 className="w-full px-2 py-1.5 rounded-r-lg"
                 type="number"
                 name="perMonth"
-				onChange={handleChange}
+                onChange={handleChange}
                 id=""
               />
             </div>
@@ -356,11 +383,16 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
             </label>
             <div className="w-8/12">
               <div className="w-full  flex border-gray-400 border-[.1px] rounded-lg justify-between">
-                <input ref={amenityRef} type="text" name="capacity" class="p-2 m-1 w-full" />
+                <input
+                  ref={amenityRef}
+                  type="text"
+                  name="capacity"
+                  class="p-2 m-1 w-full"
+                />
                 <button
                   type="button"
                   className="bg-PrimaryBlue-normal px-4 text-white rounded-r-lg"
-					onClick={()=>AddAmenitites(amenityRef.current.value)}
+                  onClick={() => AddAmenitites(amenityRef.current.value)}
                 >
                   Add
                 </button>
@@ -372,7 +404,13 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </div>
               {/* packages cards */}
               <div className="flex flex-wrap space-x-1">
-                {amenitites?.map((item,index) => <PackageInputCard index={index} text={item} removePackage={removePackage} />)}
+                {amenitites?.map((item, index) => (
+                  <PackageInputCard
+                    index={index}
+                    text={item}
+                    removePackage={removePackage}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -396,7 +434,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                     </div>
                     <input
                       id="dropzone-file"
-					  onChange={handleImageUpload}
+                      onChange={handleImageUpload}
                       type="file"
                       multiple
                       className="hidden"
@@ -405,8 +443,13 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                   </label>
                 </div>
                 {images.map((item, index) => (
-							<ImageCard img={item} index={index} key={index} />
-						))}
+                  <ImageCard
+                    img={item}
+                    index={index}
+                    removeImage={removeImage}
+                    key={index}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -419,12 +462,12 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
 
           <div class="w-full flex justify-end">
             <button
-              // type={`${progress ? "button" : "submit"}`}
+              type={`${progress ? "button" : "submit"}`}
               class="bg-[#DAA520] text-white rounded-full p-2 text-base font-normal flex justify-center items-center mt-5 w-44"
             >
-              {/* {!progress ? (
+              {!progress ? (
 							<span id="saveSpanEdit">Save</span>
-						) : ( */}
+						) : (
               <div
                 class="flex items-center justify-center font-normal"
                 id="loadingEdit"
