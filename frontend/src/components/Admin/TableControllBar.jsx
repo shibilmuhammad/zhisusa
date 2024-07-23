@@ -12,12 +12,15 @@ const TableControllBar = ({
 		input: "",
 		type: searchValues[0].value,
 	});
+	const getNestedValue = (obj, path) => {
+		return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+	  };
 	const [filterData, setFilterData] = useState(filterValues[0]);
 	const searchFormHandler = (e) => {
 		e.preventDefault();
 
 		const list = [...dataList].filter((item) =>
-			item[searchFormData.type]
+			getNestedValue(item,searchFormData.type)
 				.toLowerCase()
 				.includes(searchFormData.input.toLowerCase())
 		);
