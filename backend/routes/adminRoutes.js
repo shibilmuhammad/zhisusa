@@ -25,9 +25,10 @@ router.post('/addActivity',adminAuthMiddleWare.verifyToken,upload.array('images'
 router.post('/login',loginController.postLogin)
 router.post('/logout',loginController.logout)
 router.get('/validatetoken',loginController.validateToken)
-module.exports = router
+
 
 //live types
 
 router.get('/getlivetypes',livetypesController.getroomsData);
 router.post('/addrooms',upload.array('images',10),livetypesController.addrooms)
+module.exports = router
