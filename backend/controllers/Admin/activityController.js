@@ -103,6 +103,7 @@ module.exports = {
 				},
 			});
 			const data = await newData.save();
+			const addToMain = await categorySchema.updateOne({title:main},{$push:{types:data?.['_id'].toString()}})
 
 			res.json({
 				status: "success",
@@ -192,6 +193,7 @@ module.exports = {
 	deleteActivity: async (req, res) => {
 		try {
 			const data = await activitySchema.findByIdAndDelete({ _id: req.body.id });
+			const addToMain = await categorySchema.updateOne({title:req.body.main},{$pull : {types : req.body.id}})
 			res.json({
 				status: "success",
 			});
