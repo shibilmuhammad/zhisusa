@@ -8,6 +8,12 @@ const liveSchema = new mongoose.Schema(
     title: {
       type: String,
     },
+    shortDescription:{
+      type:String,
+    },
+    description:{
+      type:String,
+    },
     details: {
       capacity: {
         adult:{
@@ -66,4 +72,5 @@ const liveSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const liveModel = mongoose.model('rooms',liveModel)
+const liveModel = mongoose.model('rooms',liveSchema)
+module.exports = liveModel

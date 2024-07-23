@@ -59,7 +59,7 @@ const Live = () => {
 	const [categoryListDup, setCategoryListDup] = useState([]);
 	const dispatch = useDispatch();
 	const categoiesFromRedux = useSelector((state)=>state.adminCategories.categories);
-	console.log('catogiesredux',categoiesFromRedux);
+
 	useEffect(() => {
 		async function getData (){
 			try{
