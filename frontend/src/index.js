@@ -122,8 +122,12 @@ const router = createBrowserRouter([
 				element: <PersonalizeBooking />,
 			},
 			{
-				path: "/admin",
+				path: "/admin/categories",
 				element: <Categories />,
+			},
+			{
+				path: "/work",
+				element: <Works />,
 			},
 			{ path: "/activityDetails", element: <ActivityDetailsMob /> },
 			{ path: "/admin/login", element: <Login /> },

@@ -6,8 +6,10 @@ import {
 } from "react-icons/fi";
 import { GoArrowRight } from "react-icons/go";
 import { accomodationSpecsData } from "../utils/accomodation";
+import { useNavigate } from "react-router-dom";
 
 const HomeLiveSection = () => {
+	const navigate = useNavigate()
 	return (
 		<div className="  lg:relative bg-navyBlue-light w-full px-4 py-6 lg:py-0 lg:px-0 space-y-4 lg:space-y-0 lg:flex lg:h-[100vh] items-center">
 			<img className="lg:absolute h-full w-full z-0 hidden lg:block" src="../images/naturalresott.jpeg" alt="th" />
@@ -25,7 +27,7 @@ const HomeLiveSection = () => {
 					perfect escape here.
 				</p>
 				<div className="w-full pb-5 hidden lg:block">
-					<button className="bg-PrimaryBlue-normal lg:bg-transparent lg:border-[1px] lg:border-r-white rounded-full px-4 p-2 font-poppins text-white flex items-center justify-between w-max gap-6 h-max">
+					<button onClick={()=> navigate('/accommodation')} className="bg-PrimaryBlue-normal lg:bg-transparent lg:border-[1px] lg:border-r-white rounded-full px-4 p-2 font-poppins text-white flex items-center justify-between w-max gap-6 h-max">
 						<span>Discover More</span>
 						<GoArrowRight className="text-2xl " />
 					</button>

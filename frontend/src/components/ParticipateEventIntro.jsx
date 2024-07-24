@@ -1,8 +1,10 @@
 import React from "react";
 import EventGridCard from "./EventGridCard";
 import { eventsParticipateGridData } from "../utils/events";
+import { useNavigate } from "react-router-dom";
 
 const ParticipateEventIntro = () => {
+	const navigate = useNavigate()
 	return (
 		<div className="w-full flex flex-col items-center md:h-[100vh] md:p-8 py-8 md:px-16">
 			<div className="md:flex flex-row-reverse gap-10">
@@ -25,7 +27,7 @@ const ParticipateEventIntro = () => {
 				</div>
 			</div>
 
-			<button className="md:mt-10 mt-8 text-white font-poppins bg-PrimaryBlue-normal rounded-full px-8 p-2 md:px-12">
+			<button onClick={() => navigate('/eventsParticipate')} className="md:mt-10 mt-8 text-white font-poppins bg-PrimaryBlue-normal rounded-full px-8 p-2 md:px-12">
 				Discover More Events
 			</button>
 		</div>

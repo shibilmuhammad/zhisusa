@@ -1,8 +1,10 @@
 import React from "react";
 import { FiArrowUpRight } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const HomeAboutSection = () => {
 	const letters = ["Z", "H", "I", "S", "U", "S", "A"];
+	const navigate = useNavigate()
 	return (
 		<div className="p-4 relative md:flex gap-10 md:px-24 md:h-[80vh] items-center 2xl:px-44">
 			<div className="space-y-10 md:hidden">
@@ -51,7 +53,7 @@ const HomeAboutSection = () => {
 					luxury and nature, providing an idyllic escape from the hustle and
 					bustle of city life.
 				</p>
-				<button className="border-PrimaryBlue-normal flex items-center gap-5 pl-8 justify-between font-poppins border-[1px] rounded-full ">
+				<button onClick={() => navigate('/aboutus')} className="border-PrimaryBlue-normal flex items-center gap-5 pl-8 justify-between font-poppins border-[1px] rounded-full ">
 					<span className="text-PrimaryBlue-normal">Know More</span>
 
 					<FiArrowUpRight className=" rounded-full h-10 w-10 bg-PrimaryBlue-normal text-white p-2" />

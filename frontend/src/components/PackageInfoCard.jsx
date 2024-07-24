@@ -1,8 +1,10 @@
 import React from "react";
 import { MdTaskAlt } from "react-icons/md";
 import { FaCircleArrowRight } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const PackageInfoCard = ({ id, data }) => {
+	const navigate = useNavigate()
 	return (
 		<div
 			className={`rounded-2xl ${
@@ -26,7 +28,7 @@ const PackageInfoCard = ({ id, data }) => {
 				</div>
 			</div>
 			<div className="h-full w-56 lg:h-72 lg:w-72 absolute bg-white rounded-full -right-36 lg:-right-32 top-0"></div>
-            <button className="flex items-center gap-1  absolute top-2 right-2  text-sm border-black border-2 bg-white rounded-full px-4 font-poppins p-1 shadow-2xl">
+            <button onClick={() => navigate(data?.link)} className="flex items-center gap-1  absolute top-2 right-2  text-sm border-black border-2 bg-white rounded-full px-4 font-poppins p-1 shadow-2xl">
                 See Details
                 <FaCircleArrowRight className="text-xl"/>
             </button>
