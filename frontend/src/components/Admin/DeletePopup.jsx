@@ -2,17 +2,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { TiWarningOutline } from "react-icons/ti";
 import { useNavigate } from "react-router-dom";
-const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData }) => {
+const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData,main,endpoint }) => {
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
 	const [progress, setProgress] = useState(false);
 	const handleSubmit = async (e) => {
 		setProgress(true)
 		try {
-			const endpoint = type === 'activity' ? 'deleteActivity' : 'deleteCategory'
+
 			const response = await axios.post(`/api/admin/${endpoint}`, {
 				id: dataList[rowID]?._id,
-				main: type === 'activity' ? dataList[rowID]?.mainCategory : dataList[rowID]?.main_category || null,
+				main: main || null,
 				title: dataList[rowID]?.title || null,
 			});
 			setProgress(false)

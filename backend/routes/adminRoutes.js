@@ -3,6 +3,7 @@ const router = express.Router();
 const adminAuthMiddleWare = require('../middleware/authMiddleware')
 const categoryController = require('../controllers/Admin/categoryController');
 const activityController = require('../controllers/Admin/activityController');
+const eventController = require('../controllers/Admin/eventController');
 const loginController = require('../controllers/Admin/loginController')
 
 const livetypesController = require('../controllers/Admin/livetypesController')
@@ -20,6 +21,12 @@ router.post('/deleteActivity',adminAuthMiddleWare.verifyToken,activityController
 router.post('/updateActivity',adminAuthMiddleWare.verifyToken,upload.array('files',10),activityController.upadateActivity)
 router.get('/getAllActivities',adminAuthMiddleWare.verifyToken,activityController.getActivities)
 router.post('/addActivity',adminAuthMiddleWare.verifyToken,upload.array('images',10),activityController.addActivity)
+
+//events
+router.post('/deleteEvent',adminAuthMiddleWare.verifyToken,eventController.deleteEvent)
+router.post('/updateEvent',adminAuthMiddleWare.verifyToken,upload.array('files',10),eventController.upadateEvent)
+router.get('/getAllEvents',adminAuthMiddleWare.verifyToken,eventController.getEvents)
+router.post('/addEvent',adminAuthMiddleWare.verifyToken,upload.array('images',10),eventController.addEvent)
 
 //adminLogin
 router.post('/login',loginController.postLogin)

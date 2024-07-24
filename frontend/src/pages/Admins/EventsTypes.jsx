@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../components/Admin/SideBar";
 import DeletePopup from "../../components/Admin/DeletePopup";
-import CategoriesEditPopup from "../../components/Admin/CategoriesEditPopup";
 import TableControllBar from "../../components/Admin/TableControllBar";
 import axios from "axios";
 import ListDataSection from "../../components/Admin/ListDataSection";
@@ -9,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Admin/Header";
 import ActivitiesAddPopup from "../../components/Admin/ActivitiesAddPopup";
 import ActivitiesEditPopup from "../../components/Admin/ActivitiesEditPopup";
-const ActivitiesTypes = () => {
+import EventsAddPopup from "../../components/Admin/EventsAddPopup";
+import EventsEditPopup from "../../components/Admin/EventsEditPopup";
+const EventsTypes = () => {
 	const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false);
 	const [showEdit, setShowEdit] = useState(false);
@@ -31,14 +32,14 @@ const ActivitiesTypes = () => {
 		{ text: "Main Category", value: "mainCategory" },
 		{ text: "Place", value: "details.location.place" },
 	];
-	const [activityList, setActiviyList] = useState([]);
-	const [activityListDup, setActivityListDup] = useState([]);
+	const [eventList, setEventList] = useState([]);
+	const [eventListDup, setEventListDup] = useState([]);
 	useEffect(() => {
 		async function getData (){
 			try{
-				const {data} = await axios.get(`/api/admin/getAllActivities`)
-				setActiviyList(data)
-				setActivityListDup(data)
+				const {data} = await axios.get(`/api/admin/getAllEvents`)
+				setEventList(data)
+				setEventListDup(data)
 			}catch(err){
 				console.log(err);
 				if (err?.response?.status === 401 ) {
@@ -57,46 +58,46 @@ const ActivitiesTypes = () => {
 			{showDelete && (
 				<DeletePopup
 					rowID={rowID}
-					type="activity"
+					type="event"
 					setShowDelete={setShowDelete}
-					dataList={activityList}
+					dataList={eventList}
 					setLoadData={setLoadData}
 					loadData={loadData}
-					main={'Activities'}
-					endpoint={'deleteActivity'}
+					main={'Events'}
+					endpoint={'deleteEvent'}
 				/>
 			)}
 			{showEdit && (
-				<ActivitiesEditPopup
+				<EventsEditPopup
 					rowID={rowID}
 					setShowEdit={setShowEdit}
-					dataList={activityList}
+					dataList={eventList}
 					setLoadData={setLoadData}
 					loadData={loadData}
 				/>
 			)}
-			{showAdd && <ActivitiesAddPopup loadData={loadData} rowID={rowID} setLoadData={setLoadData} setShowAdd={setShowAdd} />}
+			{showAdd && <EventsAddPopup loadData={loadData} rowID={rowID} setLoadData={setLoadData} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
-				<SideBar active={"Activity Types"} />
+				<SideBar active={"Event Types"} />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
-						setList={setActiviyList}
-						dataList={activityListDup}
+						setList={setEventList}
+						dataList={eventListDup}
 						searchValues={searchValues}
 						filterValues={filterValues}
 						setShowAdd={setShowAdd}
 					/>
 					<ListDataSection
 						setTableHeaders={setTableHeaders}
-						setList={setActiviyList}
-						newList={activityListDup}
+						setList={setEventList}
+						newList={eventListDup}
 						setRowID={setRowID}
 						setShowDelete={setShowDelete}
 						setShowEdit={setShowEdit}
 						tableValues={tableValues}
 						tableHeaders={tableHeaders}
-						dataList={activityList}
+						dataList={eventList}
 					/>
 				</div>
 			</main>
@@ -104,4 +105,4 @@ const ActivitiesTypes = () => {
 	);
 };
 
-export default ActivitiesTypes;
+export default EventsTypes;
