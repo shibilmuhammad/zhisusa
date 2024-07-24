@@ -1,10 +1,12 @@
 import React from "react";
 import { BsCalendarDate } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const EventCard = () => {
+	const navigate = useNavigate()
 	return (
-		<div className="rounded-xl h-48 relative">
+		<div onClick={() => navigate('/eventDetails')} className="rounded-xl h-48 relative cursor-pointer">
 			<img
 				className="rounded-xl h-full w-full object-cover absolute z-0"
 				src="../images/music.jpg"

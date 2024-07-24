@@ -34,6 +34,7 @@ export const allPackages = [
   {
     title : 'Daily Escape',
     img : '../images/daily.png',
+    link : '/dailyescape',
     description : 'Rejuvenate with a day in nature. Enjoy peaceful garden walks,thrilling boating and more.',
     features : [
       "Dining",
@@ -44,6 +45,7 @@ export const allPackages = [
   },
   {
     title : 'Weekly Retreat',
+    link : '/weeklyretreat',
     img : '../images/weekly.png',
     description : 'Unwind and recharge your healthy mind with our Weekly Retreat package.',
     features : [
@@ -55,6 +57,7 @@ export const allPackages = [
   },
   {
     title : 'Monthly Haven',
+    link : '/monthlyhaven',
     img : '../images/monthly.png',
     description : 'Immerse yourself in a month-long journey of relaxation with our Monthly Haven package.',
     features : [
@@ -65,6 +68,7 @@ export const allPackages = [
   },
   {
     title : 'Yearly Sanctuary',
+    link : '/yearly',
     img : '../images/yearly.png',
     description : 'Commit to a year of tranquility and productivity. Enjoy continous access to all our amenities.',
     features : [

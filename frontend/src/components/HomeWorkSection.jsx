@@ -2,8 +2,10 @@ import React from "react";
 import { GoArrowRight } from "react-icons/go";
 import WorkCard from "./WorkCard";
 import { workSpecsData } from "../utils/works";
+import { useNavigate } from "react-router-dom";
 
 const HomeWorkSection = () => {
+	const navigate = useNavigate()
 	return (
 		<div className="lg:relative w-full px-4 py-6 space-y-4 lg:space-y-0 lg:py-0 lg:flex flex-col lg:w-full items-center lg:justify-center lg:h-[100vh]">
 			<img className="lg:absolute h-full w-full z-0 hidden lg:block" src="../images/workMinimalsit.jpg" alt="th" />
@@ -31,7 +33,7 @@ const HomeWorkSection = () => {
 			</div>
 
 			<div className="w-full px-20 pb-5 lg:flex justify-center lg:z-20 ">
-				<button className="bg-orange-normal lg:bg-white lg:text-black lg:mt-3 rounded-full lg:gap-6 px-4 p-2 font-poppins text-white flex items-center justify-between w-full lg:w-max">
+				<button onClick={() => navigate('/works')} className="bg-orange-normal lg:bg-white lg:text-black lg:mt-3 rounded-full lg:gap-6 px-4 p-2 font-poppins text-white flex items-center justify-between w-full lg:w-max">
 					<span>Discover More</span>
 					<GoArrowRight className="text-2xl " />
 				</button>
