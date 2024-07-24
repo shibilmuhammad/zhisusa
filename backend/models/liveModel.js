@@ -5,6 +5,9 @@ const liveSchema = new mongoose.Schema(
     subcategoryId: {
       type: mongoose.Schema.Types.ObjectId,
     },
+    subcategory:{
+      type: String
+    },
     title: {
       type: String,
     },
@@ -12,6 +15,9 @@ const liveSchema = new mongoose.Schema(
       type:String,
     },
     description:{
+      type:String,
+    },
+    status:{
       type:String,
     },
     details: {
@@ -65,7 +71,7 @@ const liveSchema = new mongoose.Schema(
       },
       customizations: {
         type: [String],
-      },
+      },  
     },
   },
   {

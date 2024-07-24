@@ -5,35 +5,107 @@ import { useNavigate } from "react-router-dom";
 import PackageInputCard from "./PackageInputCard";
 import ImageCard from "./ImageCard";
 const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
-  const [errMsg, setErrMsg] = useState(false);
+  const [errMsg, setErrMsg] = useState({});
   const [imageFiles, setImageFiles] = useState([]);
   const amenityRef = useRef(null);
   const [amenitites, setAmenities] = useState([]);
   const [images, setImages] = useState([]);
   const [progress,setProgress] = useState(false)
-  const formData = useRef({
-    title: null,
-    subCategory: null,
-    shortDescription: null,
-    description: null,
-    adultCapacity: null,
-    childCapacity: null,
-    size: null,
-    status: "active",
-    roomNumber: null,
-    floor: null,
-    view: null,
-    availability: "available",
-    proximityToAmenities: null,
-    perNight: null,
-    perWeek: null,
-    perMonth: null,
-  });
+  const formData = {
+    title: useRef(null),
+    subCategory:useRef(null),
+    shortDescription: useRef(null),
+    description: useRef(null),
+    adultCapacity: useRef(null),
+    childCapacity: useRef(null),
+    size: useRef(null),
+    status: useRef('active'),
+    roomNumber:useRef(null),
+    floor: useRef(null),
+    view: useRef(null),
+    availability: useRef('available'),
+    proximityToAmenities: useRef(null),
+    perNight: useRef(null),
+    perWeek:useRef(null),
+    perMonth: useRef(null),
+  };
+  // const titleRef = useRef(null);
+  // const subCategoryRef = useRef(null)
+  // const shortDescriptionRef = useRef(null);
+  // const descriptionRef = useRef(null);
+  // const sizeRef = useRef(null)
+  // const adultCapacityRef = useRef(null);
+  // const childCapacityRef = useRef(null);
+  // const roomNumberRef = useRef(null);
+  // const floorRef = useRef(null);
+  // const viewRef = useRef(null);
+  // const proximityToAmenitiesRef = useRef(null);
+  // const perNightRef = useRef(null);
+  // const perWeekRef = useRef(null);
+  // const perMonthRef = useRef(null);
+
+  const validateForm = () => {
+    const errors = {};
+    if (formData.title.current.value.trim() === '') {
+      
+      errors.title = "Title can't be empty!";
+      formData.title.current.focus()
+    } else if (formData.subCategory.current.value == 'Select') {
+      errors.subCategory = "Select a subcategory from the list!";
+      formData.subCategory.current.focus()
+    } else if (formData.shortDescription.current.value.trim() === '') {
+      errors.shortDescription = "Short description can't be empty!";
+      formData.shortDescription.current.focus()
+    } else if (formData.description.current.value.trim()==='') {
+      errors.description = "Description can't be empty!";
+      formData.description.current.focus()
+    } else if (formData.adultCapacity.current.value.trim() ==='') {
+      errors.adultCapacity = "Adult capacity can't be empty!";
+      formData.adultCapacity.current.focus()
+    } else if (formData.childCapacity.current.value.trim()==='') {
+      errors.childCapacity = "Child capacity can't be empty!";
+      formData.childCapacity.current.focus()
+    } else if (formData.size.current.value.trim()==='') {
+      errors.size = "Size can't be empty!";
+      formData.size.current.focus()
+    } else if (formData.roomNumber.current.value.trim()==='') {
+      errors.roomNumber = "Room number can't be empty!";
+      formData.roomNumber.current.focus()
+    } else if (formData.floor.current.value.trim()==='') {
+      errors.floor = "Floor can't be empty!";
+      formData.floor.current.focus()
+    } else if (formData.view.current.value.trim()==='') {
+      errors.view = "View can't be empty!";
+      formData.view.current.focus()
+    } else if (formData.proximityToAmenities.current.value.trim()==='') {
+      errors.proximityToAmenities = "Proximity to amenities can't be empty!";
+      formData.proximityToAmenities.current.focus()
+    } else if (formData.perNight.current.value.trim==='') {
+      errors.perNight = "Price per night can't be empty!";
+      formData.perNight.current.focus()
+    } else if (formData.perWeek.current.value.trim()==='') {
+      errors.perWeek = "Price per week can't be empty!";
+      formData.perWeek.current.focus()
+    } else if (formData.perMonth.current.value.trim() ==='') {
+      errors.perMonth = "Price per month can't be empty!";
+      formData.perMonth.current.focus()
+    }else if (amenitites.length==0){
+      errors.amenitites = "Amenities can't be empty !";
+    }else if(imageFiles.length==0){
+      errors.images = "Images can't be empty!";
+    }
+
+    setErrMsg(errors);
+    return Object.keys(errors).length === 0;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    formData.current[name] = value;
+    formData[name] = value;
+    setErrMsg((prevErrMsg) => ({ ...prevErrMsg, [name]: "" }));
   };
   const AddAmenitites = (value) => {
+    if(value.trim()==='') return
     amenityRef.current.value = "";
     setAmenities((list) => [...list, value]);
   };
@@ -56,13 +128,13 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setProgress(true)
     const data = new FormData();
-
-    Object.entries(formData.current).forEach(([key, value]) => {
-      data.append(key, value);
-    });
-
+  
+    for (let key in formData ){
+      data.append(key,formData[key].current.value)
+    }
     // Append amenities
     amenitites.forEach((amenity, index) => {
       data.append(`amenities[${index}]`, amenity);
@@ -103,11 +175,14 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                   onChange={handleChange}
                   type="text"
                   name="title"
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  ref={formData.title}
+                  placeholder="eg:Mountain View Room"
+                  className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg  ${errMsg.title ? 'border-red-500 focus:outline-red-400' : ''
+                }`}
                 />
                 {errMsg.title && (
-                  <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                  <span className="text-[10px] text-red-600 space-y-0">
+                    {errMsg.title}
                   </span>
                 )}
               </div>
@@ -118,7 +193,9 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </label>
               <div className="">
                 <select
-                  class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
+                ref={formData.subCategory}
+                   className={`border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2 ${errMsg.subCategory ? 'border-red-500 focus:outline-red-400' : ''
+                  }`}
                   name="subCategory"
                   onChange={handleChange}
                 >
@@ -129,9 +206,9 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                     <option value={item.title}>{item.title}</option>
                   ))}
                 </select>
-                {errMsg.main && (
-                  <span class=" text-[10px] text-red-600 space-y-0">
-                    Select a main category from list !
+                {errMsg.subCategory && (
+                  <span className="text-[10px] text-red-600 space-y-0">
+                    {errMsg.subCategory}
                   </span>
                 )}
               </div>
@@ -146,12 +223,15 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               <textarea
                 type="text"
                 onChange={handleChange}
+                ref={formData.shortDescription}
+                placeholder="eg:Naturally lit, with a large picture window and Lutyens' style furnishings."
                 name="shortDescription"
-                class="min-h-12 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                className={`min-h-12 px-2 border-gray-400 border-[.1px]  w-full p-2 rounded-lg ${errMsg.shortDescription ? 'border-red-500 focus:outline-red-400' : ''
+              }`}
               />
-              {errMsg.title && (
-                <span class=" text-[10px] text-red-600 space-y-0">
-                  category can't be empty !
+             {errMsg.shortDescription && (
+                <span className="text-[10px] text-red-600 space-y-0">
+                  {errMsg.shortDescription}
                 </span>
               )}
             </div>
@@ -166,11 +246,14 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 type="text"
                 onChange={handleChange}
                 name="description"
-                class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                placeholder="eg:A private space to relax and unwind. Views of our croquet lawns, flower beds and rockeries are best enjoyed from your window with a cup of tea, coffee or in room dining. While the outside presents an English style garden, inside, your room has been designed with equal measure of heritage style; from the two poster king sized bed, ottoman and Victorian style lamps, to hand carved chairs and a writing desk."
+                ref={formData.description}
+                className={`min-h-28 px-2 placeholder:text-xs placeholder:text-gray-400 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.description ? 'border-red-500 focus:outline-red-400' : ''
+                  }`}
               />
-              {errMsg.title && (
-                <span class=" text-[10px] text-red-600 space-y-0">
-                  category can't be empty !
+             {errMsg.description && (
+                <span className="text-[10px] text-red-600 space-y-0">
+                  {errMsg.description}
                 </span>
               )}
             </div>
@@ -185,23 +268,38 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <div className="flex items-center">
                   <p className="p-2 bg-gray-100 rounded-l-lg"> Adult</p>
                   <input
-                    type="text"
+                    type="number"
                     name="adultCapacity"
-                    class="px-2 w-full p-2 "
+                    ref={formData.adultCapacity}
+                    className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.adultCapacity ? 'border-red-500 focus:outline-red-400' : ''
+                      }`}
                     onChange={handleChange}
                   />
+                  
                 </div>
 
                 <div className="flex items-center">
                   <p className="p-2 bg-gray-100">Child</p>
                   <input
-                    type="text"
+                  ref={formData.childCapacity}
+                    type="number"
                     name="childCapacity"
-                    class="px-2  w-full p-2 rounded-r-lg "
+                    className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.childCapacity ? 'border-red-500 focus:outline-red-400' : ''
+                  }`}
                     onChange={handleChange}
                   />
                 </div>
               </div>
+              {errMsg.adultCapacity && (
+                    <span className="text-[10px] text-red-600 space-y-0">
+                      {errMsg.adultCapacity}
+                    </span>
+                  )}
+                   {errMsg.childCapacity && (
+                    <span className="text-[10px] text-red-600 space-y-0">
+                      {errMsg.childCapacity}
+                    </span>
+                  )}
             </div>
             <div class="w-full space-y-1">
               <label className="" for="">
@@ -209,14 +307,16 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </label>
               <div className="">
                 <input
-                  type="text"
+                  type="number"
                   name="size"
                   onChange={handleChange}
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  ref={formData.size}
+                  placeholder="In Square Feet (sq ft)"
+                  class={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.size? 'border-red-500 focus:outline-red-400':'' } `}
                 />
-                {errMsg.title && (
+                {errMsg.size && (
                   <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                  {errMsg.size}
                   </span>
                 )}
               </div>
@@ -229,6 +329,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <select
                   class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
                   name="status"
+                  ref={formData.status}
                   onChange={handleChange}
                 >
                   <option value="active" selected>
@@ -248,14 +349,17 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </label>
               <div className="">
                 <input
+                ref={formData.roomNumber}
                   type="text"
                   name="roomNumber"
+                  placeholder="eg:221B"
                   onChange={handleChange}
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.roomNumber ? 'border-red-500 focus:outline-red-400' : ''
+                }`}
                 />
-                {errMsg.title && (
-                  <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                {errMsg.roomNumber && (
+                  <span className="text-[10px] text-red-600 space-y-0">
+                    {errMsg.roomNumber}
                   </span>
                 )}
               </div>
@@ -268,12 +372,16 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <input
                   type="text"
                   name="floor"
+                  placeholder="eg:First"
+                  ref={formData.floor}
                   onChange={handleChange}
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.floor ? 'border-red-500 focus:outline-red-400' : ''
+                }`}
+
                 />
-                {errMsg.title && (
+                {errMsg.floor && (
                   <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                   {errMsg.floor}
                   </span>
                 )}
               </div>
@@ -285,13 +393,16 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               <div className="">
                 <input
                   type="text"
+                  placeholder="eg:Mountain View"
                   name="view"
+                  ref={formData.view}
                   onChange={handleChange}
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.view ? 'border-red-500 focus:outline-red-400' : ''
+                }`}
                 />
-                {errMsg.title && (
+                {errMsg.view && (
                   <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                    {errMsg.view}
                   </span>
                 )}
               </div>
@@ -307,6 +418,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <select
                   class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
                   name="availability"
+                  ref={formData.availability}
                   onChange={handleChange}
                 >
                   <option value="available" selected>
@@ -322,14 +434,17 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </label>
               <div className="">
                 <input
+                  ref={formData.proximityToAmenities}
                   type="text"
                   name="proximityToAmenities"
+                  placeholder="eg:Gym"
                   onChange={handleChange}
-                  class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+                  className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg ${errMsg.proximityToAmenities ? 'border-red-500 focus:outline-red-400' : ''
+                }`}
                 />
-                {errMsg.title && (
+                {errMsg.proximityToAmenities && (
                   <span class=" text-[10px] text-red-600 space-y-0">
-                    category can't be empty !
+                   {errMsg.proximityToAmenities}
                   </span>
                 )}
               </div>
@@ -339,16 +454,18 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
           <div className="flex gap-5 w-full items-center">
             <label className="w-4/12" for="">
               Price
-            </label>
-            <div className="rounded-lg border-gray-400 border-[.1px] w-8/12 flex items-center">
+            </label> 
+            <div className={`rounded-lg  border-[.1px] w-8/12 flex items-center ${errMsg.perNight || errMsg.perWeek || errMsg.perMonth ? 'border-red-500 focus:outline-red-400':'border-gray-400'}`}>
               <div className="bg-gray-100 rounded-l-lg p-2 px-2 flex items-center justify-end">
                 <span>Night</span>
               </div>
               <span className="px-2">₹</span>
               <input
-                className="w-full px-2 py-1.5 h-full"
+                className={`w-full px-2 py-1.5 h-full ${errMsg.perNight?'border-red-500 focus:outline-red-400' : ''}`}
                 type="number"
+                ref={formData.perNight}
                 name="perNight"
+                placeholder="eg:1500"
                 onChange={handleChange}
                 id=""
               />
@@ -357,9 +474,11 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </div>
               <span className="px-2">₹</span>
               <input
-                className="w-full px-2 py-1.5 "
+                 className={`w-full px-2 py-1.5 h-full ${errMsg.perWeek?'border-red-500 focus:outline-red-400' : ''}`}
                 type="number"
+                placeholder="10,500"
                 name="perWeek"
+                ref={formData.perWeek}
                 onChange={handleChange}
                 id=""
               />
@@ -368,26 +487,47 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
               </div>
               <span className="px-2">₹</span>
               <input
-                className="w-full px-2 py-1.5 rounded-r-lg"
+                 className={`w-full px-2 py-1.5 h-full ${errMsg.perMonth?'border-red-500 focus:outline-red-400' : ''}`}
                 type="number"
                 name="perMonth"
+                placeholder="42,000"
+                ref={formData.perMonth}
                 onChange={handleChange}
                 id=""
               />
+              
             </div>
+            
           </div>
+          {errMsg.perNight && (
+                  <span class=" text-[10px] text-red-600 space-y-0 flex  justify-evenly">
+                   {errMsg.perNight}
+                  </span>
+                )}
+                {errMsg.perWeek && (
+                  <span class=" text-[10px] text-red-600 space-y-0 flex  justify-evenly">
+                   {errMsg.perWeek}
+                  </span>
+                )}
+                {errMsg.perMonth && (
+                  <span class=" text-[10px] text-red-600 space-y-0 flex  justify-evenly">
+                   {errMsg.perMonth}
+                  </span>
+                )}
           {/* package includes */}
           <div className="flex items-center gap-5 w-full">
             <label className="w-4/12" for="">
               Amenitites
             </label>
             <div className="w-8/12">
-              <div className="w-full  flex border-gray-400 border-[.1px] rounded-lg justify-between">
+              <div className={`w-full  flex border-gray-400 border-[.1px] rounded-lg justify-between ${errMsg.amenitites?'border-red-500 focus:outline-red-400':''}`}>
                 <input
+                  onChange={()=> setErrMsg((prevErrMsg) => ({ ...prevErrMsg, amenitites: "" }))}
                   ref={amenityRef}
                   type="text"
                   name="capacity"
                   class="p-2 m-1 w-full"
+                  placeholder="eg:Internet Access"
                 />
                 <button
                   type="button"
@@ -396,12 +536,13 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 >
                   Add
                 </button>
-                {errMsg.title && (
+                
+              </div>
+              {errMsg.amenitites && (
                   <span class=" text-[10px] text-red-600 space-y-0">
-                    packages can't be empty !
+                   {errMsg.amenitites}
                   </span>
                 )}
-              </div>
               {/* packages cards */}
               <div className="flex flex-wrap space-x-1">
                 {amenitites?.map((item, index) => (
@@ -424,7 +565,7 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                 <div className="flex items-center justify-center w-full">
                   <label
                     for="dropzone-file"
-                    className="flex px-8 flex-col items-center justify-center w-full p-2 h-28 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 "
+                    className={`flex px-8 flex-col items-center justify-center w-full p-2 h-28 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 ${errMsg.images?'border-red-300 focus:outline-red-400':''} `}
                   >
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                       <i className="bi bi-cloud-arrow-up text-3xl text-gray-500"></i>
@@ -441,7 +582,9 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                       accept="image/*"
                     />
                   </label>
+                
                 </div>
+                
                 {images.map((item, index) => (
                   <ImageCard
                     img={item}
@@ -451,6 +594,11 @@ const RoomsAddPoupup = ({ setShowAdd, categoryList }) => {
                   />
                 ))}
               </div>
+              {errMsg.images && (
+                  <span class=" text-[10px] text-red-600 space-y-0">
+                   {errMsg.images}
+                  </span>
+                )}
             </div>
           </div>
 

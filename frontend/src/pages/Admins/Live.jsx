@@ -13,7 +13,10 @@ import {useDispatch, useSelector} from 'react-redux'
 import { addToCategories } from "../../utils/categoriesDataSlice";
 const Live = () => {
     const navigate = useNavigate()
-	const [showDelete, setShowDelete] = useState(false);
+	const [showDelete, setShowDelete] = useState(false); 
+	const [loading,setLoading] = useState(false)
+	const [liveTypes,setLiveTypes] = useState([])
+	const [liveTypesDup,setLiveTypesDup] = useState([])
 	const [showEdit, setShowEdit] = useState(false);
 	const [showAdd, setShowAdd] = useState(false);
 	const [error,setError] = useState("")
@@ -21,35 +24,37 @@ const Live = () => {
 	const [tableHeaders, setTableHeaders] =
 		useState
 			([{
-				name: "Category",
+				name: "Rooms",
 				sort: true,
 				sortType: "letter",
 				value: "title",
 				asc: true,
 			},
 			{
-				name: "Main Category",
+				name: "SubCategory",
+				sort: true,
+				sortType: "letter",
+				value: "subcategory",
+				asc: true,
+			},
+			{
+				name: "Availability",
 				sort: false,
 				sortType: "",
 				value: "",
 				asc: true,
 			},
+			{ name: "Price", sort: true, sortType: "number", value: "perNight", asc: true },
 			{
-				name: "Types Count",
-				sort: true,
-				sortType: "number",
-				value: "count",
+				name: "Status",
+				sort: false,
+				sortType: "",
+				value: "",
 				asc: true,
 			},
-			{ name: "Status", sort: false, sortType: "", value: "", asc: true },
 			{ name: "Action", sort: false, sortType: "", value: "", asc: true }
 		]);
-	const tableValues = ["title", "main_category", "count"];
-	const sortValues = [
-		{ text: "Category ID", value: "id" },
-		{ text: "Category", value: "title" },
-		{ text: "Types Count", value: "count" },
-	];
+	const tableValues = ["title", "subcategory", "details.availability" ,"details.perNight" ]
 	const filterValues = ["All", "Active", "Blocked"];
 	const searchValues = [
 		{ text: "Category", value: "title" },
@@ -61,24 +66,44 @@ const Live = () => {
 	const categoiesFromRedux = useSelector((state)=>state.adminCategories.categories);
 
 	useEffect(() => {
-		async function getData (){
+		async function fetchCategories (){
 			try{
 				const {data} = await axios.get(`/api/admin/getAllCategories`)
 				setCategoryList(data);
 				const filteredData = categoryList.filter((item)=>item?.main_category =='Live');
 				setCategoryListDup(filteredData)
+				console.log('filterData ',filteredData);
 			}catch(err){
 				if (err?.response?.status === 401 ) {
                     setError('Unauthorized');
 					navigate('/admin/login')
                 } else {
                     setError('Server error: ' + error?.response?.status);
-					
                 }
 			}
 		}
-		getData();
-	}, [showAdd, showDelete, showEdit]);
+		async function fetchRooms (){
+			try{
+				const {data} = await axios.get(`/api/admin/getlivetypes`)
+				setLiveTypes(data);
+				setLiveTypesDup(data)
+			}catch(err){
+				if (err?.response?.status === 401 ) {
+                    setError('Unauthorized');
+					navigate('/admin/login')
+                } else {
+                    setError('Server error: ' + error?.response?.status);
+                }
+			}
+		}
+		const fetchData = async () => {
+			setLoading(true);
+			await Promise.all([fetchCategories(), fetchRooms()]);
+			setLoading(false);
+		  };
+	  
+		  fetchData();
+	}, []);
 	return (
 		<div className="bg-[#F2F2F2] min-h-screen">
 			{showDelete && (
@@ -103,22 +128,21 @@ const Live = () => {
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
 						setList={setCategoryList}
-						dataList={categoryListDup}
+						dataList={liveTypesDup}
 						searchValues={searchValues}
 						filterValues={filterValues}
-						sortValues={sortValues}
 						setShowAdd={setShowAdd}
 					/>
 					<ListDataSection
 						setTableHeaders={setTableHeaders}
-						setList={setCategoryList}
-						newList={categoryListDup}
+						setList={setLiveTypes}
+						newList={liveTypesDup}
 						setRowID={setRowID}
 						setShowDelete={setShowDelete}
 						setShowEdit={setShowEdit}
 						tableValues={tableValues}
 						tableHeaders={tableHeaders}
-						dataList={categoryList}
+						dataList={liveTypes}
 					/>
 				</div>
 			</main>

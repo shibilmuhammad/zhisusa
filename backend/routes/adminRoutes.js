@@ -29,5 +29,5 @@ module.exports = router
 
 //live types
 
-router.get('/getlivetypes',livetypesController.getroomsData);
-router.post('/addrooms',upload.array('images',10),livetypesController.addrooms)
+router.get('/getlivetypes',adminAuthMiddleWare.verifyToken,livetypesController.getroomsData);
+router.post('/addrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.addrooms)
