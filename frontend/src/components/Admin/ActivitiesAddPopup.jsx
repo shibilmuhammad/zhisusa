@@ -92,7 +92,6 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		for (let i = 0; i < formData.finalImages.length; i++) {
 			finalFormData.append("images", formData.finalImages[i]);
 		}
-		console.log(formRefs.current);
 		for (let key in formRefs.current) {
 			finalFormData.append(key, formRefs.current[key]);
 		}

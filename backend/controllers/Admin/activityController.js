@@ -22,12 +22,47 @@ module.exports = {
 			});
 		}
 	},
-	
+
 	addActivity: async (req, res) => {
 		try {
-			const {title,status,main,availability,startTime,endTime,description,proximity,priceHour,priceDay,capacity,location,packages} = req.body;
-			if (![title,status,main,availability,startTime,endTime,description,proximity,priceHour,priceDay,capacity,location].every(Boolean) || packages.length < 1 || req.files.length < 1) {
-				return res.status(400).json({ error: 'All fields are required and packages cannot be empty.' });
+			const {
+				title,
+				status,
+				main,
+				availability,
+				startTime,
+				endTime,
+				description,
+				proximity,
+				priceHour,
+				priceDay,
+				capacity,
+				location,
+				packages,
+			} = req.body;
+			if (
+				![
+					title,
+					status,
+					main,
+					availability,
+					startTime,
+					endTime,
+					description,
+					proximity,
+					priceHour,
+					priceDay,
+					capacity,
+					location,
+				].every(Boolean) ||
+				packages.length < 1 ||
+				req.files.length < 1
+			) {
+				return res
+					.status(400)
+					.json({
+						error: "All fields are required and packages cannot be empty.",
+					});
 			}
 			const storage = getStorage(app);
 			const files = req.files;
@@ -42,11 +77,11 @@ module.exports = {
 			});
 
 			const uploadedFiles = await Promise.all(uploadPromises);
-			
+
 			const newData = new activitySchema({
 				title: title,
-				mainCategory: main || 'Activities',
-				status: status || 'Available',
+				mainCategory: main || "Activities",
+				status: status || "Available",
 				details: {
 					description: description,
 					capacity: capacity,
@@ -58,7 +93,7 @@ module.exports = {
 						availability: availability,
 						time: `${startTime} to ${endTime}`,
 					},
-					
+
 					location: {
 						place: location,
 						proximityToAmenities: proximity,
@@ -68,6 +103,7 @@ module.exports = {
 				},
 			});
 			const data = await newData.save();
+			const addToMain = await categorySchema.updateOne({title:main},{$push:{types:data?.['_id'].toString()}})
 
 			res.json({
 				status: "success",
@@ -78,41 +114,86 @@ module.exports = {
 		}
 	},
 	upadateActivity: async (req, res) => {
-		const { title, status, main, id } = req.body;
-
 		try {
-			const data = await mainSchema.find({ title: main });
-			const oldCategory = await categorySchema.findById(id);
+			const {
+				title,
+				status,
+				main,
+				availability,
+				startTime,
+				endTime,
+				description,
+				proximity,
+				priceHour,
+				priceDay,
+				capacity,
+				location,
+				packages,
+				id,
+				image_links
+			} = req.body;
+			const storage = getStorage(app);
+			const files = req.files;
+			if (files.length > 0) {
+				
+				const uploadPromises = files.map(async (file) => {
+					const fileName = `${Date.now()}_${file.originalname}`;
+					const fileRef = ref(storage, `images/${fileName}`);
 
-			if (!(oldCategory.main_category === main)) {
-				const addId = await mainSchema.updateOne(
-					{ title: main },
-					{ $push: { categories: id } }
-				);
-				const deleteId = await mainSchema.updateOne(
-					{ title: oldCategory.main_category },
-					{ $pull: { categories: id } }
-				);
+					await uploadBytes(fileRef, file.buffer);
+					const publicUrl = await getDownloadURL(fileRef);
+
+					return publicUrl;
+				});
+
+				var uploadedFiles = await Promise.all(uploadPromises);
 			}
+			console.log(req.body);
 
-			const updateData = await categorySchema.findByIdAndUpdate(id, {
-				title: title,
-				status: status,
-				main_category: main,
-			});
+
+			const updateData = await activitySchema.findOne({_id:id});
+			if (updateData) {
+				updateData.title = title || updateData.title;
+				updateData.status = status || updateData.status;
+				updateData.mainCategory = main || updateData.mainCategory;
+				updateData.details.schedule.time =
+					`${startTime} to ${endTime}` || updateData.details.schedule.time;
+				updateData.description = description || updateData.details.description;
+				updateData.details.capacity = capacity || updateData.details.capacity;
+				updateData.details.price.perDay =
+					priceDay || updateData.details.price.perDay;
+				updateData.details.price.perSession =
+					priceHour || updateData.details.price.perSession;
+				updateData.details.packageIncludes =
+					packages || updateData.details.packageIncludes;
+				updateData.details.schedule.availability =
+					availability || updateData.details.schedule.availability;
+				updateData.details.location.place =
+					location || updateData.details.location.place;
+				updateData.details.location.proximityToAmenities =
+					proximity || updateData.details.location.proximityToAmenities;
+				if(image_links){
+					uploadedFiles ? updateData.details.images = [...image_links.split(',') ,...uploadedFiles] : updateData.details.images = image_links.split(',')
+				}else{
+					uploadedFiles ? updateData.details.images = uploadedFiles : updateData.details.images = []
+				}
+				
+					
+			}
+			await updateData.save()
 
 			res.json({
 				status: "success",
 			});
 		} catch (error) {
-			res.json({
-				status: "failed",
-			});
+			console.error("Error uploading files:", error);
+			res.status(500).json({ error: "Failed to upload files" });
 		}
 	},
 	deleteActivity: async (req, res) => {
 		try {
 			const data = await activitySchema.findByIdAndDelete({ _id: req.body.id });
+			const addToMain = await categorySchema.updateOne({title:req.body.main},{$pull : {types : req.body.id}})
 			res.json({
 				status: "success",
 			});
@@ -123,26 +204,3 @@ module.exports = {
 		}
 	},
 };
-function base64ImageToBlob(str) {
-	// extract content type and base64 payload from original string
-	var pos = str.indexOf(";base64,");
-	var type = str.substring(5, pos);
-	var b64 = str.substr(pos + 8);
-
-	// decode base64
-	var imageContent = atob(b64);
-
-	// create an ArrayBuffer and a view (as unsigned 8-bit)
-	var buffer = new ArrayBuffer(imageContent.length);
-	var view = new Uint8Array(buffer);
-
-	// fill the view, using the decoded base64
-	for (var n = 0; n < imageContent.length; n++) {
-		view[n] = imageContent.charCodeAt(n);
-	}
-
-	// convert ArrayBuffer to Blob
-	var blob = new Blob([buffer], { type: type });
-
-	return blob;
-}

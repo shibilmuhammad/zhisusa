@@ -17,7 +17,7 @@ router.post('/addCategory',adminAuthMiddleWare.verifyToken,categoryController.ad
 
 //activities
 router.post('/deleteActivity',adminAuthMiddleWare.verifyToken,activityController.deleteActivity)
-router.post('/updateActivity',adminAuthMiddleWare.verifyToken,activityController.upadateActivity)
+router.post('/updateActivity',adminAuthMiddleWare.verifyToken,upload.array('files',10),activityController.upadateActivity)
 router.get('/getAllActivities',adminAuthMiddleWare.verifyToken,activityController.getActivities)
 router.post('/addActivity',adminAuthMiddleWare.verifyToken,upload.array('images',10),activityController.addActivity)
 
@@ -25,9 +25,13 @@ router.post('/addActivity',adminAuthMiddleWare.verifyToken,upload.array('images'
 router.post('/login',loginController.postLogin)
 router.post('/logout',loginController.logout)
 router.get('/validatetoken',loginController.validateToken)
-module.exports = router
+
 
 //live types
 
+
 router.get('/getlivetypes',adminAuthMiddleWare.verifyToken,livetypesController.getroomsData);
 router.post('/addrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.addrooms)
+
+module.exports = router
+
