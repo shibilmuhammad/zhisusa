@@ -13,8 +13,8 @@ const SideBar = ({active}) => {
         { title: "Categories", src: "", icon: MdCategory },
         { title: "Live Types", src: "", icon: MdBedroomParent },
         { title: "Work Types", src: "", icon: GiOfficeChair },
-        { title: "Activity Types", src: "", icon: MdSurfing },
-        { title: "Event Types", src: "", icon: BsCake2Fill },
+        { title: "Activity Types", src: "/admin/activity", icon: MdSurfing },
+        { title: "Event Types", src: "/admin/events", icon: BsCake2Fill },
         { title: "Zhisusa Events", src: "", icon: FaMusic },
       ];
   return (
@@ -22,7 +22,7 @@ const SideBar = ({active}) => {
             {sideBar.map((item)=>
                 <Link
                 to={item.src}
-                className={`${active === item.title ? 'bg-PrimaryBlue-normal text-white rounded-lg hover:bg-PrimaryBlue-normal' : 'bg-transparent rounded-sm'} flex items-center whitespace-nowrap space-x-2 cursor-pointer hover:bg-gray-200 px-3 py-3`}
+                className={`${active === item.title ? 'bg-PrimaryBlue-normal text-white rounded-lg hover:bg-PrimaryBlue-normal' : 'bg-transparent rounded-sm hover:bg-gray-200'} flex items-center whitespace-nowrap space-x-2 cursor-pointer  px-3 py-3`}
             >
                 <item.icon />
                 <h2 className={`${active === item.title ? ' text-white' : 'text-[#7E7878]'} text-base font-semibold `}>
