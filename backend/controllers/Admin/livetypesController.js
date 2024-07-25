@@ -12,7 +12,7 @@ const app = require("../../config/firebase");
 module.exports = {
   getroomsData: async (req, res) => {
       const data = await Room.find();
-      res.status(200).json({data})
+      res.status(200).json(data)
 
   },
    addrooms : async (req, res) => {
