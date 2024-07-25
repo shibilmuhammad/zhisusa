@@ -54,11 +54,11 @@ const Live = () => {
 			},
 			{ name: "Action", sort: false, sortType: "", value: "", asc: true }
 		]);
-	const tableValues = ["title", "subcategory", "details.availability" ,"details.perNight" ]
+	const tableValues = ["title", "subcategory", "details.availability" ,"details.price.perNight" ]
 	const filterValues = ["All", "Active", "Blocked"];
 	const searchValues = [
-		{ text: "Category", value: "title" },
-		{ text: "Main Category", value: "main_category" },
+		{ text: "Room", value: "title" },
+		{ text: "Type", value: "subcategory" },
 	];
 	const [categoryList, setCategoryList] = useState([]);
 	const [categoryListDup, setCategoryListDup] = useState([]);
@@ -99,11 +99,15 @@ const Live = () => {
 		const fetchData = async () => {
 			setLoading(true);
 			await Promise.all([fetchCategories(), fetchRooms()]);
+			console.log('ivetpyees',liveTypes);
 			setLoading(false);
 		  };
 	  
 		  fetchData();
 	}, []);
+	useEffect(()=>{
+		console.log('liveeeeeee',liveTypes);
+	},[liveTypes])
 	return (
 		<div className="bg-[#F2F2F2] min-h-screen">
 			{showDelete && (
@@ -127,7 +131,7 @@ const Live = () => {
 				<SideBar />
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
 					<TableControllBar
-						setList={setCategoryList}
+						setList={setLiveTypes}
 						dataList={liveTypesDup}
 						searchValues={searchValues}
 						filterValues={filterValues}
@@ -142,6 +146,7 @@ const Live = () => {
 						setShowEdit={setShowEdit}
 						tableValues={tableValues}
 						tableHeaders={tableHeaders}
+						
 						dataList={liveTypes}
 					/>
 				</div>

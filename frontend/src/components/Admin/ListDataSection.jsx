@@ -4,6 +4,7 @@ import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
 
 const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableValues,setRowID,newList,setList,setTableHeaders}) => {
+	console.log('datalist is ',dataList);
 	const openDelete = (id) => {
 		setRowID(id);
 		setShowDelete(true);
