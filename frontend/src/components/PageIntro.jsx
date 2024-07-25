@@ -18,7 +18,7 @@ const PageIntro = ({data}) => {
 			
 			<div className="absolute  bg-transparent p-8 w-full bg-gradient-to-t from-black  z-10 -bottom-1 right-0"></div>
 
-			<div className="absolute inset-0 z-10 md:h-[100vh] h-[70vh] bg-black opacity-70"></div>
+			<div className="absolute inset-0 z-10 md:h-[100vh] h-[70vh] bg-black opacity-60"></div>
 		</div>
 	);
 };

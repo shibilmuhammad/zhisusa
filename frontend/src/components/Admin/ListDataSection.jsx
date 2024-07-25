@@ -90,7 +90,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 													sortHandler(
 														item.value,
 														item.type,
-														"desc",
+														"asc",
 														item.asc,index
 													)
 												}
@@ -98,7 +98,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 											/>):(
 											<IoMdArrowDropdown
 												onClick={() =>
-													sortHandler(item.value, item.type, "asc",item.asc,index)
+													sortHandler(item.value, item.type, "desc",item.asc,index)
 												}
 												className="cursor-pointer "
 											/>)}
