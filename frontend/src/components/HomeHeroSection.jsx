@@ -9,7 +9,7 @@ const HomeHeroSection = () => {
 		<div className={`  h-[70vh] md:h-[100vh] object-center flex flex-col justify-center items-center  z-10  relative mb-16`}>
 			<img
 				className="h-full w-full object-cover absolute -z-20"
-				src="../images/retreat-hub.jpeg"
+				src="../images/homeBg.jpeg"
 				alt=""
 			/>
 			<div className=" z-20 flex flex-col gap-5 md:gap-0 justify-between md:justify-center items-center h-[40vh]  px-6 md:px-24 md:items-center">
