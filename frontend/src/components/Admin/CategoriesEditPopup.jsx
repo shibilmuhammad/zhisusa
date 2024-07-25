@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 const CategoriesEditPopup = ({
@@ -12,7 +12,7 @@ const CategoriesEditPopup = ({
 	const navigate = useNavigate();
 	const [error, setError] = useState("");
 	const [progress, setProgress] = useState(false);
-	const [formData, setFormData] = useState({
+	const formData = useRef({
 		title: dataList[rowID]?.title,
 		status: dataList[rowID]?.status,
 		main: dataList[rowID]?.main_category,
@@ -23,21 +23,20 @@ const CategoriesEditPopup = ({
 		main: false,
 		server: false,
 	});
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const finalFormData = new FormData();
+		
+		for (let key in formData.current) {
+			finalFormData.append(key, formData.current[key]?.value);
+		}
 		if (validateForm()) {
 			setProgress(true);
 			try {
 				const response = await axios.post(
 					`/api/admin/updateCategory`,
-					formData
+					finalFormData
 				);
 				setProgress(false);
 				setLoadData(!loadData);
@@ -57,15 +56,22 @@ const CategoriesEditPopup = ({
 
 	const validateForm = () => {
 		setErrMsg((errMsg) => ({ ...errMsg, title: false, main: false }));
-		if (!formData.title) {
+		if (!formData.current.title.value) {
 			setErrMsg((errMsg) => ({ ...errMsg, title: true }));
 			return false;
-		} else if (formData.main === "Select") {
+		} else if (formData.current.main.value === "Select") {
 			setErrMsg((errMsg) => ({ ...errMsg, main: true }));
 			return false;
 		}
 		return true;
 	};
+	useEffect(() => {
+		if(dataList){
+			formData.current.title.value = dataList[rowID]?.title
+			formData.current.status.value = dataList[rowID]?.status
+			formData.current.main.value = dataList[rowID]?.main_category
+		}
+	},[])
 	return (
 		<div
 			class="font-poppins fixed inset-0 flex justify-center items-center z-10 bg-[rgba(0,0,0,0.3)]"
@@ -77,10 +83,9 @@ const CategoriesEditPopup = ({
 					<label for="w-4/12">Category</label>
 					<div className="w-8/12">
 						<input
-							value={formData?.title}
 							type="text"
 							name="title"
-							onChange={handleChange}
+							ref={(el) => (formData.current.title = el)}
 							class="px-2 border-gray-400 border-[.1px] p-2 rounded-lg w-full"
 						/>
 						{errMsg.title && (
@@ -96,8 +101,8 @@ const CategoriesEditPopup = ({
 						<select
 							class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="main"
-							onChange={handleChange}
-							value={formData.main}>
+							ref={(el) => (formData.current.main = el)}
+							>
 							<option value="Select" selected disabled>
 								Select
 							</option>
@@ -120,8 +125,8 @@ const CategoriesEditPopup = ({
 						<select
 							class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="status"
-							value={formData?.status}
-							onChange={handleChange}>
+							ref={(el) => (formData.current.status = el)}
+							>
 							<option value="Active">Active</option>
 							<option value="Blocked">Blocked</option>
 						</select>
