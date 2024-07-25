@@ -15,7 +15,7 @@ const Gallery = () => {
 			 <Header />
 			<SimplePageIntro
 				data={{
-					thumb: "../images/tent.jpg",
+					thumb: "../images/bg4.jpeg",
 					title: "Gallery",
 				}}
 			/>

@@ -10,7 +10,7 @@ const Aboutus = () => {
 			 <Header />
 			<SimplePageIntro
 				data={{
-					thumb: "../images/tent.jpg",
+					thumb: "../images/bg3.jpeg",
 					title: "About us",
 				}}
 			/>
@@ -29,7 +29,7 @@ const Aboutus = () => {
 				<h1 className="text-xl font-medium md:hidden">Our Company</h1>
 				<img
 					className="hidden md:block h-64 rounded-xl"
-					src="../images/about.jpg"
+					src="../images/bg2.jpeg"
 					alt="home"
 				/>
 				<p className="text-sm md:text-lg">

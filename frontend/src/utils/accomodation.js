@@ -29,7 +29,7 @@ export const accomodationFeaturesIntro = {
     description : 'Discover the exceptional features that make our accommodations a perfect blend of comfort, style, and nature. Enjoy luxurious rooms and suites, charming tents, and a serene natural setting, all designed to provide an unforgettable stay.'
 }
 export const accomodationIntro = {
-    thumb :'../images/live-intro.jpg',
+    thumb :'../images/homeBg.jpeg',
     title : 'Stay with Comfort',
     description : 'Experience luxurious accommodations with a touch of nature. Choose from cozy rooms, charming tents, and well-appointed suites, all designed to provide the perfect blend of comfort and serenity. Enjoy modern amenities in a stunning natural setting.',
     button : 'Explore Your Perfect Nature Stay'
