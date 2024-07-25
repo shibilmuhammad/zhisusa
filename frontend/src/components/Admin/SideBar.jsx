@@ -10,12 +10,12 @@ const SideBar = ({active}) => {
     
         { title: "Dashboard", src: "", icon: MdDashboard },
         { title: "Bookings", src: "", icon: FaClipboardList },
-        { title: "Categories", src: "", icon: MdCategory },
+        { title: "Categories", src: "/admin/categories", icon: MdCategory },
         { title: "Live Types", src: "", icon: MdBedroomParent },
         { title: "Work Types", src: "", icon: GiOfficeChair },
         { title: "Activity Types", src: "/admin/activity", icon: MdSurfing },
         { title: "Event Types", src: "/admin/events", icon: BsCake2Fill },
-        { title: "Zhisusa Events", src: "", icon: FaMusic },
+        { title: "Zhisusa Events", src: "/admin/zhisusaEvents", icon: FaMusic },
       ];
   return (
     <div className="left mt-28  space-y-4 border-r-[.1px] border-gray-400 w-fit pt-1 pb-1 pr-10">
