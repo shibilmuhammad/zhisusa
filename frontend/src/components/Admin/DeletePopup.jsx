@@ -15,17 +15,18 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData
 				main: main || null,
 				title: dataList[rowID]?.title || null,
 			});
+				console.log('response is ',response);
 			setProgress(false)
 			setLoadData(!loadData)
 			setShowDelete(false);
 
 		} catch (error) {
 			setProgress(false)
-			if (error.response.status === 401) {
+			if (error?.response?.status === 401) {
 				setError("Unauthorized");
 				navigate("/admin/login");
 			} else {
-				setError("Server error: " + error.response.status);
+				setError("Server error: " + error?.response?.status);
 			}
 		}
 	};
