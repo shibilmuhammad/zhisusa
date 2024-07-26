@@ -11,7 +11,7 @@ const SideBar = ({active}) => {
         { title: "Dashboard", src: "", icon: MdDashboard },
         { title: "Bookings", src: "", icon: FaClipboardList },
         { title: "Categories", src: "", icon: MdCategory },
-        { title: "Live Types", src: "", icon: MdBedroomParent },
+        { title: "Live Types", src: "/admin/live", icon: MdBedroomParent },
         { title: "Work Types", src: "", icon: GiOfficeChair },
         { title: "Activity Types", src: "/admin/activity", icon: MdSurfing },
         { title: "Event Types", src: "/admin/events", icon: BsCake2Fill },

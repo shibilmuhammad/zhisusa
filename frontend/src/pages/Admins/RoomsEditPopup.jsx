@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import PackageInputCard from "./PackageInputCard";
-import ImageCard from "./ImageCard";
-const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loading }) => {
+import PackageInputCard from "../../components/Admin/PackageInputCard";
+import ImageCard from "../../components/Admin/ImageCard";
+const RoomsEditPopup = ({ setLoadData , loadData , setShowEdit, categoryList ,loading ,rowID ,dataList}) => {
   const [errMsg, setErrMsg] = useState({});
   const [imageFiles, setImageFiles] = useState([]);
   const amenityRef = useRef(null);
@@ -19,31 +19,37 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
     adultCapacity: useRef(null),
     childCapacity: useRef(null),
     size: useRef(null),
-    status: useRef('active'),
+    status: useRef(null),
     roomNumber:useRef(null),
     floor: useRef(null),
     view: useRef(null),
-    availability: useRef('available'),
+    availability: useRef(null),
     proximityToAmenities: useRef(null),
     perNight: useRef(null),
     perWeek:useRef(null),
     perMonth: useRef(null),
   };
-  // const titleRef = useRef(null);
-  // const subCategoryRef = useRef(null)
-  // const shortDescriptionRef = useRef(null);
-  // const descriptionRef = useRef(null);
-  // const sizeRef = useRef(null)
-  // const adultCapacityRef = useRef(null);
-  // const childCapacityRef = useRef(null);
-  // const roomNumberRef = useRef(null);
-  // const floorRef = useRef(null);
-  // const viewRef = useRef(null);
-  // const proximityToAmenitiesRef = useRef(null);
-  // const perNightRef = useRef(null);
-  // const perWeekRef = useRef(null);
-  // const perMonthRef = useRef(null);
-
+  useEffect(()=>{
+    formData.title.current.value = dataList[rowID].title;
+    formData.subCategory.current.value = dataList[rowID].subcategory
+    formData.shortDescription.current.value = dataList[rowID].shortDescription
+    formData.description.current.value = dataList[rowID].description
+    formData.adultCapacity.current.value = dataList[rowID].details.capacity.adult
+    formData.childCapacity.current.value = dataList[rowID].details.capacity.child
+    formData.size.current.value = dataList[rowID].details.size
+    formData.status.current.value = dataList[rowID].status
+    formData.roomNumber.current.value = dataList[rowID].details.location.roomNumber
+    formData.floor.current.value = dataList[rowID].details.location.floor
+    formData.view.current.value = dataList[rowID].details.location.view
+    formData.availability.current.value = dataList[rowID].details.availability
+    formData.proximityToAmenities.current.value = dataList[rowID].details.location.proximityToAmenities
+    formData.perNight.current.value = dataList[rowID].details.price.perNight
+    formData.perWeek.current.value =  dataList[rowID].details.price.perWeek
+    formData.perMonth.current.value =  dataList[rowID].details.price.perMonth
+    setAmenities(dataList[rowID].details.amenities);
+    setImages(dataList[rowID].details.images)
+    setImageFiles(dataList[rowID].details.images)
+  },[])
   const validateForm = () => {
     const errors = {};
     if (formData.title.current.value.trim() === '') {
@@ -131,7 +137,6 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
     if (!validateForm()) return;
     setProgress(true)
     const data = new FormData();
-  
     for (let key in formData ){
       data.append(key,formData[key].current.value)
     }
@@ -144,15 +149,16 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
     imageFiles.forEach((image, index) => {
       data.append(`images`, image);
     });
+    data.append('id',dataList[rowID]._id)
     try {
-      const response = await axios.post("/api/admin/addrooms", data, {
+      const response = await axios.post("/api/admin/editrooms", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       setProgress(false)
       setLoadData(!loadData)
-      setShowAdd(false);
+      setShowEdit(false);
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrMsg({ server: true });
@@ -181,6 +187,7 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
                 type="text"
                 name="title"
                 ref={formData.title}
+                value={formData?.title?.current?.value}
                 placeholder="eg:Mountain View Room"
                 className={`px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg  ${errMsg.title ? 'border-red-500 focus:outline-red-400' : ''
               }`}
@@ -198,6 +205,7 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
             </label>
             <div className="">
               <select
+               value={formData?.subCategory?.current?.value}
               ref={formData.subCategory}
                  className={`border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2 ${errMsg.subCategory ? 'border-red-500 focus:outline-red-400' : ''
                 }`}
@@ -649,7 +657,7 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
         </div>
         <button
           class="absolute -top-2 cursor-pointer right-4 text-3xl"
-          onClick={() => setShowAdd(false)}
+          onClick={() => setShowEdit(false)}
         >
           <IoIosCloseCircle />
         </button>
@@ -660,4 +668,4 @@ const RoomsAddPoupup = ({ setLoadData , loadData , setShowAdd, categoryList ,loa
   );
 };
 
-export default RoomsAddPoupup;
+export default RoomsEditPopup;

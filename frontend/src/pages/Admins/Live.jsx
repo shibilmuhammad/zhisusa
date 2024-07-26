@@ -11,10 +11,12 @@ import Header from "../../components/Admin/Header";
 import RoomsAddPoupup from "../../components/Admin/RoomsAddPopup";
 import {useDispatch, useSelector} from 'react-redux'
 import { addToCategories } from "../../utils/categoriesDataSlice";
+import RoomsEditPopup from "./RoomsEditPopup";
 const Live = () => {
     const navigate = useNavigate()
 	const [showDelete, setShowDelete] = useState(false); 
-	const [loading,setLoading] = useState(false)
+	const [loading,setLoading] = useState(false);
+	const [loadData,setLoadData] = useState(false)
 	const [liveTypes,setLiveTypes] = useState([])
 	const [liveTypesDup,setLiveTypesDup] = useState([])
 	const [showEdit, setShowEdit] = useState(false);
@@ -70,9 +72,8 @@ const Live = () => {
 			try{
 				const {data} = await axios.get(`/api/admin/getAllCategories`)
 				setCategoryList(data);
-				const filteredData = categoryList.filter((item)=>item?.main_category =='Live');
-				setCategoryListDup(filteredData)
-				console.log('filterData ',filteredData);
+
+				
 			}catch(err){
 				if (err?.response?.status === 401 ) {
                     setError('Unauthorized');
@@ -99,40 +100,47 @@ const Live = () => {
 		const fetchData = async () => {
 			setLoading(true);
 			await Promise.all([fetchCategories(), fetchRooms()]);
-			console.log('ivetpyees',liveTypes);
 			setLoading(false);
 		  };
 	  
 		  fetchData();
-	}, []);
+	}, [loadData]);
 	useEffect(()=>{
-		console.log('liveeeeeee',liveTypes);
-	},[liveTypes])
+		setCategoryListDup([...categoryList].filter((item)=>item?.main_category =='Live'));
+		
+	},[categoryList])
+
 	return (
 		<div className="bg-[#F2F2F2] min-h-screen">
 			{showDelete && (
 				<DeletePopup
 					rowID={rowID}
-					type="category"
+					type="Room"
 					setShowDelete={setShowDelete}
-					dataList={categoryList}
+					dataList={liveTypes}
+					endpoint={'deleterooms'}
+					loadData={loadData}
+					setLoadData={setLoadData}
 				/>
 			)}
 			{showEdit && (
-				<CategoriesEditPopup
+				<RoomsEditPopup
+				setLoadData={setLoadData}
+					loadData={loadData}
 					rowID={rowID}
 					setShowEdit={setShowEdit}
-					dataList={categoryList}
+					dataList={liveTypes}
+					categoryList={categoryListDup}
 				/>
 			)}
-			{showAdd && <RoomsAddPoupup categoryList={categoryListDup} setShowAdd={setShowAdd} />}
+			{ showAdd && <RoomsAddPoupup loadData={loadData} setLoadData={setLoadData} loading={loading} categoryList={categoryListDup} setShowAdd={setShowAdd} />}
 			{<Header />}
 			<main className="px-10 flex w-full">
-				<SideBar />
+				<SideBar  active={'Live Types'}/>
 				<div className="mt-12 flex items-center flex-col w-full pl-12 gap-6">
-					<TableControllBar
+					<TableControllBar 
 						setList={setLiveTypes}
-						dataList={liveTypesDup}
+					 	dataList={liveTypesDup}
 						searchValues={searchValues}
 						filterValues={filterValues}
 						setShowAdd={setShowAdd}
