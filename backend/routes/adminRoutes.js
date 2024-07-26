@@ -7,9 +7,12 @@ const eventController = require('../controllers/Admin/eventController');
 const loginController = require('../controllers/Admin/loginController')
 const ZhisusaEventsController = require('../controllers/Admin/zhisusaEventsController')
 
-const livetypesController = require('../controllers/Admin/livetypesController')
+
+const livetypesController = require('../controllers/Admin/livetypesController');
+const workTypesController = require('../controllers/Admin/workTypesController')
 const upload = require('../utils/upload');
 const zhisusaEventsController = require('../controllers/Admin/zhisusaEventsController');
+
 
 
 //categories
@@ -49,5 +52,7 @@ router.get('/getlivetypes',adminAuthMiddleWare.verifyToken,livetypesController.g
 router.post('/addrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.addrooms)
 router.post('/deleterooms',adminAuthMiddleWare.verifyToken,livetypesController.deleteRoom)
 router.post('/editrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.editRooms)
+//work Types
+router.get('/getworktypes',adminAuthMiddleWare.verifyToken,workTypesController.getWorkTypes)
 module.exports = router
 

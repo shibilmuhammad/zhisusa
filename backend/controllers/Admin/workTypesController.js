@@ -1,4 +1,4 @@
-const Room = require("../../models/liveModel");
+const Work = require("../../models/workModel");
 const categoryModel = require('../../models/categoryModel')
 const sharp = require('sharp');
 const {
@@ -11,13 +11,15 @@ const app = require("../../config/firebase");
 const liveModel = require("../../models/liveModel");
 
 module.exports = {
-  getroomsData: async (req, res) => {
+  getWorkTypes: async (req, res) => {
     try{
-      const data = await Room.find();
-      res.status(200).json(data)
+        const data = await Work.find();
+        res.status(200).json(data)
     }catch(error){
-      res.status(500).json({message:"Internal Server Error"})
+        res.status(500).json({message:"Internal Server Error"})
     }
+     
+
   },
    addrooms : async (req, res) => {
     try {
