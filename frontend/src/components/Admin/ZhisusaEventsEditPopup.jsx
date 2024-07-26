@@ -18,9 +18,9 @@ const ZhisusaEventsEditPopup = ({
 		proximity: false,
 		images: false,
         price : false,
-        terms: null,
-		time: null,
-		date: null,
+        terms: false,
+		time: false,
+		date: false,
 
 	});
 	const [progress, setProgress] = useState(false);
@@ -116,19 +116,23 @@ const ZhisusaEventsEditPopup = ({
 
 	const validateForm = () => {
 		const newErrorState = { ...error };
+		for(const key in newErrorState){
+			newErrorState[key] = false
+		}
 		let isValid = true;
-
-		Object.keys(formRefs.current).forEach((key) => {
-			console.log(formRefs.current);
-			if (!formRefs.current[key]) {
+		for (const key in formRefs.current) {
+			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
+			  if (formRefs.current[key].value.trim() === "" && (key !== 'map' && key !== 'ageGroup' && key !== 'terms')) {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
-				return false;
-			} else {
-				newErrorState[key] = false;
+				formRefs.current[key].focus();
+				formRefs.current[key].style.outlineColor = "red";
+				return false; // Prevent form submission
+			  }
 			}
-		});
+		  }
+
 
 		if (formData.images.length < 1) {
 			
@@ -254,12 +258,13 @@ const ZhisusaEventsEditPopup = ({
 									name="price"
 									class="px-2 p-2 rounded-lg outline-none"
 								/>
-								{error.price && (
+								
+							</div>
+							{error.price && (
 									<span class=" text-[10px] text-red-600 space-y-0">
 										price can't be empty !
 									</span>
 								)}
-							</div>
 						</div>
 						<div class="w-full space-y-1">
 							<label className="" for="">

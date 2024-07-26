@@ -17,10 +17,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		main: false,
 		server: false,
 	});
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		formData.current[name] = value;
-	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const finalFormData = new FormData();
@@ -72,7 +69,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 					</label>
 					<div className="w-8/12">
 						<input
-							onChange={handleChange}
+							ref={(el) => (formData.current.title = el)}
 							type="text"
 							name="title"
 							class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -92,7 +89,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						<select
 							class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="main"
-							onChange={handleChange}>
+							ref={(el) => (formData.current.main = el)}>
 							<option value="Select" selected disabled>
 								Select
 							</option>
@@ -116,7 +113,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						<select
 							class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="status"
-							onChange={handleChange}
+							ref={(el) => (formData.current.status = el)}
 							>
 							<option value="Active" selected>
 								Active

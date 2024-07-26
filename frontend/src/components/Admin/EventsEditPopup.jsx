@@ -141,18 +141,23 @@ const EventsEditPopup = ({
 
 	const validateForm = () => {
 		const newErrorState = { ...error };
+		for(const key in newErrorState){
+			newErrorState[key] = false
+		}
 		let isValid = true;
-
-		Object.keys(formRefs.current).forEach((key) => {
-			if (!formRefs.current[key]) {
+		for (const key in formRefs.current) {
+			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
+			  if (formRefs.current[key].value.trim() === "" ) {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
-				return false;
-			} else {
-				newErrorState[key] = false;
+				formRefs.current[key].focus();
+				formRefs.current[key].style.outlineColor = "red";
+				return false; // Prevent form submission
+			  }
 			}
-		});
+		  }
+
 		if (formData.packages.length < 1) {
 			setError((prevError) => ({ ...prevError, packages: true }));
 			isValid = false;
