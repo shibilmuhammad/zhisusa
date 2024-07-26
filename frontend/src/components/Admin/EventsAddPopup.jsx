@@ -95,13 +95,12 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			finalFormData.append("images", formData.finalImages[i]);
 		}
 		for (let key in formRefs.current) {
-			finalFormData.append(key, formRefs.current[key]);
+			finalFormData.append(key, formRefs.current[key]?.value);
 		}
 			
 		finalFormData.append("packages", formData.packages);
 
 		finalFormData.append("amenities",JSON.stringify(amenitiesList))
-		console.log(amenitiesList);
 		if (validateForm()) {
 			setProgress(true);
 
@@ -129,19 +128,23 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 
 	const validateForm = () => {
 		const newErrorState = { ...error };
+		for(const key in newErrorState){
+			newErrorState[key] = false
+		}
 		let isValid = true;
-
-		Object.keys(formRefs.current).forEach((key) => {
-			console.log(formRefs.current);
-			if (!formRefs.current[key]) {
+		for (const key in formRefs.current) {
+			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
+			  if (formRefs.current[key]?.value?.trim() === "" ) {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
-				return false;
-			} else {
-				newErrorState[key] = false;
+				formRefs.current[key].focus();
+				formRefs.current[key].style.outlineColor = "red";
+				return false; // Prevent form submission
+			  }
 			}
-		});
+		  }
+
 		if (formData.packages.length < 1) {
 			
 			setError(prevError => ({ ...prevError, packages: true }));
@@ -186,7 +189,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.title = el}
 									type="text"
 									name="title"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -207,6 +210,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="main"
 									disabled
+									ref={(el) => formRefs.current.main = el}
 									defaultValue={"Events"}>
 									<option value="Events">Events</option>
 								</select>
@@ -221,7 +225,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.capacity = el}
 									type="number"
 									name="capacity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -243,7 +247,8 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								</div>
 								
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.price = el}
+									
 									type="number"
 									name="price"
 									class="px-2 p-2 rounded-lg outline-none"
@@ -263,7 +268,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="status"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.status = el}
 									defaultValue={"Available"}>
 									<option value="Available" selected>
 										Available
@@ -280,7 +285,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</label>
 						<div className="">
 							<textarea
-								onChange={handleChange}
+								ref={(el) => formRefs.current.description = el}
 								type="text"
 								name="description"
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -300,7 +305,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.location = el}
 									type="text"
 									name="location"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -318,7 +323,7 @@ const EventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.proximity = el}
 									type="text"
 									name="proximity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "

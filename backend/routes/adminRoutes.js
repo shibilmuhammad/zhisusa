@@ -5,10 +5,14 @@ const categoryController = require('../controllers/Admin/categoryController');
 const activityController = require('../controllers/Admin/activityController');
 const eventController = require('../controllers/Admin/eventController');
 const loginController = require('../controllers/Admin/loginController')
+const ZhisusaEventsController = require('../controllers/Admin/zhisusaEventsController')
+
 
 const livetypesController = require('../controllers/Admin/livetypesController');
 const workTypesController = require('../controllers/Admin/workTypesController')
-const upload = require('../utils/upload')
+const upload = require('../utils/upload');
+const zhisusaEventsController = require('../controllers/Admin/zhisusaEventsController');
+
 
 
 //categories
@@ -28,6 +32,12 @@ router.post('/deleteEvent',adminAuthMiddleWare.verifyToken,eventController.delet
 router.post('/updateEvent',adminAuthMiddleWare.verifyToken,upload.array('files',10),eventController.upadateEvent)
 router.get('/getAllEvents',adminAuthMiddleWare.verifyToken,eventController.getEvents)
 router.post('/addEvent',adminAuthMiddleWare.verifyToken,upload.array('images',10),eventController.addEvent)
+
+//zhisusa events
+router.post('/deleteZhisusaEvent',adminAuthMiddleWare.verifyToken,zhisusaEventsController.deleteZhisusaEvent)
+router.post('/updateZhisusaEvent',adminAuthMiddleWare.verifyToken,upload.array('files',10),zhisusaEventsController.upadateZhisusaEvent)
+router.get('/getAllZhisusaEvents',adminAuthMiddleWare.verifyToken,zhisusaEventsController.getZhisusaEvents)
+router.post('/addZhisusaEvent',adminAuthMiddleWare.verifyToken,upload.array('images',10),ZhisusaEventsController.addZhisusaEvent)
 
 //adminLogin
 router.post('/login',loginController.postLogin)

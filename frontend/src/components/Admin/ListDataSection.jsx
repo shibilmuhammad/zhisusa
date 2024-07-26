@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
@@ -18,37 +18,40 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 		return path.split('.').reduce((acc, part) => acc && acc[part], obj);
 	  };
 	const [idSort, setIdSort] = useState(true);
-	const sortHandler = (value, type, order,asc,index) => {
+	const sortHandler = async (value, type, order,asc,index) => {
 		if (value === "id") {
-			const sortedList = newList.reverse();
+			const sortedList = [...newList].reverse();
 			setList(sortedList);
 			setIdSort(!idSort);
 		} else {
 			const updatedList = [...tableHeaders];
 			updatedList[index] = { ...updatedList[index], ...{asc:!asc}} ;
 			setTableHeaders(updatedList);
-
 			if (type === "number") {
 				if (order === "asc") {
-					const sortedList = [...newList].sort((a, b) => a[value] - b[value]);
+					const sortedList = [...newList].sort((a, b) => getNestedValue(a,value) - getNestedValue(b,value));
 					setList(sortedList);
 				} else {
-					const sortedList = [...newList].sort((a, b) => b[value] - a[value]);
+					const sortedList = [...newList].sort((a, b) => getNestedValue(b,value) - getNestedValue(a,value));
 					setList(sortedList);
 				}
 			} else {
+
 				if (order === "asc") {
-					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? -1 :  ((b[value] > a[value]) ? 1 : 0));
+					const sortedList = [...newList].sort((a, b) => (getNestedValue(b,value) > getNestedValue(a,value)) ? -1 :  ((getNestedValue(b,value) < getNestedValue(a,value)) ? 1 : 0));
 
 					setList(sortedList);
 				} else {
-					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? 1 :  ((b[value] > a[value]) ? -1 : 0));
+					const sortedList = [...newList].sort((a, b) => (getNestedValue(b,value) > getNestedValue(a,value)) ? 1 :  ((getNestedValue(b,value) < getNestedValue(a,value)) ? -1 : 0));
 					setList(sortedList);
 				}
 			}
 		}
 	
 	}
+	useEffect(() => {
+
+	},[tableHeaders])
 	return (
 		<div className="right w-full">
 			<table className="w-full mt-2">
@@ -81,11 +84,11 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 									{item.name}
 									{item.sort && (
 										<div className="text-white -space-y-1">
-											{item.asc ? (<IoMdArrowDropup
+											{!item.asc ? (<IoMdArrowDropup
 												onClick={() =>
 													sortHandler(
 														item.value,
-														item.type,
+														item.sortType,
 														"desc",
 														item.asc,index
 													)
@@ -94,7 +97,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 											/>):(
 											<IoMdArrowDropdown
 												onClick={() =>
-													sortHandler(item.value, item.type, "asc",item.asc,index)
+													sortHandler(item.value, item.sortType, "asc",item.asc,index)
 												}
 												className="cursor-pointer "
 											/>)}

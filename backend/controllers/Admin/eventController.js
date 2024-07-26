@@ -4,6 +4,7 @@ const eventSchema = require("../../models/eventModel");
 const formidable = require("formidable");
 const {
 	getStorage,
+	deleteObject,
 	ref,
 	uploadBytes,
 	getDownloadURL,
@@ -22,7 +23,6 @@ module.exports = {
 			});
 		}
 	},
-
 	addEvent: async (req, res) => {
 		try {
 			const {
@@ -57,18 +57,26 @@ module.exports = {
 					error: "All fields are required and packages cannot be empty.",
 				});
 			}
-			let amenitiesList = JSON.parse(amenities)
+			let amenitiesList = JSON.parse(amenities);
 			amenitiesList.forEach((pkg) => {
 				pkg.items = pkg.items.filter((item) => item.title.trim() !== "");
 			});
 			amenitiesList = amenitiesList.filter((pkg) => pkg.name.trim() !== "");
 			const storage = getStorage(app);
 			const files = req.files;
+			
 			const uploadPromises = files.map(async (file) => {
+				const optimizedBuffer = await sharp(file.buffer)
+				.resize(800, 800, {
+					fit: sharp.fit.inside,
+					withoutEnlargement: true,
+				})
+				.jpeg({ quality: 80 })
+				.toBuffer();
 				const fileName = `${Date.now()}_${file.originalname}`;
-				const fileRef = ref(storage, `images/${fileName}`);
+				const fileRef = ref(storage, `events/${fileName}`);
 
-				await uploadBytes(fileRef, file.buffer);
+				await uploadBytes(fileRef, optimizedBuffer);
 				const publicUrl = await getDownloadURL(fileRef);
 
 				return publicUrl;
@@ -91,7 +99,7 @@ module.exports = {
 					},
 					images: uploadedFiles,
 					eventOptions: packages,
-					packages : amenitiesList
+					packages: amenitiesList,
 				},
 			});
 			const data = await newData.save();
@@ -112,49 +120,71 @@ module.exports = {
 		try {
 			const {
 				title,
-					status,
-					main,
-					description,
-					proximity,
-					price,
-					capacity,
-					location,
-					packages,
-					amenities,
+				status,
+				main,
+				description,
+				proximity,
+				price,
+				capacity,
+				location,
+				packages,
+				amenities,
 				id,
 				image_links,
 			} = req.body;
 			const storage = getStorage(app);
 			const files = req.files;
 			if (files.length > 0) {
-				const uploadPromises = files.map(async (file) => {
+				var uploadPromises = files.map(async (file) => {
+					const optimizedBuffer = await sharp(file.buffer)
+					.resize(800, 800, {
+						fit: sharp.fit.inside,
+						withoutEnlargement: true,
+					})
+					.jpeg({ quality: 80 })
+					.toBuffer();
 					const fileName = `${Date.now()}_${file.originalname}`;
-					const fileRef = ref(storage, `images/${fileName}`);
-
-					await uploadBytes(fileRef, file.buffer);
+					const fileRef = ref(storage, `events/${fileName}`);
+	
+					await uploadBytes(fileRef, optimizedBuffer);
 					const publicUrl = await getDownloadURL(fileRef);
-
+	
 					return publicUrl;
 				});
-
-				var uploadedFiles = await Promise.all(uploadPromises);
+				
+	
 			}
+			const uploadedFiles = await Promise.all(uploadPromises);
 			console.log(req.body);
-			let amenitiesList = JSON.parse(amenities)
+			let amenitiesList = JSON.parse(amenities);
 			amenitiesList.forEach((pkg) => {
 				pkg.items = pkg.items.filter((item) => item.title.trim() !== "");
 			});
 			amenitiesList = amenitiesList.filter((pkg) => pkg.name.trim() !== "");
 
 			const updateData = await eventSchema.findOne({ _id: id });
+			const commonItems = image_links
+				.split(",")
+				.filter((item) => updateData?.details?.images.includes(item));
+			if (commonItems.length > 0) {
+				const deletePromises = commonItems.map(async (link) => {
+					const fileRef = ref(storage, link);
+
+					const deleteFile = await deleteObject(fileRef);
+
+					return deleteFile;
+				});
+
+				await Promise.all(deletePromises);
+			}
 			if (updateData) {
 				updateData.title = title || updateData.title;
 				updateData.status = status || updateData.status;
 				updateData.mainCategory = main || updateData.mainCategory;
-				updateData.details.description= description || updateData.details.description;
+				updateData.details.description =
+					description || updateData.details.description;
 				updateData.details.capacity = capacity || updateData.details.capacity;
-				updateData.details.price =
-					price || updateData.details.price
+				updateData.details.price = price || updateData.details.price;
 				updateData.details.eventOptions =
 					packages || updateData.details.eventOptions;
 				updateData.details.packages =
@@ -188,15 +218,30 @@ module.exports = {
 	},
 	deleteEvent: async (req, res) => {
 		try {
-			const data = await eventSchema.findByIdAndDelete({ _id: req.body.id });
-			const addToMain = await categorySchema.updateOne(
+			const data = await eventSchema.findOne({ _id: req.body.id });
+
+			const storage = getStorage(app);
+
+			const deletePromises = data?.details?.images?.map(async (link) => {
+				const fileRef = ref(storage, link);
+
+				const deleteFile = await deleteObject(fileRef);
+
+				return deleteFile;
+			});
+
+			await Promise.all(deletePromises);
+			await eventSchema.findByIdAndDelete({ _id: req.body.id });
+			await categorySchema.updateOne(
 				{ title: req.body.main },
 				{ $pull: { types: req.body.id } }
 			);
+
 			res.json({
 				status: "success",
 			});
 		} catch (error) {
+			console.log(error);
 			res.json({
 				status: "failed",
 			});

@@ -33,7 +33,7 @@ export const eventsHostIntro = {
     description : 'Transform your special occasions into unforgettable experiences with our elegant venues and expert planning services. From weddings to art exhibitions, birthday celebrations, and music festivals, we offer everything you need for a flawless event that leaves lasting impressions.',
 }
 export const eventsIntro =  {
-    thumb :'../images/event-intro.jpg',
+    thumb :'../images/bg2.jpeg',
     title : 'Explore Your Dream Events with Style',
     description : 'Transform your special occasions into unforgettable experiences with our elegant venues and expert planning services. From weddings to art exhibitions, birthday celebrations, and music festivals, we offer everything you need for a flawless event that leaves lasting impressions.',
     button : 'Plan Your Favorite Event'

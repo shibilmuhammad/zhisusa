@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import PackageInputCard from "./PackageInputCard";
 import ImageCard from "./ImageCard";
-const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
+const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	const navigate = useNavigate();
 	const [error, setError] = useState({
 		title: false,
@@ -12,49 +11,37 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		description: false,
 		location: false,
 		proximity: false,
-		priceDay: false,
-		priceHour: false,
-		packages: false,
 		images: false,
+        price : false,
+        terms: false,
+		time: false,
+		date: false,
+
 	});
-	const packageInput = useRef();
 	const [progress, setProgress] = useState(false);
 	const formRefs = useRef({
 		title: null,
 		capacity: null,
+		price: null,
 		description: null,
 		location: null,
 		proximity: null,
-		price: null,
-		main: "Activities",
 		status: "Available",
-		priceHour: null,
-		priceDay: null,
-		availability: "All Days",
-		startTime: "09:00",
-		endTime: "18:00",
+		ageGroup: null,
+		terms: null,
+        language : 'Tamil',
+        map : null,
+        type : 'Music',
+		time: '10:00',
+		date: new Date().toISOString().slice(0,10),
 	});
 	const [formData, setFormData] = useState({
 		packages: [],
 		images: [],
 		finalImages: [],
 	});
-	const addPackage = (newPackage) => {
-		if (newPackage) {
-			packageInput.current.value = "";
-			setFormData((prevState) => ({
-				...prevState,
-				packages: [...prevState.packages, newPackage],
-			}));
-		}
-	};
 
-	const removePackage = (index) => {
-		setFormData((prevState) => ({
-			...prevState,
-			packages: prevState.packages.filter((_, i) => i !== index),
-		}));
-	};
+
 	const handleImageUpload = (e) => {
 		const files = Array.from(e.target.files);
 		const newImages = files.map((file) => URL.createObjectURL(file));
@@ -92,12 +79,11 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		for (let key in formRefs.current) {
 			finalFormData.append(key, formRefs.current[key]?.value);
 		}
-		finalFormData.append("packages", formData.packages);
 		if (validateForm()) {
 			setProgress(true);
 			try {
 				const response = await axios.post(
-					"/api/admin/addActivity",
+					"/api/admin/addZhisusaEvent",
 					finalFormData
 				);
 				setProgress(false);
@@ -117,6 +103,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	};
 
 	const validateForm = () => {
+		
 		const newErrorState = { ...error };
 		for(const key in newErrorState){
 			newErrorState[key] = false
@@ -124,7 +111,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		let isValid = true;
 		for (const key in formRefs.current) {
 			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
-			  if (formRefs.current[key].value.trim() === "") {
+			  if (formRefs.current[key].value.trim() === "" && (key !== 'map' && key !== 'ageGroup' && key !== 'terms')) {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
@@ -134,15 +121,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			  }
 			}
 		  }
-		if (formData.packages.length < 1) {
-			
-			setError(prevError => ({ ...prevError, packages: true }));
-			isValid = false;
-			return false;
-		}else{
-			setError(prevError => ({ ...prevError, packages: false }));
-			isValid = true;
-		}
+
 		if (formData.images.length < 1) {
 			
 			setError(prevError => ({ ...prevError, images: true }));
@@ -161,13 +140,13 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	return (
 		<div
 			class="font-poppins fixed inset-0 flex justify-center z-[999] items-center bg-[rgba(0,0,0,0.3)]"
-			id="categoryEditPopup">
+			>
 			<form
 				onSubmit={handleSubmit}
 				encType="multipart/form-data"
 				class="relative w-5/12 h-[80vh] ">
 				<div className="bg-white rounded-lg w-full  py-8 px-5  space-y-3 text-sm pr-8 pt-10 overflow-auto h-full">
-					{/* title & main */}
+					{/* title & type */}
 					<div className="flex gap-5">
 						<div class="w-full space-y-1">
 							<label className="" htmlFor="">
@@ -175,6 +154,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
+									
 									ref={(el) => formRefs.current.title = el}
 									type="text"
 									name="title"
@@ -189,21 +169,21 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</div>
 						<div class="w-full space-y-1">
 							<label className="" for="">
-								Main Category
+								Type
 							</label>
 							<div className="">
 								<select
+									ref={(el) => formRefs.current.type = el}
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
-									name="main"
-									disabled
-									ref={(el) => formRefs.current.main = el}
-									defaultValue={"Activities"}>
-									<option value="Activities">Activities</option>
+									name="type"
+									defaultValue={"Music"}>
+									<option value="Music">Music</option>
+                                    <option value="Art Shows">Art Shows</option>
 								</select>
 							</div>
 						</div>
 					</div>
-					{/* capacity & status */}
+					{/* capacity & price ,status */}
 					<div className="flex gap-5">
 						<div class="w-full space-y-1">
 							<label className="" for="">
@@ -223,6 +203,29 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								)}
 							</div>
 						</div>
+                        <div class="w-full space-y-1">
+							<label className="" for="">
+								Price
+							</label>
+							<div className="flex border-gray-400 border-[.1px] w-full rounded-lg">
+                                <div className="bg-gray-100 rounded-l-lg p-2 px-6 flex items-center justify-end">
+                                    <span className="px-2">₹</span>
+								</div>
+								
+								<input
+									ref={(el) => formRefs.current.price = el}
+									type="number"
+									name="price"
+									class="px-2 p-2 rounded-lg outline-none"
+								/>
+								
+							</div>
+							{error.price && (
+									<span class=" text-[10px] text-red-600 space-y-0">
+										price can't be empty !
+									</span>
+								)}
+						</div>
 						<div class="w-full space-y-1">
 							<label className="" for="">
 								Status
@@ -236,59 +239,55 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									<option value="Available" selected>
 										Available
 									</option>
-									<option value="Available">Not Available</option>
+									<option value="Not Available">Not Available</option>
 								</select>
 							</div>
 						</div>
 					</div>
-					{/* availability & time */}
+					{/* language & time */}
 					<div className="flex gap-5">
 						<div class="w-full space-y-1">
 							<label className="" for="">
-								Availability
+								Language
 							</label>
 							<div className="">
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
-									name="availability"
-									ref={(el) => formRefs.current.availability = el}
-									defaultValue={"All Days"}>
-									<option value="All Days" selected>
-										All Days
+									name="language"
+									ref={(el) => formRefs.current.language = el}
+									defaultValue={"Tamil"}>
+									<option value="Tamil">
+										Tamil
 									</option>
-									<option value="Weekend">Weekend</option>
+									<option value="English">English</option>
 								</select>
 							</div>
 						</div>
 						<div class="w-full space-y-1">
 							<label className="" for="">
-								Time
+								Date & Time
 							</label>
 							<div className=" flex gap-3 border-gray-400 border-[.1px] w-full  rounded-lg px-1.5">
 								<div className="py-1.5">
 									<input
-										type="time"
-										name="startTime"
+										type="date"
+										name="date"
 										id=""
-										min="09:00"
-										max="18:00"
-										defaultValue={"09:00"}
-										ref={(el) => formRefs.current.startTime = el}
+										defaultValue={new Date().toISOString().slice(0,10)}
+										ref={(el) => formRefs.current.date = el}
 									/>
 								</div>
-								<div className="px-6 bg-gray-100 flex justify-center items-center">
-									<span>To</span>
+								<div className="px-1 bg-gray-100 flex justify-center items-center">
+									
 								</div>
 
 								<div className="py-1.5">
 									<input
 										type="time"
-										name="endTime"
+										name="time"
 										id=""
-										min="09:00"
-										max="18:00"
-										defaultValue={"16:00"}
-										ref={(el) => formRefs.current.endTime = el}
+										defaultValue={"10:00"}
+										ref={(el) => formRefs.current.time = el}
 									/>
 								</div>
 							</div>
@@ -352,74 +351,50 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</div>
 						</div>
 					</div>
-					{/* price */}
-					<div className="flex gap-5 w-full items-center">
-						<label className="w-4/12" for="">
-							Price
-						</label>
-						<div className="w-8/12">
-							<div className="rounded-lg border-gray-400 border-[.1px] w-full flex items-center">
-								<div className="bg-gray-100 rounded-l-lg p-2 px-6 flex items-center justify-end">
-									<span>Hour</span>
-								</div>
-								<span className="px-2">₹</span>
+                    {/* age group & map */}
+					<div className="flex gap-5">
+						<div class="w-full space-y-1">
+							<label className="" for="">
+								Age Group (Minimum)
+							</label>
+							<div className="">
 								<input
-									className="w-full px-2 h-full"
+									ref={(el) => formRefs.current.ageGroup = el}
 									type="number"
-									name="priceHour"
-									ref={(el) => formRefs.current.priceHour = el}
-								/>
-								<div className="bg-gray-100 p-2 px-6 flex items-center justify-end">
-									<span>Day </span>
-								</div>
-								<span className="px-2">₹</span>
-								<input
-									className="w-full px-2 rounded-r-lg h-full"
-									type="number"
-									name="priceDay"
-									ref={(el) => formRefs.current.priceDay = el}
+									name="ageGroup"
+									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 								/>
 							</div>
-							{(error.priceDay || error.priceHour) && (
-								<span class=" text-[10px] text-red-600 space-y-0">
-									Please fill both price fields !
-								</span>
-							)}
+						</div>
+						<div class="w-full space-y-1">
+							<label className="" for="">
+								Map Link
+							</label>
+							<div className="">
+								<input
+									ref={(el) => formRefs.current.map = el}
+									type="text"
+									name="map"
+									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+								/>
+							</div>
 						</div>
 					</div>
-					{/* package includes */}
-					<div className="flex gap-5 w-full items-center">
-						<label className="w-4/12" for="">
-							Package Includes
+                    {/* terms & conditions */}
+					<div class="w-full space-y-1">
+						<label className="" for="">
+							Terms and Conditions
 						</label>
-						<div className="w-8/12">
-							<div className="w-full flex border-gray-400 border-[.1px] rounded-lg justify-between">
-								<input
-									ref={packageInput}
-									type="text"
-									name="capacity"
-									class="p-2 rounded-l-lg w-full"
-								/>
-								<button
-									type="button"
-									onClick={() => addPackage(packageInput.current.value.trim())}
-									className="bg-PrimaryBlue-normal px-4 text-white rounded-r-lg">
-									Add
-								</button>
-							</div>
-							{/* packages cards */}
-							<div className="flex flex-wrap mt-2 gap-2">
-								{formData.packages?.map((item, index) => (
-									<PackageInputCard
-										index={index}
-										text={item}
-										removePackage={removePackage}
-									/>
-								))}
-							</div>
-							{error.packages && (
+						<div className="">
+							<textarea
+								ref={(el) => formRefs.current.map = el}
+								type="text"
+								name="terms"
+								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
+							/>
+							{error.terms && (
 								<span class=" text-[10px] text-red-600 space-y-0">
-									packages can't be empty !
+									terms and conditions can't be empty !
 								</span>
 							)}
 						</div>
@@ -517,4 +492,4 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	);
 };
 
-export default ActivitiesAddPopup;
+export default ZhisusaEventsAddPopup;
