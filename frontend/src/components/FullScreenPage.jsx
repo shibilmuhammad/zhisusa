@@ -5,10 +5,10 @@ const FullScreenPage = ({Heading,Description,button,span}) => {
     <div>
       <div className="w-full h-[50vh] lg:h-[100vh] bg-red-300">
         <div className="w-full h-full relative">
-          <div className="bg-black h-full w-full absolute opacity-70"></div>
+          <div className="bg-black h-full w-full absolute opacity-60"></div>
           <img
             className="w-full h-full object-cover"
-            src="../images/retreat-hub.jpeg"
+            src="../images/bg4.jpeg"
           ></img>
           <div className="absolute inset-0 flex flex-col  justify-center items-center text-white">
             <h1 className="font-futura text-center text-3xl lg:text-5xl font-bold">

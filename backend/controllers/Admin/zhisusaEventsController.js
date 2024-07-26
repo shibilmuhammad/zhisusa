@@ -1,7 +1,6 @@
 const categorySchema = require("../../models/categoryModel");
 const mainSchema = require("../../models/mainModel");
-const activitySchema = require("../../models/activityModel");
-
+const zhisusaEventsShema = require("../../models/zhisusaEventsModel");
 const formidable = require("formidable");
 const {
 	getStorage,
@@ -12,9 +11,9 @@ const {
 const app = require("../../config/firebase");
 
 module.exports = {
-	getActivities: async (req, res) => {
+	getZhisusaEvents: async (req, res) => {
 		try {
-			const data = await activitySchema.find();
+			const data = await zhisusaEventsShema.find();
 
 			res.status(200).json(data);
 		} catch (error) {
@@ -24,46 +23,46 @@ module.exports = {
 		}
 	},
 
-	addActivity: async (req, res) => {
+	addZhisusaEvent: async (req, res) => {
 		try {
 			const {
 				title,
 				status,
-				main,
-				availability,
-				startTime,
-				endTime,
+				date,
 				description,
 				proximity,
-				priceHour,
-				priceDay,
+				price,
+				time,
 				capacity,
 				location,
-				packages,
+				terms,
+				language,
+				ageGroup,
+				map,
+				type
 			} = req.body;
 			if (
 				![
 					title,
+					type,
 					status,
-					main,
-					availability,
-					startTime,
-					endTime,
+					date,
 					description,
 					proximity,
-					priceHour,
-					priceDay,
+					price,
+					time,
 					capacity,
 					location,
+					terms,
+					language,
+					ageGroup,
+					map
 				].every(Boolean) ||
-				packages.length < 1 ||
 				req.files.length < 1
 			) {
-				return res
-					.status(400)
-					.json({
-						error: "All fields are required and packages cannot be empty.",
-					});
+				return res.status(400).json({
+					error: "All fields are required and packages cannot be empty.",
+				});
 			}
 			const storage = getStorage(app);
 			const files = req.files;
@@ -78,33 +77,34 @@ module.exports = {
 			});
 
 			const uploadedFiles = await Promise.all(uploadPromises);
+			console.log(req.body);
 
-			const newData = new activitySchema({
+			const newData = new zhisusaEventsShema({
 				title: title,
-				mainCategory: main || "Activities",
 				status: status || "Available",
+				type : type || "Music",
 				details: {
 					description: description,
 					capacity: capacity,
-					price: {
-						perDay: priceDay,
-						perSession: priceHour,
-					},
+					price: price,
+					language : language,
+					ageGroup : ageGroup,
+					termsAndConditions : terms,
 					schedule: {
-						availability: availability,
-						time: `${startTime} to ${endTime}`,
+						date: date,
+						time: time,
 					},
 
 					location: {
-						place: location,
+						venue: location,
 						proximityToAmenities: proximity,
+						map : map
 					},
 					images: uploadedFiles,
-					packageIncludes: packages,
+
 				},
 			});
-			const data = await newData.save();
-			const addToMain = await categorySchema.updateOne({title:main},{$push:{types:data?.['_id'].toString()}})
+			const data = await newData.save()
 
 			res.json({
 				status: "success",
@@ -114,29 +114,29 @@ module.exports = {
 			res.status(500).json({ error: "Failed to upload files" });
 		}
 	},
-	upadateActivity: async (req, res) => {
+	upadateZhisusaEvent: async (req, res) => {
 		try {
 			const {
 				title,
 				status,
-				main,
-				availability,
-				startTime,
-				endTime,
+				date,
 				description,
 				proximity,
-				priceHour,
-				priceDay,
+				price,
+				time,
 				capacity,
 				location,
-				packages,
+				terms,
+				language,
+				ageGroup,
+				map,
+				type,
 				id,
-				image_links
+				image_links,
 			} = req.body;
 			const storage = getStorage(app);
 			const files = req.files;
 			if (files.length > 0) {
-				
 				const uploadPromises = files.map(async (file) => {
 					const fileName = `${Date.now()}_${file.originalname}`;
 					const fileRef = ref(storage, `images/${fileName}`);
@@ -151,37 +151,45 @@ module.exports = {
 			}
 			console.log(req.body);
 
-
-			const updateData = await activitySchema.findOne({_id:id});
+			const updateData = await zhisusaEventsShema.findOne({ _id: id });
 			if (updateData) {
 				updateData.title = title || updateData.title;
 				updateData.status = status || updateData.status;
-				updateData.mainCategory = main || updateData.mainCategory;
+				updateData.type = type || updateData.type;
 				updateData.details.schedule.time =
-					`${startTime} to ${endTime}` || updateData.details.schedule.time;
+					time || updateData.details.schedule.time;
+				updateData.details.schedule.date =
+					date || updateData.details.schedule.date;
 				updateData.description = description || updateData.details.description;
 				updateData.details.capacity = capacity || updateData.details.capacity;
-				updateData.details.price.perDay =
-					priceDay || updateData.details.price.perDay;
-				updateData.details.price.perSession =
-					priceHour || updateData.details.price.perSession;
-				updateData.details.packageIncludes =
-					packages || updateData.details.packageIncludes;
-				updateData.details.schedule.availability =
-					availability || updateData.details.schedule.availability;
+				updateData.details.price =
+					price || updateData.details.price;
+				updateData.details.ageGroup =
+					ageGroup || updateData.details.ageGroup;
+				updateData.details.termsAndConditions =
+					terms || updateData.details.termsAndConditions;
+				updateData.details.language =
+					language || updateData.details.language;
 				updateData.details.location.place =
 					location || updateData.details.location.place;
+				updateData.details.location.map =
+					map || updateData.details.location.map;
 				updateData.details.location.proximityToAmenities =
 					proximity || updateData.details.location.proximityToAmenities;
-				if(image_links){
-					uploadedFiles ? updateData.details.images = [...image_links.split(',') ,...uploadedFiles] : updateData.details.images = image_links.split(',')
-				}else{
-					uploadedFiles ? updateData.details.images = uploadedFiles : updateData.details.images = []
+				if (image_links) {
+					uploadedFiles
+						? (updateData.details.images = [
+								...image_links.split(","),
+								...uploadedFiles,
+						  ])
+						: (updateData.details.images = image_links.split(","));
+				} else {
+					uploadedFiles
+						? (updateData.details.images = uploadedFiles)
+						: (updateData.details.images = []);
 				}
-				
-					
 			}
-			await updateData.save()
+			await updateData.save();
 
 			res.json({
 				status: "success",
@@ -191,10 +199,11 @@ module.exports = {
 			res.status(500).json({ error: "Failed to upload files" });
 		}
 	},
-	deleteActivity: async (req, res) => {
+	deleteZhisusaEvent: async (req, res) => {
 		try {
-			const data = await activitySchema.findByIdAndDelete({ _id: req.body.id });
-			const addToMain = await categorySchema.updateOne({title:req.body.main},{$pull : {types : req.body.id}})
+			const data = await zhisusaEventsShema.findByIdAndDelete({
+				_id: req.body.id,
+			});
 			res.json({
 				status: "success",
 			});

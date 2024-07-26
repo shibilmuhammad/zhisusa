@@ -62,7 +62,7 @@ const HomeAboutSection = () => {
 			<div className="hidden md:block md:w-5/12">
 				<div class="container">
 					<div class="letter-z">
-						<img src="../images/surfing.jpg" alt="Image1" />
+						<img src="../images/bg4.jpeg" alt="Image1" />
 						
 					</div>
 				</div>

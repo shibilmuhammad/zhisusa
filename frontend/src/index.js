@@ -34,6 +34,7 @@ import Categories from "./pages/Admins/Categories";
 import Login from "./components/Admin/Login";
 import Live from "./pages/Admins/Live";
 import EventsTypes from "./pages/Admins/EventsTypes";
+import ZhisusaEvents from "./pages/Admins/ZhisusaEvents";
 
 
 const router = createBrowserRouter([
@@ -136,6 +137,7 @@ const router = createBrowserRouter([
       { path: "/admin/live", element: <Live/> },
 
       		{ path: "/admin/activity", element: <ActivitiesTypes/> },
+			  { path: "/admin/zhisusaEvents", element: <ZhisusaEvents/> },
 			
 
 		],

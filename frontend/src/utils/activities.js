@@ -29,7 +29,7 @@ export const activityFeaturesIntro = {
     description : 'Explore the essence of our activities through our standout features. From breathtaking locations to expert guidance and top-tier equipment, each activity promises a memorable experience. Suitable for all levels, with flexible scheduling and a focus on safety and environmental awareness, our features guarantee an unforgettable outdoor adventure.'
 }
 export const activityIntro = {
-    thumb :'../images/activity.jpeg',
+    thumb :'../images/bg2.jpeg',
     title : 'Explore Outdoor Adventures',
     description : 'Dive into a world of outdoor activities designed to rejuvenate your spirit and invigorate your senses. From tranquil hikes through scenic trails to thrilling archery sessions and serene yoga practices, discover an array of experiences that will connect you with nature and leave you feeling refreshed and energized.',
     button : 'Explore Your Favorite Activites'

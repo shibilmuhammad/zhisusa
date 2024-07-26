@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
@@ -18,7 +18,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 		return path.split('.').reduce((acc, part) => acc && acc[part], obj);
 	  };
 	const [idSort, setIdSort] = useState(true);
-	const sortHandler = (value, type, order,asc,index) => {
+	const sortHandler = async (value, type, order,asc,index) => {
 		if (value === "id") {
 			const sortedList = newList.reverse();
 			setList(sortedList);
@@ -27,6 +27,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 			const updatedList = [...tableHeaders];
 			updatedList[index] = { ...updatedList[index], ...{asc:!asc}} ;
 			setTableHeaders(updatedList);
+			
 
 			if (type === "number") {
 				if (order === "asc") {
@@ -49,6 +50,9 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 		}
 	
 	}
+	useEffect(() => {
+
+	},[tableHeaders])
 	return (
 		<div className="right w-full">
 			<table className="w-full mt-2">
@@ -86,7 +90,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 													sortHandler(
 														item.value,
 														item.type,
-														"desc",
+														"asc",
 														item.asc,index
 													)
 												}
@@ -94,7 +98,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 											/>):(
 											<IoMdArrowDropdown
 												onClick={() =>
-													sortHandler(item.value, item.type, "asc",item.asc,index)
+													sortHandler(item.value, item.type, "desc",item.asc,index)
 												}
 												className="cursor-pointer "
 											/>)}

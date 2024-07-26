@@ -7,8 +7,8 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	const [error, setError] = useState("");
 	const [er2, seter2] = useState(false);
 	const [progress, setProgress] = useState(false);
-	const [formData, setFormData] = useState({
-		title: "",
+	const formData = useRef({
+		title: null,
 		status: "Active",
 		main: "Select",
 	});
@@ -19,17 +19,19 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	});
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
+		formData.current[name] = value;
 	};
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const finalFormData = new FormData();
+		
+		for (let key in formData.current) {
+			finalFormData.append(key, formData.current[key]?.value);
+		}
 		if (validateForm()) {
 			setProgress(true);
 			try {
-				const response = await axios.post("/api/admin/addCategory", formData);
+				const response = await axios.post("/api/admin/addCategory", finalFormData);
 				setProgress(false);
 				setLoadData(!loadData);
 				setShowAdd(false);
@@ -48,10 +50,10 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 
 	const validateForm = () => {
 		setErrMsg((errMsg) => ({ ...errMsg, title: false, main: false }));
-		if (!formData.title) {
+		if (formData.current.title.value.trim() === '') {
 			setErrMsg((errMsg) => ({ ...errMsg, title: true }));
 			return false;
-		} else if (formData.main === "Select") {
+		} else if (formData.current.main.value === "Select") {
 			setErrMsg((errMsg) => ({ ...errMsg, main: true }));
 			return false;
 		}
@@ -73,7 +75,6 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							onChange={handleChange}
 							type="text"
 							name="title"
-							value={formData.title}
 							class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
 						/>
 						{errMsg.title && (
@@ -91,8 +92,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						<select
 							class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="main"
-							onChange={handleChange}
-							value={formData.main}>
+							onChange={handleChange}>
 							<option value="Select" selected disabled>
 								Select
 							</option>
@@ -117,7 +117,7 @@ const CategoriesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 							name="status"
 							onChange={handleChange}
-							value={formData.status}>
+							>
 							<option value="Active" selected>
 								Active
 							</option>
