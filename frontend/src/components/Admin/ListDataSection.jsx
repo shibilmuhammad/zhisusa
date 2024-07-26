@@ -20,30 +20,29 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 	const [idSort, setIdSort] = useState(true);
 	const sortHandler = async (value, type, order,asc,index) => {
 		if (value === "id") {
-			const sortedList = newList.reverse();
+			const sortedList = [...newList].reverse();
 			setList(sortedList);
 			setIdSort(!idSort);
 		} else {
 			const updatedList = [...tableHeaders];
 			updatedList[index] = { ...updatedList[index], ...{asc:!asc}} ;
 			setTableHeaders(updatedList);
-			
-
 			if (type === "number") {
 				if (order === "asc") {
-					const sortedList = [...newList].sort((a, b) => a[value] - b[value]);
+					const sortedList = [...newList].sort((a, b) => getNestedValue(a,value) - getNestedValue(b,value));
 					setList(sortedList);
 				} else {
-					const sortedList = [...newList].sort((a, b) => b[value] - a[value]);
+					const sortedList = [...newList].sort((a, b) => getNestedValue(b,value) - getNestedValue(a,value));
 					setList(sortedList);
 				}
 			} else {
+
 				if (order === "asc") {
-					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? -1 :  ((b[value] > a[value]) ? 1 : 0));
+					const sortedList = [...newList].sort((a, b) => (getNestedValue(b,value) > getNestedValue(a,value)) ? -1 :  ((getNestedValue(b,value) < getNestedValue(a,value)) ? 1 : 0));
 
 					setList(sortedList);
 				} else {
-					const sortedList = [...newList].sort((a, b) => (b[value] > a[value]) ? 1 :  ((b[value] > a[value]) ? -1 : 0));
+					const sortedList = [...newList].sort((a, b) => (getNestedValue(b,value) > getNestedValue(a,value)) ? 1 :  ((getNestedValue(b,value) < getNestedValue(a,value)) ? -1 : 0));
 					setList(sortedList);
 				}
 			}
@@ -85,12 +84,12 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 									{item.name}
 									{item.sort && (
 										<div className="text-white -space-y-1">
-											{item.asc ? (<IoMdArrowDropup
+											{!item.asc ? (<IoMdArrowDropup
 												onClick={() =>
 													sortHandler(
 														item.value,
-														item.type,
-														"asc",
+														item.sortType,
+														"desc",
 														item.asc,index
 													)
 												}
@@ -98,7 +97,7 @@ const ListDataSection = ({dataList,setShowDelete,setShowEdit,tableHeaders,tableV
 											/>):(
 											<IoMdArrowDropdown
 												onClick={() =>
-													sortHandler(item.value, item.type, "desc",item.asc,index)
+													sortHandler(item.value, item.sortType, "asc",item.asc,index)
 												}
 												className="cursor-pointer "
 											/>)}

@@ -4,6 +4,7 @@ const zhisusaEventsShema = require("../../models/zhisusaEventsModel");
 const formidable = require("formidable");
 const {
 	getStorage,
+	deleteObject,
 	ref,
 	uploadBytes,
 	getDownloadURL,
@@ -53,10 +54,7 @@ module.exports = {
 					time,
 					capacity,
 					location,
-					terms,
 					language,
-					ageGroup,
-					map
 				].every(Boolean) ||
 				req.files.length < 1
 			) {
@@ -67,10 +65,17 @@ module.exports = {
 			const storage = getStorage(app);
 			const files = req.files;
 			const uploadPromises = files.map(async (file) => {
+				const optimizedBuffer = await sharp(file.buffer)
+				.resize(800, 800, {
+					fit: sharp.fit.inside,
+					withoutEnlargement: true,
+				})
+				.jpeg({ quality: 80 })
+				.toBuffer();
 				const fileName = `${Date.now()}_${file.originalname}`;
-				const fileRef = ref(storage, `images/${fileName}`);
+				const fileRef = ref(storage, `zhisusaEvents/${fileName}`);
 
-				await uploadBytes(fileRef, file.buffer);
+				await uploadBytes(fileRef, optimizedBuffer);
 				const publicUrl = await getDownloadURL(fileRef);
 
 				return publicUrl;
@@ -88,8 +93,8 @@ module.exports = {
 					capacity: capacity,
 					price: price,
 					language : language,
-					ageGroup : ageGroup,
-					termsAndConditions : terms,
+					ageGroup : ageGroup || '',
+					termsAndConditions : terms || '',
 					schedule: {
 						date: date,
 						time: time,
@@ -98,7 +103,7 @@ module.exports = {
 					location: {
 						venue: location,
 						proximityToAmenities: proximity,
-						map : map
+						map : map || ''
 					},
 					images: uploadedFiles,
 
@@ -138,12 +143,19 @@ module.exports = {
 			const files = req.files;
 			if (files.length > 0) {
 				const uploadPromises = files.map(async (file) => {
+					const optimizedBuffer = await sharp(file.buffer)
+					.resize(800, 800, {
+						fit: sharp.fit.inside,
+						withoutEnlargement: true,
+					})
+					.jpeg({ quality: 80 })
+					.toBuffer();
 					const fileName = `${Date.now()}_${file.originalname}`;
-					const fileRef = ref(storage, `images/${fileName}`);
-
-					await uploadBytes(fileRef, file.buffer);
+					const fileRef = ref(storage, `zhisusaEvents/${fileName}`);
+	
+					await uploadBytes(fileRef, optimizedBuffer);
 					const publicUrl = await getDownloadURL(fileRef);
-
+	
 					return publicUrl;
 				});
 
@@ -152,6 +164,20 @@ module.exports = {
 			console.log(req.body);
 
 			const updateData = await zhisusaEventsShema.findOne({ _id: id });
+			const commonItems = image_links
+				.split(",")
+				.filter((item) => updateData?.details?.images.includes(item));
+			if (commonItems.length > 0) {
+				const deletePromises = commonItems.map(async (link) => {
+					const fileRef = ref(storage, link);
+
+					const deleteFile = await deleteObject(fileRef);
+
+					return deleteFile;
+				});
+
+				await Promise.all(deletePromises);
+			}
 			if (updateData) {
 				updateData.title = title || updateData.title;
 				updateData.status = status || updateData.status;
@@ -201,13 +227,27 @@ module.exports = {
 	},
 	deleteZhisusaEvent: async (req, res) => {
 		try {
-			const data = await zhisusaEventsShema.findByIdAndDelete({
+			const data = await zhisusaEventsShema.findOne({ _id: req.body.id });
+
+			const storage = getStorage(app);
+
+			const deletePromises = data?.details?.images?.map(async (link) => {
+				const fileRef = ref(storage, link);
+
+				const deleteFile = await deleteObject(fileRef);
+
+				return deleteFile;
+			});
+
+			await Promise.all(deletePromises);
+			const deleteData = await zhisusaEventsShema.findByIdAndDelete({
 				_id: req.body.id,
 			});
 			res.json({
 				status: "success",
 			});
 		} catch (error) {
+			console.log(error);
 			res.json({
 				status: "failed",
 			});

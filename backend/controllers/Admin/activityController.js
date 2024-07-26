@@ -6,6 +6,7 @@ const formidable = require("formidable");
 const {
 	getStorage,
 	ref,
+	deleteObject,
 	uploadBytes,
 	getDownloadURL,
 } = require("firebase/storage");
@@ -68,10 +69,17 @@ module.exports = {
 			const storage = getStorage(app);
 			const files = req.files;
 			const uploadPromises = files.map(async (file) => {
+				const optimizedBuffer = await sharp(file.buffer)
+				.resize(800, 800, {
+					fit: sharp.fit.inside,
+					withoutEnlargement: true,
+				})
+				.jpeg({ quality: 80 })
+				.toBuffer();
 				const fileName = `${Date.now()}_${file.originalname}`;
-				const fileRef = ref(storage, `images/${fileName}`);
+				const fileRef = ref(storage, `activity/${fileName}`);
 
-				await uploadBytes(fileRef, file.buffer);
+				await uploadBytes(fileRef, optimizedBuffer);
 				const publicUrl = await getDownloadURL(fileRef);
 
 				return publicUrl;
@@ -138,12 +146,19 @@ module.exports = {
 			if (files.length > 0) {
 				
 				const uploadPromises = files.map(async (file) => {
+					const optimizedBuffer = await sharp(file.buffer)
+					.resize(800, 800, {
+						fit: sharp.fit.inside,
+						withoutEnlargement: true,
+					})
+					.jpeg({ quality: 80 })
+					.toBuffer();
 					const fileName = `${Date.now()}_${file.originalname}`;
-					const fileRef = ref(storage, `images/${fileName}`);
-
-					await uploadBytes(fileRef, file.buffer);
+					const fileRef = ref(storage, `activity/${fileName}`);
+	
+					await uploadBytes(fileRef, optimizedBuffer);
 					const publicUrl = await getDownloadURL(fileRef);
-
+	
 					return publicUrl;
 				});
 
@@ -153,6 +168,20 @@ module.exports = {
 
 
 			const updateData = await activitySchema.findOne({_id:id});
+			const commonItems = image_links
+				.split(",")
+				.filter((item) => updateData?.details?.images.includes(item));
+			if (commonItems.length > 0) {
+				const deletePromises = commonItems.map(async (link) => {
+					const fileRef = ref(storage, link);
+
+					const deleteFile = await deleteObject(fileRef);
+
+					return deleteFile;
+				});
+
+				await Promise.all(deletePromises);
+			}
 			if (updateData) {
 				updateData.title = title || updateData.title;
 				updateData.status = status || updateData.status;
@@ -193,7 +222,20 @@ module.exports = {
 	},
 	deleteActivity: async (req, res) => {
 		try {
-			const data = await activitySchema.findByIdAndDelete({ _id: req.body.id });
+			const data = await activitySchema.findOne({ _id: req.body.id });
+
+			const storage = getStorage(app);
+
+			const deletePromises = data?.details?.images?.map(async (link) => {
+				const fileRef = ref(storage, link);
+
+				const deleteFile = await deleteObject(fileRef);
+
+				return deleteFile;
+			});
+
+			await Promise.all(deletePromises);
+			const deleteData = await activitySchema.findByIdAndDelete({ _id: req.body.id });
 			const addToMain = await categorySchema.updateOne({title:req.body.main},{$pull : {types : req.body.id}})
 			res.json({
 				status: "success",

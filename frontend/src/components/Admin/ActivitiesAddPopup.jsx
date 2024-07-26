@@ -82,10 +82,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		main: false,
 		server: false,
 	});
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		formRefs.current[name] = value;
-	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const finalFormData = new FormData();
@@ -93,7 +90,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			finalFormData.append("images", formData.finalImages[i]);
 		}
 		for (let key in formRefs.current) {
-			finalFormData.append(key, formRefs.current[key]);
+			finalFormData.append(key, formRefs.current[key]?.value);
 		}
 		finalFormData.append("packages", formData.packages);
 		if (validateForm()) {
@@ -121,20 +118,22 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 
 	const validateForm = () => {
 		const newErrorState = { ...error };
+		for(const key in newErrorState){
+			newErrorState[key] = false
+		}
 		let isValid = true;
-
-		Object.keys(formRefs.current).forEach((key) => {
-			console.log(formRefs.current);
-			if (!formRefs.current[key]) {
-				console.log(formRefs.current[key], "empty ");
+		for (const key in formRefs.current) {
+			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
+			  if (formRefs.current[key].value.trim() === "") {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
-				return false;
-			} else {
-				newErrorState[key] = false;
+				formRefs.current[key].focus();
+				formRefs.current[key].style.outlineColor = "red";
+				return false; // Prevent form submission
+			  }
 			}
-		});
+		  }
 		if (formData.packages.length < 1) {
 			
 			setError(prevError => ({ ...prevError, packages: true }));
@@ -176,7 +175,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.title = el}
 									type="text"
 									name="title"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -197,6 +196,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="main"
 									disabled
+									ref={(el) => formRefs.current.main = el}
 									defaultValue={"Activities"}>
 									<option value="Activities">Activities</option>
 								</select>
@@ -211,7 +211,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.capacity = el}
 									type="number"
 									name="capacity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -231,7 +231,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="status"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.status = el}
 									defaultValue={"Available"}>
 									<option value="Available" selected>
 										Available
@@ -251,7 +251,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="availability"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.availability = el}
 									defaultValue={"All Days"}>
 									<option value="All Days" selected>
 										All Days
@@ -273,7 +273,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 										min="09:00"
 										max="18:00"
 										defaultValue={"09:00"}
-										onChange={handleChange}
+										ref={(el) => formRefs.current.startTime = el}
 									/>
 								</div>
 								<div className="px-6 bg-gray-100 flex justify-center items-center">
@@ -288,7 +288,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 										min="09:00"
 										max="18:00"
 										defaultValue={"16:00"}
-										onChange={handleChange}
+										ref={(el) => formRefs.current.endTime = el}
 									/>
 								</div>
 							</div>
@@ -301,7 +301,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</label>
 						<div className="">
 							<textarea
-								onChange={handleChange}
+								ref={(el) => formRefs.current.description = el}
 								type="text"
 								name="description"
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -321,7 +321,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.location = el}
 									type="text"
 									name="location"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -339,7 +339,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.proximity = el}
 									type="text"
 									name="proximity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -367,7 +367,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									className="w-full px-2 h-full"
 									type="number"
 									name="priceHour"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.priceHour = el}
 								/>
 								<div className="bg-gray-100 p-2 px-6 flex items-center justify-end">
 									<span>Day </span>
@@ -377,7 +377,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									className="w-full px-2 rounded-r-lg h-full"
 									type="number"
 									name="priceDay"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.priceDay = el}
 								/>
 							</div>
 							{(error.priceDay || error.priceHour) && (

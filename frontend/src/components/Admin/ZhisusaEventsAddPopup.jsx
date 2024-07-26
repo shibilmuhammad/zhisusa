@@ -13,19 +13,19 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		proximity: false,
 		images: false,
         price : false,
-        terms: null,
-		time: null,
-		date: null,
+        terms: false,
+		time: false,
+		date: false,
 
 	});
 	const [progress, setProgress] = useState(false);
 	const formRefs = useRef({
 		title: null,
 		capacity: null,
+		price: null,
 		description: null,
 		location: null,
 		proximity: null,
-		price: null,
 		status: "Available",
 		ageGroup: null,
 		terms: null,
@@ -69,10 +69,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		main: false,
 		server: false,
 	});
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		formRefs.current[name] = value;
-	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const finalFormData = new FormData();
@@ -80,7 +77,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			finalFormData.append("images", formData.finalImages[i]);
 		}
 		for (let key in formRefs.current) {
-			finalFormData.append(key, formRefs.current[key]);
+			finalFormData.append(key, formRefs.current[key]?.value);
 		}
 		if (validateForm()) {
 			setProgress(true);
@@ -106,20 +103,24 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 	};
 
 	const validateForm = () => {
+		
 		const newErrorState = { ...error };
+		for(const key in newErrorState){
+			newErrorState[key] = false
+		}
 		let isValid = true;
-
-		Object.keys(formRefs.current).forEach((key) => {
-			console.log(formRefs.current);
-			if (!formRefs.current[key]) {
+		for (const key in formRefs.current) {
+			if (formRefs.current.hasOwnProperty(key) && formRefs.current[key] !== null) {
+			  if (formRefs.current[key].value.trim() === "" && (key !== 'map' && key !== 'ageGroup' && key !== 'terms')) {
 				newErrorState[key] = true;
 				isValid = false;
 				setError(newErrorState);
-				return false;
-			} else {
-				newErrorState[key] = false;
+				formRefs.current[key].focus();
+				formRefs.current[key].style.outlineColor = "red";
+				return false; // Prevent form submission
+			  }
 			}
-		});
+		  }
 
 		if (formData.images.length < 1) {
 			
@@ -153,7 +154,8 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									
+									ref={(el) => formRefs.current.title = el}
 									type="text"
 									name="title"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -171,6 +173,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<select
+									ref={(el) => formRefs.current.type = el}
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="type"
 									defaultValue={"Music"}>
@@ -188,7 +191,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.capacity = el}
 									type="number"
 									name="capacity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -210,17 +213,18 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								</div>
 								
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.price = el}
 									type="number"
 									name="price"
 									class="px-2 p-2 rounded-lg outline-none"
 								/>
-								{error.price && (
+								
+							</div>
+							{error.price && (
 									<span class=" text-[10px] text-red-600 space-y-0">
 										price can't be empty !
 									</span>
 								)}
-							</div>
 						</div>
 						<div class="w-full space-y-1">
 							<label className="" for="">
@@ -230,7 +234,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="status"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.status = el}
 									defaultValue={"Available"}>
 									<option value="Available" selected>
 										Available
@@ -250,7 +254,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 								<select
 									class="border-gray-400 border-[.1px] w-full  rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="language"
-									onChange={handleChange}
+									ref={(el) => formRefs.current.language = el}
 									defaultValue={"Tamil"}>
 									<option value="Tamil">
 										Tamil
@@ -270,7 +274,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 										name="date"
 										id=""
 										defaultValue={new Date().toISOString().slice(0,10)}
-										onChange={handleChange}
+										ref={(el) => formRefs.current.date = el}
 									/>
 								</div>
 								<div className="px-1 bg-gray-100 flex justify-center items-center">
@@ -283,7 +287,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 										name="time"
 										id=""
 										defaultValue={"10:00"}
-										onChange={handleChange}
+										ref={(el) => formRefs.current.time = el}
 									/>
 								</div>
 							</div>
@@ -296,7 +300,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</label>
 						<div className="">
 							<textarea
-								onChange={handleChange}
+								ref={(el) => formRefs.current.description = el}
 								type="text"
 								name="description"
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -316,7 +320,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.location = el}
 									type="text"
 									name="location"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -334,7 +338,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.proximity = el}
 									type="text"
 									name="proximity"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -355,7 +359,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.ageGroup = el}
 									type="number"
 									name="ageGroup"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -368,7 +372,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 							</label>
 							<div className="">
 								<input
-									onChange={handleChange}
+									ref={(el) => formRefs.current.map = el}
 									type="text"
 									name="map"
 									class="px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
@@ -383,7 +387,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</label>
 						<div className="">
 							<textarea
-								onChange={handleChange}
+								ref={(el) => formRefs.current.map = el}
 								type="text"
 								name="terms"
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "
