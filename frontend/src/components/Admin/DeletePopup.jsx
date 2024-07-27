@@ -15,7 +15,6 @@ const DeletePopup = ({ type, setShowDelete, rowID, dataList,setLoadData,loadData
 				main: main || null,
 				title: dataList[rowID]?.title || null,
 			});
-				console.log('response is ',response);
 			setProgress(false)
 			setLoadData(!loadData)
 			setShowDelete(false);

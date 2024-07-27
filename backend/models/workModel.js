@@ -70,5 +70,5 @@ const workSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const workModel = mongoose.model('rooms',workSchema)
+const workModel = mongoose.model('work',workSchema)
 module.exports = workModel

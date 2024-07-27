@@ -12,7 +12,7 @@ const SideBar = ({active}) => {
         { title: "Bookings", src: "", icon: FaClipboardList },
         { title: "Categories", src: "", icon: MdCategory },
         { title: "Live Types", src: "/admin/live", icon: MdBedroomParent },
-        { title: "Work Types", src: "", icon: GiOfficeChair },
+        { title: "Work Types", src: "/admin/work", icon: GiOfficeChair },
         { title: "Activity Types", src: "/admin/activity", icon: MdSurfing },
         { title: "Event Types", src: "/admin/events", icon: BsCake2Fill },
         { title: "Zhisusa Events", src: "/admin/zhisusaEvents", icon: FaMusic },
