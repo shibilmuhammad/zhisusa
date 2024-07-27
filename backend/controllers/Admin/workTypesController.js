@@ -18,10 +18,9 @@ module.exports = {
     }catch(error){
         res.status(500).json({message:"Internal Server Error"})
     }
-     
-
   },
-   addrooms : async (req, res) => {
+   addWork : async (req, res) => {
+    console.log(req.body);
     try {
       const formData = req.body;
       const files = req.files;
@@ -38,7 +37,7 @@ module.exports = {
           .jpeg({ quality: 80 })
           .toBuffer();
   
-        const storageRef = ref(storage, `rooms/${file.originalname}`)
+        const storageRef = ref(storage, `workingSpace/${file.originalname}`)
         await uploadBytes(storageRef, optimizedBuffer);
         const downloadURL = await getDownloadURL(storageRef);
         imageUrls.push(downloadURL);
@@ -52,22 +51,18 @@ module.exports = {
         description: formData.description,
         status:formData.status,
         details: {
-          capacity: {
-            adult: formData.adultCapacity,
-            child: formData.childCapacity,
-          },
+          capacity: formData.capacity,
           size: formData.size,
           amenities: formData.amenities,
           price: {
-            perNight: formData.perNight,
-            perWeek: formData.perWeek,
+            perHour: formData.perHour,
+            perDay: formData.perDay,
             perMonth: formData.perMonth,
           },
           availability: formData.availability,
           location: {
-            roomNumber: formData.roomNumber,
+            workSpaceNumber: formData.workingspaceNumber,
             floor: formData.floor,
-            view: formData.view,
             proximityToAmenities: formData.proximityToAmenities,
           },
           images: imageUrls,
@@ -75,20 +70,20 @@ module.exports = {
           customizations: formData.customizations,
         },
       };
-      const newRoom = new Room(roomData);
+      const newRoom = new Work(roomData);
       await newRoom.save();
       res.status(200).json({ message: "Room added Successfully" });
     } catch (error) {
       res.status(500).json('An error occurred while adding the room.');
     }
-  },deleteRoom: async(req,res)=>{
+  },deleteWork: async(req,res)=>{
     try{
-      const deletedDocument = await liveModel.findByIdAndDelete(req.body.id);
+      const deletedDocument = await Work.findByIdAndDelete(req.body.id);
       res.json({status:'success'})
     }catch(error){
       res.status(500).json({status:false})
     }
-  },editRooms: async(req,res) =>{
+  },editWork: async(req,res) =>{
     try {
       const formData = req.body;
       const files = req.files;
@@ -104,23 +99,26 @@ module.exports = {
          
       } 
       const storage = getStorage(app);
-  
-      for (const file of files) {
-        // Optimize the image using Sharp
-        const optimizedBuffer = await sharp(file.buffer)
-          .resize(800, 800, {
-            fit: sharp.fit.inside,
-            withoutEnlargement: true,
-          })
-          .jpeg({ quality: 80 })
-          .toBuffer();
-  
-        const storageRef = ref(storage, `rooms/${file.originalname}`)
-        await uploadBytes(storageRef, optimizedBuffer);
-        const downloadURL = await getDownloadURL(storageRef);
-        imageUrls.push(downloadURL);
+      if(files){
+        for (const file of files) {
+          // Optimize the image using Sharp
+          const optimizedBuffer = await sharp(file.buffer)
+            .resize(800, 800, {
+              fit: sharp.fit.inside,
+              withoutEnlargement: true,
+            })
+            .jpeg({ quality: 80 })
+            .toBuffer();
+    
+          const storageRef = ref(storage, `rooms/${file.originalname}`)
+          await uploadBytes(storageRef, optimizedBuffer);
+          const downloadURL = await getDownloadURL(storageRef);
+          imageUrls.push(downloadURL);
+        }
       }
       const subcategory = await categoryModel.findOne({title:formData.subCategory});
+      console.log('formData is',formData);
+      console.log('subcategory is ',subcategory);
       const roomData = {
         subcategoryId: subcategory._id,
         subcategory:formData.subCategory,
@@ -129,22 +127,18 @@ module.exports = {
         description: formData.description,
         status:formData.status,
         details: {
-          capacity: {
-            adult: formData.adultCapacity,
-            child: formData.childCapacity,
-          },
+          capacity: formData.capacity,
           size: formData.size,
           amenities: formData.amenities,
           price: {
-            perNight: formData.perNight,
-            perWeek: formData.perWeek,
+            perHour: formData.perHour,
+            perDay: formData.perDay,
             perMonth: formData.perMonth,
           },
           availability: formData.availability,
           location: {
-            roomNumber: formData.roomNumber,
+            workSpaceNumber: formData.workingspaceNumber,
             floor: formData.floor,
-            view: formData.view,
             proximityToAmenities: formData.proximityToAmenities,
           },
           images: imageUrls,
@@ -152,7 +146,7 @@ module.exports = {
           customizations: formData.customizations,
         },
       };
-      const updatedRoom = await Room.findOneAndUpdate({_id:formData.id},roomData);
+      const updatedRoom = await Work.findOneAndUpdate({_id:formData.id},roomData);
       res.status(200).json({ message: "Room added Successfully" });
     } catch (error) {
       console.log(error);

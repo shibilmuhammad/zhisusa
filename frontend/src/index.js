@@ -35,114 +35,112 @@ import Login from "./components/Admin/Login";
 import Live from "./pages/Admins/Live";
 import EventsTypes from "./pages/Admins/EventsTypes";
 import ZhisusaEvents from "./pages/Admins/ZhisusaEvents";
-
+import Work from "./pages/Admins/Work";
 
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <App />,
-		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
-			{
-				path: "/gallery",
-				element: <Gallery />,
-			},
-			{
-				path: "/aboutus",
-				element: <Aboutus />,
-			},
-			{
-				path: "/dailyescape",
-				element: <Packages />,
-			},
-			{
-				path: "/weeklyretreat",
-				element: <WeeklyRetreat />,
-			},
-			{
-				path: "/contactus",
-				element: <Contactus />,
-			},
-			{
-				path: "/events",
-				element: <Events />,
-			},
-			{
-				path: "/eventsParticipate",
-				element: <ParticipateEvents />,
-			},
-			{
-				path: "/eventDetails",
-				element: <ParticipateEventDetails />,
-			},
-			{
-				path: "/eventBooking",
-				element: <ParticipateEventBooking />,
-			},
-			{
-				path: "/eventBookingStatus",
-				element: <ParticipateEventBookingStatus />,
-			},
-			{
-				path: "/monthlyhaven",
-				element: <MonthlyHaven />,
-			},
-			{
-				path: "/yearly",
-				element: <Yearly />,
-			},
-			{
-				path: "/amenities",
-				element: <Amenites />,
-			},
-			{
-				path: "/accommodation",
-				element: <Accomodation />,
-			},
-			{
-				path: "/activites",
-				element: <Activities />,
-			},
-			{
-				path: "/bookspace",
-				element: <Works />,
-			},
-			{
-				path: "/bookroom",
-				element: <BookRoom />,
-			},
-			{
-				path: "/confirmstay",
-				element: <ConfirmStay />,
-			},
-			{
-				path: "/personalize",
-				element: <PersonalizeBooking />,
-			},
-			{
-				path: "/admin/categories",
-				element: <Categories />,
-			},
-			{
-				path: "/work",
-				element: <Works />,
-			},
-			{ path: "/activityDetails", element: <ActivityDetailsMob /> },
-			{ path: "/admin/login", element: <Login /> },
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/gallery",
+        element: <Gallery />,
+      },
+      {
+        path: "/aboutus",
+        element: <Aboutus />,
+      },
+      {
+        path: "/dailyescape",
+        element: <Packages />,
+      },
+      {
+        path: "/weeklyretreat",
+        element: <WeeklyRetreat />,
+      },
+      {
+        path: "/contactus",
+        element: <Contactus />,
+      },
+      {
+        path: "/events",
+        element: <Events />,
+      },
+      {
+        path: "/eventsParticipate",
+        element: <ParticipateEvents />,
+      },
+      {
+        path: "/eventDetails",
+        element: <ParticipateEventDetails />,
+      },
+      {
+        path: "/eventBooking",
+        element: <ParticipateEventBooking />,
+      },
+      {
+        path: "/eventBookingStatus",
+        element: <ParticipateEventBookingStatus />,
+      },
+      {
+        path: "/monthlyhaven",
+        element: <MonthlyHaven />,
+      },
+      {
+        path: "/yearly",
+        element: <Yearly />,
+      },
+      {
+        path: "/amenities",
+        element: <Amenites />,
+      },
+      {
+        path: "/accommodation",
+        element: <Accomodation />,
+      },
+      {
+        path: "/activites",
+        element: <Activities />,
+      },
+      {
+        path: "/bookspace",
+        element: <Works />,
+      },
+      {
+        path: "/bookroom",
+        element: <BookRoom />,
+      },
+      {
+        path: "/confirmstay",
+        element: <ConfirmStay />,
+      },
+      {
+        path: "/personalize",
+        element: <PersonalizeBooking />,
+      },
+      {
+        path: "/admin/categories",
+        element: <Categories />,
+      },
+      {
+        path: "/work",
+        element: <Works />,
+      },
+      { path: "/activityDetails", element: <ActivityDetailsMob /> },
+      { path: "/admin/login", element: <Login /> },
 
-      { path: "/admin/events", element: <EventsTypes/>},
-      { path: "/admin/live", element: <Live/> },
-
-      		{ path: "/admin/activity", element: <ActivitiesTypes/> },
-			  { path: "/admin/zhisusaEvents", element: <ZhisusaEvents/> },
-			
-
-		],
-		errorElement: <Works />,
-	},
+      { path: "/admin/events", element: <EventsTypes /> },
+      { path: "/admin/live", element: <Live /> },
+	  { path: "/admin/work", element: <Work /> },
+      { path: "/admin/activity", element: <ActivitiesTypes /> },
+      { path: "/admin/zhisusaEvents", element: <ZhisusaEvents /> },
+    ],
+    errorElement: <Works />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -53,6 +53,9 @@ router.post('/addrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10
 router.post('/deleterooms',adminAuthMiddleWare.verifyToken,livetypesController.deleteRoom)
 router.post('/editrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.editRooms)
 //work Types
-router.get('/getworktypes',adminAuthMiddleWare.verifyToken,workTypesController.getWorkTypes)
+router.get('/getworktypes',adminAuthMiddleWare.verifyToken,workTypesController.getWorkTypes);
+router.post('/addwork',adminAuthMiddleWare.verifyToken,upload.array('images',10),workTypesController.addWork)
+router.post('/deletework',adminAuthMiddleWare.verifyToken,workTypesController.deleteWork)
+router.post('/editwork',adminAuthMiddleWare.verifyToken,upload.array('images',10),workTypesController.editWork)
 module.exports = router
 
