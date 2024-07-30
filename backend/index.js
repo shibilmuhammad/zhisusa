@@ -19,7 +19,7 @@ app.use(session({
  connectDB();
  const adminrouter = require('./routes/adminRoutes')
  const userrouter = require('./routes/userRoutes')
- app.use("/api/user",userrouter)
+ app.use("/api/",userrouter)
  app.use("/api/admin",adminrouter)
  
 const PORT = process.env.PORT || 8080;

@@ -10,7 +10,7 @@ const SideBar = ({active}) => {
     
         { title: "Dashboard", src: "", icon: MdDashboard },
         { title: "Bookings", src: "", icon: FaClipboardList },
-        { title: "Categories", src: "", icon: MdCategory },
+        { title: "Categories", src: "/admin/categories", icon: MdCategory },
         { title: "Live Types", src: "/admin/live", icon: MdBedroomParent },
         { title: "Work Types", src: "/admin/work", icon: GiOfficeChair },
         { title: "Activity Types", src: "/admin/activity", icon: MdSurfing },

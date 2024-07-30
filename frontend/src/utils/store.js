@@ -5,6 +5,7 @@ import roomCountSlice from './roomCountSlice';
 import activityDetailsSlice from './activityDetailsSlice';
 import categoriesDataSlice from './categoriesDataSlice';
 import amenitiesAdminSlice from './amenitiesAdminSlice';
+import zhisusaEventsSlice from './zhisusaEventsSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,7 +13,8 @@ const store = configureStore({
     roomCount : roomCountSlice,
     activities : activityDetailsSlice,
     adminCategories : categoriesDataSlice,
-    amenitiesAdmin : amenitiesAdminSlice
+    amenitiesAdmin : amenitiesAdminSlice,
+    zhisusaEvents : zhisusaEventsSlice
   },
 });
 
