@@ -83,8 +83,11 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		server: false,
 	});
 
+
 	const handleSubmit = async (e) => {
+		
 		e.preventDefault();
+		
 		const finalFormData = new FormData();
 		for (let i = 0; i < formData.finalImages.length; i++) {
 			finalFormData.append("images", formData.finalImages[i]);
@@ -233,10 +236,10 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									name="status"
 									ref={(el) => formRefs.current.status = el}
 									defaultValue={"Available"}>
-									<option value="Available" selected>
+									<option value="Available" >
 										Available
 									</option>
-									<option value="Available">Not Available</option>
+									<option value="Not Available">Not Available</option>
 								</select>
 							</div>
 						</div>
@@ -253,7 +256,7 @@ const ActivitiesAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									name="availability"
 									ref={(el) => formRefs.current.availability = el}
 									defaultValue={"All Days"}>
-									<option value="All Days" selected>
+									<option value="All Days" >
 										All Days
 									</option>
 									<option value="Weekend">Weekend</option>

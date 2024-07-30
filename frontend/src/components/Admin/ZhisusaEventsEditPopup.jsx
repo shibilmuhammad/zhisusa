@@ -90,7 +90,7 @@ const ZhisusaEventsEditPopup = ({
 		finalFormData.append("id", dataList[rowID]?._id);
 		const pattern = /^((http|https|ftp):\/\/)/;
 		const filteredLink = formData.images.filter((item) => pattern.test(item));
-		finalFormData.append("image_links", filteredLink);
+		finalFormData.append("image_links", JSON.stringify(filteredLink));
 		if (validateForm()) {
 			setProgress(true);
 			try {
@@ -217,8 +217,10 @@ const ZhisusaEventsEditPopup = ({
 									class="border-gray-400 border-[.1px] w-full rounded-lg text-left text-xs px-2 text-gray-500 p-2"
 									name="type"
 									ref={(el) => (formRefs.current.type = el)}>
-									<option value="Music">Music</option>
-                                    <option value="Art Shows">Art Shows</option>
+									<option value="Music">Music</option> 
+									<option value="Art Shows">Art Shows</option>
+									<option value="Work Shops">Work Shops</option>
+                                   
 								</select>
 							</div>
 						</div>

@@ -2,6 +2,7 @@ const categorySchema = require("../../models/categoryModel");
 const mainSchema = require("../../models/mainModel");
 const eventSchema = require("../../models/eventModel");
 const formidable = require("formidable");
+const sharp = require('sharp');
 const {
 	getStorage,
 	deleteObject,
@@ -135,7 +136,7 @@ module.exports = {
 			const storage = getStorage(app);
 			const files = req.files;
 			if (files.length > 0) {
-				var uploadPromises = files.map(async (file) => {
+				const uploadPromises = files.map(async (file) => {
 					const optimizedBuffer = await sharp(file.buffer)
 					.resize(800, 800, {
 						fit: sharp.fit.inside,
@@ -151,10 +152,11 @@ module.exports = {
 	
 					return publicUrl;
 				});
+				var uploadedFiles = await Promise.all(uploadPromises);
 				
 	
 			}
-			const uploadedFiles = await Promise.all(uploadPromises);
+			
 			console.log(req.body);
 			let amenitiesList = JSON.parse(amenities);
 			amenitiesList.forEach((pkg) => {
@@ -165,7 +167,7 @@ module.exports = {
 			const updateData = await eventSchema.findOne({ _id: id });
 			const commonItems = image_links
 				.split(",")
-				.filter((item) => updateData?.details?.images.includes(item));
+				.filter((item) => !updateData?.details?.images.includes(item));
 			if (commonItems.length > 0) {
 				const deletePromises = commonItems.map(async (link) => {
 					const fileRef = ref(storage, link);

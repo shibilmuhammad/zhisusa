@@ -1,6 +1,7 @@
 const categorySchema = require("../../models/categoryModel");
 const mainSchema = require("../../models/mainModel");
 const activitySchema = require("../../models/activityModel");
+const sharp = require("sharp");
 
 const formidable = require("formidable");
 const {
@@ -60,22 +61,20 @@ module.exports = {
 				packages.length < 1 ||
 				req.files.length < 1
 			) {
-				return res
-					.status(400)
-					.json({
-						error: "All fields are required and packages cannot be empty.",
-					});
+				return res.status(400).json({
+					error: "All fields are required and packages cannot be empty.",
+				});
 			}
 			const storage = getStorage(app);
 			const files = req.files;
 			const uploadPromises = files.map(async (file) => {
 				const optimizedBuffer = await sharp(file.buffer)
-				.resize(800, 800, {
-					fit: sharp.fit.inside,
-					withoutEnlargement: true,
-				})
-				.jpeg({ quality: 80 })
-				.toBuffer();
+					.resize(800, 800, {
+						fit: sharp.fit.inside,
+						withoutEnlargement: true,
+					})
+					.jpeg({ quality: 80 })
+					.toBuffer();
 				const fileName = `${Date.now()}_${file.originalname}`;
 				const fileRef = ref(storage, `activity/${fileName}`);
 
@@ -112,7 +111,10 @@ module.exports = {
 				},
 			});
 			const data = await newData.save();
-			const addToMain = await categorySchema.updateOne({title:main},{$push:{types:data?.['_id'].toString()}})
+			const addToMain = await categorySchema.updateOne(
+				{ title: main },
+				{ $push: { types: data?._id.toString() } }
+			);
 
 			res.json({
 				status: "success",
@@ -139,26 +141,25 @@ module.exports = {
 				location,
 				packages,
 				id,
-				image_links
+				image_links,
 			} = req.body;
 			const storage = getStorage(app);
 			const files = req.files;
 			if (files.length > 0) {
-				
 				const uploadPromises = files.map(async (file) => {
 					const optimizedBuffer = await sharp(file.buffer)
-					.resize(800, 800, {
-						fit: sharp.fit.inside,
-						withoutEnlargement: true,
-					})
-					.jpeg({ quality: 80 })
-					.toBuffer();
+						.resize(800, 800, {
+							fit: sharp.fit.inside,
+							withoutEnlargement: true,
+						})
+						.jpeg({ quality: 80 })
+						.toBuffer();
 					const fileName = `${Date.now()}_${file.originalname}`;
 					const fileRef = ref(storage, `activity/${fileName}`);
-	
+
 					await uploadBytes(fileRef, optimizedBuffer);
 					const publicUrl = await getDownloadURL(fileRef);
-	
+
 					return publicUrl;
 				});
 
@@ -166,11 +167,10 @@ module.exports = {
 			}
 			console.log(req.body);
 
-
-			const updateData = await activitySchema.findOne({_id:id});
+			const updateData = await activitySchema.findOne({ _id: id });
 			const commonItems = image_links
 				.split(",")
-				.filter((item) => updateData?.details?.images.includes(item));
+				.filter((item) => !updateData?.details?.images.includes(item));
 			if (commonItems.length > 0) {
 				const deletePromises = commonItems.map(async (link) => {
 					const fileRef = ref(storage, link);
@@ -202,15 +202,20 @@ module.exports = {
 					location || updateData.details.location.place;
 				updateData.details.location.proximityToAmenities =
 					proximity || updateData.details.location.proximityToAmenities;
-				if(image_links){
-					uploadedFiles ? updateData.details.images = [...image_links.split(',') ,...uploadedFiles] : updateData.details.images = image_links.split(',')
-				}else{
-					uploadedFiles ? updateData.details.images = uploadedFiles : updateData.details.images = []
+				if (image_links) {
+					uploadedFiles
+						? (updateData.details.images = [
+								...image_links.split(","),
+								...uploadedFiles,
+						  ])
+						: (updateData.details.images = image_links.split(","));
+				} else {
+					uploadedFiles
+						? (updateData.details.images = uploadedFiles)
+						: (updateData.details.images = []);
 				}
-				
-					
 			}
-			await updateData.save()
+			await updateData.save();
 
 			res.json({
 				status: "success",
@@ -235,8 +240,13 @@ module.exports = {
 			});
 
 			await Promise.all(deletePromises);
-			const deleteData = await activitySchema.findByIdAndDelete({ _id: req.body.id });
-			const addToMain = await categorySchema.updateOne({title:req.body.main},{$pull : {types : req.body.id}})
+			const deleteData = await activitySchema.findByIdAndDelete({
+				_id: req.body.id,
+			});
+			const addToMain = await categorySchema.updateOne(
+				{ title: req.body.main },
+				{ $pull: { types: req.body.id } }
+			);
 			res.json({
 				status: "success",
 			});

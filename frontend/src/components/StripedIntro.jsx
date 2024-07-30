@@ -4,7 +4,7 @@ const StripedIntro = ({type,data}) => {
 	return (
 		<div className={`w-full  flex  ${type === 'host' ? 'bg-orange-active':'bg-PrimaryBlue-light_active'}`}>
 			<div className="w-6/12 p-8 space-y-8">
-				<div className="text-5xl font-poppins font-bold space-y-2">
+				<div className="text-5xl font-poppins font-bold space-y-2 mt-16">
 					<span className=" ">{data?.title}</span>
 					<span className={`block ${type === 'host' ? 'text-orange-normal' : 'text-PrimaryBlue-normal'} `}>Events</span>
 				</div>

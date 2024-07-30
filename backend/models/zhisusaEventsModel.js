@@ -4,6 +4,10 @@ const zhisusaEventsSchema = new mongoose.Schema({
   title: String, // or "Boating", etc.
   status : String,
   type : String,
+  eventId: {
+    type: String,
+    unique: true,
+  },
   details: {
     description: String,
     capacity: Number,

@@ -2,6 +2,7 @@ const categorySchema = require("../../models/categoryModel");
 const mainSchema = require("../../models/mainModel");
 const zhisusaEventsShema = require("../../models/zhisusaEventsModel");
 const formidable = require("formidable");
+const sharp = require('sharp')
 const {
 	getStorage,
 	deleteObject,
@@ -88,6 +89,7 @@ module.exports = {
 				title: title,
 				status: status || "Available",
 				type : type || "Music",
+				eventId : await getNextUniqueId(),
 				details: {
 					description: description,
 					capacity: capacity,
@@ -164,9 +166,8 @@ module.exports = {
 			console.log(req.body);
 
 			const updateData = await zhisusaEventsShema.findOne({ _id: id });
-			const commonItems = image_links
-				.split(",")
-				.filter((item) => updateData?.details?.images.includes(item));
+			const commonItems = JSON.parse(image_links)
+				.filter((item) => !updateData?.details?.images.includes(item));
 			if (commonItems.length > 0) {
 				const deletePromises = commonItems.map(async (link) => {
 					const fileRef = ref(storage, link);
@@ -196,7 +197,7 @@ module.exports = {
 					terms || updateData.details.termsAndConditions;
 				updateData.details.language =
 					language || updateData.details.language;
-				updateData.details.location.place =
+				updateData.details.location.venue =
 					location || updateData.details.location.place;
 				updateData.details.location.map =
 					map || updateData.details.location.map;
@@ -205,10 +206,10 @@ module.exports = {
 				if (image_links) {
 					uploadedFiles
 						? (updateData.details.images = [
-								...image_links.split(","),
+								...JSON.parse(image_links),
 								...uploadedFiles,
 						  ])
-						: (updateData.details.images = image_links.split(","));
+						: (updateData.details.images = JSON.parse(image_links));
 				} else {
 					uploadedFiles
 						? (updateData.details.images = uploadedFiles)
@@ -254,3 +255,11 @@ module.exports = {
 		}
 	},
 };
+async function getNextUniqueId() {
+	const lastEvent = await zhisusaEventsShema.findOne().sort({ eventId: -1 }).exec();
+	if (lastEvent && lastEvent.eventId) {
+	  const lastId = parseInt(lastEvent.eventId.replace('EVNTID', ''), 10);
+	  return `EVNTID${lastId + 1}`;
+	}
+	return 'EVNTID1000';
+  }

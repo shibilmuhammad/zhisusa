@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const categoryController = require('../controllers/Admin/categoryController');
+const zhisusaEventsController = require('../controllers/User/zhisusaEventsController');
 
+//zhisusa events
+router.get('/getAllZhisusaEvents',zhisusaEventsController.getZhisusaEvents)
+router.post('/bookZhisusaEvent',zhisusaEventsController.bookEvent)
+router.post('/createOrder',zhisusaEventsController.createOrder)
+router.post('/payment/verify',zhisusaEventsController.verifyPayment)
 
-
-//categories
-router.post('/deletecategory',categoryController.deleteCategory)
-router.get('/getallcategories',categoryController.getCategories)
-router.post('/addcategory',categoryController.addCategory)
 
 module.exports = router

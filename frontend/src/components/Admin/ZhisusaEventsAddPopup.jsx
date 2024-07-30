@@ -40,8 +40,6 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		images: [],
 		finalImages: [],
 	});
-
-
 	const handleImageUpload = (e) => {
 		const files = Array.from(e.target.files);
 		const newImages = files.map((file) => URL.createObjectURL(file));
@@ -69,7 +67,6 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 		main: false,
 		server: false,
 	});
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const finalFormData = new FormData();
@@ -101,7 +98,6 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 			}
 		}
 	};
-
 	const validateForm = () => {
 		
 		const newErrorState = { ...error };
@@ -179,6 +175,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									defaultValue={"Music"}>
 									<option value="Music">Music</option>
                                     <option value="Art Shows">Art Shows</option>
+									<option value="Work Shops">Work Shops</option>
 								</select>
 							</div>
 						</div>
@@ -236,7 +233,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 									name="status"
 									ref={(el) => formRefs.current.status = el}
 									defaultValue={"Available"}>
-									<option value="Available" selected>
+									<option value="Available" >
 										Available
 									</option>
 									<option value="Not Available">Not Available</option>
@@ -387,7 +384,7 @@ const ZhisusaEventsAddPopup = ({ setShowAdd, setLoadData, loadData }) => {
 						</label>
 						<div className="">
 							<textarea
-								ref={(el) => formRefs.current.map = el}
+								ref={(el) => formRefs.current.terms = el}
 								type="text"
 								name="terms"
 								class="min-h-28 px-2 border-gray-400 border-[.1px] w-full p-2 rounded-lg "

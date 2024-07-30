@@ -298,7 +298,7 @@ const EventsEditPopup = ({
 									ref={(el) => (formRefs.current.status = el)}
 									defaultValue={"Available"}>
 									<option value="Available">Available</option>
-									<option value="Available">Not Available</option>
+									<option value="Not Available">Not Available</option>
 								</select>
 							</div>
 						</div>
