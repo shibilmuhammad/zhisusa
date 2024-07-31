@@ -46,14 +46,14 @@ const ParticipateEventBookingStatus = () => {
 				</button>
 			</div>
 			{/* Related Events */}
-			<div className="p-5 md:px-24">
+			{/* <div className="p-5 md:px-24">
 				<h1 className="text-xl font-poppins font-bold border-b-2 border-gray-400 pb-1">
 					You may also like this
 				</h1>
 				<div className="mt-4 grid grid-cols-1 md:grid-cols-3">
 					<EventRelatedCard />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 };

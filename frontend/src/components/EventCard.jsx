@@ -17,7 +17,7 @@ const EventCard = ({data}) => {
 		return `${formattedHour}:${minute.toString().padStart(2, '0')} ${period}`;
 	  }
 	return (
-		<div onClick={() => navigate(`/eventDetails/${data?.eventId}`)} className="rounded-xl h-48 relative cursor-pointer">
+		<div onClick={() => navigate(`/eventDetails?id=${data?.eventId}`)} className="rounded-xl h-48 relative cursor-pointer">
 			<img
 				className="rounded-xl h-full w-full object-cover absolute z-0"
 				src={data?.details?.images[0]}

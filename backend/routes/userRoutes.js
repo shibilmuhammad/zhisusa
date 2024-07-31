@@ -5,9 +5,10 @@ const zhisusaEventsController = require('../controllers/User/zhisusaEventsContro
 
 //zhisusa events
 router.get('/getAllZhisusaEvents',zhisusaEventsController.getZhisusaEvents)
+router.get('/getEventDetails',zhisusaEventsController.getZhisusaEventDetails)
 router.post('/bookZhisusaEvent',zhisusaEventsController.bookEvent)
 router.post('/createOrder',zhisusaEventsController.createOrder)
-router.post('/payment/verify',zhisusaEventsController.verifyPayment)
+router.post('/payment/bookEvent',zhisusaEventsController.bookEvent)
 
 
 module.exports = router
