@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { MdAddCircle } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
-const EventBookingSummary = ({ data }) => {
+const EventBookingSummary = ({ data,setCost,cost }) => {
+	const initialPrice = data?.details?.price || 0;
 	const [price, setPrice] = useState({
 		ticketCount: 1,
-		pricePerTicket: data?.details?.price, // assuming a base price per ticket
-		subTotal: data?.details?.price,
-		gst: data?.details?.price * 0.18, // 18% of the initial subTotal
-		total: data?.details?.price + data?.details?.price * 0.18,
+		pricePerTicket: initialPrice  , // assuming a base price per ticket
+		subTotal: initialPrice,
+		gst: initialPrice  * 0.18 , // 18% of the initial subTotal
+		total: initialPrice + (initialPrice  * 0.18),
 	});
 
 	const calculateTotalWithGST = (ticketCount, pricePerTicket) => {
@@ -73,6 +74,19 @@ const EventBookingSummary = ({ data }) => {
 		return `${formattedHour}:${minute.toString().padStart(2, "0")} ${period}`;
 	};
 	const navigate = useNavigate();
+	useEffect(() => {
+		const initialPrice = data?.details?.price || 0;
+		setPrice({
+			ticketCount: 1,
+			pricePerTicket: initialPrice,
+			subTotal: initialPrice,
+			gst: initialPrice * 0.18, // 18% of the initial subTotal
+			total: initialPrice + initialPrice * 0.18,
+		});
+	}, [data]);
+	useEffect(() => {
+		setCost(price)
+	},[price])
 	return (
 		<div className="font-poppins px-4 flex flex-col justify-between h-full md:w-5/12 md:mt-8">
 			<div>
@@ -108,7 +122,7 @@ const EventBookingSummary = ({ data }) => {
 
 				<hr />
 				<div className="flex flex-col mt-5">
-					<span>{formatDate(data?.details?.schedule?.date)}</span>
+					<span>{formatDate(data?.details?.schedule?.date || "2024/12/12")}</span>
 					<span>{formatTime(data?.details?.schedule?.time || "00:00")}</span>
 				</div>
 				<div className="flex flex-col my-5 md:my-3">
@@ -123,7 +137,7 @@ const EventBookingSummary = ({ data }) => {
 					</div>
 					<div className="flex justify-between items-center">
 						<span>GST (18%)</span>
-						<span>₹ {price.gst}</span>
+						<span>₹ {price?.gst}</span>
 					</div>
 					<div className="flex justify-between items-center">
 						<span>convenience Fee</span>

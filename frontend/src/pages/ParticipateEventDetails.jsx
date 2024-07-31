@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from '../components/Header';
 import SimplePageIntro from "../components/SimplePageIntro";
 import EventAboutSection from "../components/EventAboutSection";
@@ -7,27 +7,34 @@ import EventDetailsSection from "../components/EventDetailsSection";
 import EventPriceCard from "../components/EventPriceCard";
 import EventRelatedCard from "../components/EventRelatedCard";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import axios from 'axios'
 const ParticipateEventDetails = () => {
-
+	const [data,setData] = useState({})
+	function useQuery() {
+		return new URLSearchParams(useLocation().search);
+	}
+	let query = useQuery();
+  	const id = query.get('id');
+	const list = useSelector((state) => state?.zhisusaEvents?.zhisusaEvents)
 	useEffect(() => {
 		async function getData() {
 			try {
-				const { data } = await axios.get(`/api/getAllZhisusaEvents`);
-				setEventsList(data);
-				dispatch(addToEvents(data))
+				const { data } = await axios.get(`/api/getEventDetails?id=${id}`);
+				setData(data);
 
 			} catch (err) {
 				if (err?.response?.status === 401) {
-					setError("Unauthorized");
-					navigate("/admin/login");
+					console.log("Unauthorized");
+					//navigate("/admin/login");
 				} else {
-					setError("Server error: " + error?.response?.status);
+					console.log(err?.response?.status);
 				}
 			}
 		}
-		getData();
 		window.scroll(0,0)
+		getData();
+		
 	},[])
 	return (
 		<div className="relative">
