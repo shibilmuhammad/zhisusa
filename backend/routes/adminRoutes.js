@@ -48,7 +48,7 @@ router.get('/validatetoken',loginController.validateToken)
 //live types
 
 
-router.get('/getlivetypes',adminAuthMiddleWare.verifyToken,livetypesController.getroomsData);
+router.get('/getlivetypes', ,livetypesController.getroomsData);
 router.post('/addrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.addrooms)
 router.post('/deleterooms',adminAuthMiddleWare.verifyToken,livetypesController.deleteRoom)
 router.post('/editrooms',adminAuthMiddleWare.verifyToken,upload.array('images',10),livetypesController.editRooms)
